@@ -14,7 +14,7 @@ namespace Shoppi.Data.Models
             Category = category;
         }
 
-        public int Id { get; set; }
+        public int Id { get; protected set; }
 
         public Category Category
         {
@@ -36,7 +36,7 @@ namespace Shoppi.Data.Models
             }
         }
 
-        public int Quantity { private get; set; }
+        public int Quantity { get; protected set; }
 
         private void ValidateName(string name)
         {
