@@ -1,12 +1,10 @@
 ﻿using Shoppi.Data.Models;
 using System.Collections.Generic;
 
-namespace Shoppi.Data.Abstract
+namespace Shoppi.Logic.Abstract
 {
-    public interface IProductRepository
+    public interface IProductServices
     {
-        Product GetById(int id);
-
         IEnumerable<Product> GetAll();
     }
 }
