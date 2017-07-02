@@ -17,6 +17,11 @@ namespace Shoppi.Data.Models
             }
         }
 
+        private Category()
+        {
+            SubCategories = new List<Category>();
+        }
+
         public int Id { get; protected set; }
         public List<Category> SubCategories { get; protected set; }
 

@@ -14,6 +14,10 @@ namespace Shoppi.Data.Models
             Category = category;
         }
 
+        private Product()
+        {
+        }
+
         public int Id { get; protected set; }
 
         public Category Category
