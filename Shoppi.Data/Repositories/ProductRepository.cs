@@ -1,7 +1,8 @@
 ﻿using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Shoppi.Data.Repositories
 {
@@ -14,14 +15,14 @@ namespace Shoppi.Data.Repositories
             _context = context;
         }
 
-        public IEnumerable<Product> GetAll()
+        public Task<List<Product>> GetAllAsync()
         {
-            return _context.Products.ToList();
+            return _context.Products.ToListAsync();
         }
 
-        public Product GetById(int id)
+        public Task<Product> GetByIdAsync(int id)
         {
-            return _context.Products.FirstOrDefault(p => p.Id == id);
+            return _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

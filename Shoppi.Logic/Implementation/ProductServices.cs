@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shoppi.Logic.Implementation
 {
@@ -14,9 +15,9 @@ namespace Shoppi.Logic.Implementation
             _productRepository = productRepository;
         }
 
-        public IEnumerable<Product> GetAll()
+        public Task<List<Product>> GetAllAsync()
         {
-            return _productRepository.GetAll();
+            return _productRepository.GetAllAsync();
         }
     }
 }

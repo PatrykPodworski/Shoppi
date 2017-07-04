@@ -1,12 +1,13 @@
 ﻿using Shoppi.Data.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shoppi.Data.Abstract
 {
     public interface IProductRepository
     {
-        Product GetById(int id);
+        Task<Product> GetByIdAsync(int id);
 
-        IEnumerable<Product> GetAll();
+        Task<List<Product>> GetAllAsync();
     }
 }

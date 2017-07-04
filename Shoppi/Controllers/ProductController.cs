@@ -1,4 +1,5 @@
 ﻿using Shoppi.Logic.Abstract;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Shoppi.Controllers
@@ -12,9 +13,9 @@ namespace Shoppi.Controllers
             _productServices = productServices;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var model = _productServices.GetAll();
+            var model = await _productServices.GetAllAsync();
             return View(model);
         }
     }

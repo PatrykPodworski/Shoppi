@@ -1,10 +1,11 @@
 ﻿using Shoppi.Data.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shoppi.Logic.Abstract
 {
     public interface IProductServices
     {
-        IEnumerable<Product> GetAll();
+        Task<List<Product>> GetAllAsync();
     }
 }
