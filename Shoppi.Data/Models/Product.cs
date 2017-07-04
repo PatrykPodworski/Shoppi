@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Shoppi.Data.Models
+﻿namespace Shoppi.Data.Models
 {
     public class Product
     {
@@ -17,11 +15,12 @@ namespace Shoppi.Data.Models
 
         public int Id { get; protected set; }
 
-        [Required]
+        public int CategoryId { get; set; }
+
         public Category Category { get; set; }
 
         public string Name { get; set; }
 
-        public int Quantity { get; protected set; }
+        public int Quantity { get; set; }
     }
 }
