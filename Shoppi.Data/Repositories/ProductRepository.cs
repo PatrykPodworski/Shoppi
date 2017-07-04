@@ -15,14 +15,33 @@ namespace Shoppi.Data.Repositories
             _context = context;
         }
 
-        public Task<List<Product>> GetAllAsync()
+        public bool Create(Product product)
         {
-            return _context.Products.ToListAsync();
+            try
+            {
+                _context.Products.Add(product);
+            }
+            catch (System.Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        public Task<Product> GetByIdAsync(int id)
+        public async Task<List<Product>> GetAllAsync()
         {
-            return _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return await _context.Products.ToListAsync();
+        }
+
+        public async Task<Product> GetByIdAsync(int id)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<int> SaveAsync()
+        {
+            return await _context.SaveChangesAsync();
         }
     }
 }

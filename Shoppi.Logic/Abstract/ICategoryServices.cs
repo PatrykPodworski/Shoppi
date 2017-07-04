@@ -4,10 +4,8 @@ using System.Threading.Tasks;
 
 namespace Shoppi.Logic.Abstract
 {
-    public interface IProductServices
+    public interface ICategoryServices
     {
-        Task<List<Product>> GetAllAsync();
-
-        Task<bool> Create(Product product);
+        Task<List<Category>> GetAllAsync();
     }
 }

@@ -15,9 +15,22 @@ namespace Shoppi.Logic.Implementation
             _productRepository = productRepository;
         }
 
-        public Task<List<Product>> GetAllAsync()
+        public async Task<bool> Create(Product product)
         {
-            return _productRepository.GetAllAsync();
+            var success = _productRepository.Create(product);
+
+            if (!success)
+            {
+                return false;
+            }
+
+            await _productRepository.SaveAsync();
+            return true;
+        }
+
+        public async Task<List<Product>> GetAllAsync()
+        {
+            return await _productRepository.GetAllAsync();
         }
     }
 }

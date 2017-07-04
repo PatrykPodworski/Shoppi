@@ -9,5 +9,9 @@ namespace Shoppi.Data.Abstract
         Task<Product> GetByIdAsync(int id);
 
         Task<List<Product>> GetAllAsync();
+
+        bool Create(Product product);
+
+        Task<int> SaveAsync();
     }
 }
