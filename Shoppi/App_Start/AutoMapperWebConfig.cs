@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Shoppi.Controllers;
 using Shoppi.Data.Models;
 
 namespace Shoppi.App_Start
@@ -10,7 +9,7 @@ namespace Shoppi.App_Start
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile(new ProductProfile);
+                cfg.AddProfile(new ProductProfile());
             });
         }
     }
@@ -19,7 +18,7 @@ namespace Shoppi.App_Start
     {
         public ProductProfile()
         {
-            CreateMap<ProductCreateModel, Product>();
+            CreateMap<ProductCreateViewModel, Product>();
         }
     }
 }

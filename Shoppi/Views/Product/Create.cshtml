@@ -1,0 +1,15 @@
+﻿@model ProductCreateViewModel
+
+<h1>Add a product</h1>
+@using (Html.BeginForm("Create", "Product", FormMethod.Post))
+{
+    @Html.ValidationSummary()
+
+    @Html.LabelFor(x => x.Name) @Html.EditorFor(x => x.Name)
+    <br />
+    @Html.Label("Category") @Html.DropDownListFor(x => x.CategoryId, Model.Categories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList())
+    <br />
+    @Html.LabelFor(x => x.Quantity) @Html.EditorFor(x => x.Quantity)
+    <br />
+    <input class="btn" type="submit" value="Add" />
+}

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.MVC", "Shoppi\Shoppi.MVC.csproj", "{2630A75A-6286-4153-B31B-E9EBB516B8AD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Web", "Shoppi\Shoppi.Web.csproj", "{2630A75A-6286-4153-B31B-E9EBB516B8AD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Tests", "Shoppi.Tests\Shoppi.Tests.csproj", "{84FC6CA1-EBDB-4E64-BCB9-5557CBA596AF}"
 	ProjectSection(ProjectDependencies) = postProject

@@ -20,6 +20,8 @@ namespace Shoppi
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IProductServices, ProductServices>();
             container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<ICategoryServices, CategoryServices>();
+            container.RegisterType<ICategoryRepository, CategoryRepository>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
