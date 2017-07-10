@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
+using Shoppi.Models;
 
 namespace Shoppi.App_Start
 {

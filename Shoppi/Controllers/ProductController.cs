@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using Shoppi.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -28,10 +27,7 @@ namespace Shoppi.Controllers
         public async Task<ActionResult> Create()
         {
             var categories = await _categoryServices.GetAllAsync();
-            var model = new ProductCreateViewModel
-            {
-                Categories = categories
-            };
+            var model = new ProductCreateViewModel(categories);
 
             return View(model);
         }
@@ -41,7 +37,7 @@ namespace Shoppi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(model);
             }
 
             var product = Mapper.Map<Product>(model);
@@ -57,18 +53,4 @@ namespace Shoppi.Controllers
             return View();
         }
     }
-}
-
-public class ProductCreateViewModel
-{
-    public List<Category> Categories { get; set; }
-
-    [Required]
-    public string Name { get; set; }
-
-    [Required]
-    public int CategoryId { get; set; }
-
-    [Required]
-    public int Quantity { get; set; }
 }

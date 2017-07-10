@@ -1,9 +1,13 @@
-﻿@model ProductCreateViewModel
+﻿@using Shoppi.Helpers;
+
+@model Shoppi.Models.ProductCreateViewModel
 
 <h1>Add a product</h1>
 @using (Html.BeginForm("Create", "Product", FormMethod.Post))
 {
     @Html.ValidationSummary()
+
+    @Html.HiddenForCategories(Model.Categories)
 
     @Html.LabelFor(x => x.Name) @Html.EditorFor(x => x.Name)
     <br />
