@@ -1,6 +1,7 @@
 ﻿using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
+using Shoppi.Logic.Exceptions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -15,17 +16,20 @@ namespace Shoppi.Logic.Implementation
             _productRepository = productRepository;
         }
 
-        public async Task<bool> Create(Product product)
+        public async Task Create(Product product)
         {
-            var success = _productRepository.Create(product);
-
-            if (!success)
+            if (string.IsNullOrWhiteSpace(product.Name))
             {
-                return false;
+                throw new InvalidProductNameException("Product name can't be null or whitespaces.");
             }
 
+            if (product.Quantity < 0)
+            {
+                throw new NegativeProductQuantityException("Product quantity can't be negative.");
+            }
+
+            _productRepository.Create(product);
             await _productRepository.SaveAsync();
-            return true;
         }
 
         public async Task<List<Product>> GetAllAsync()

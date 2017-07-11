@@ -15,18 +15,9 @@ namespace Shoppi.Data.Repositories
             _context = context;
         }
 
-        public bool Create(Product product)
+        public void Create(Product product)
         {
-            try
-            {
-                _context.Products.Add(product);
-            }
-            catch (System.Exception)
-            {
-                return false;
-            }
-
-            return true;
+            _context.Products.Add(product);
         }
 
         public async Task<List<Product>> GetAllAsync()

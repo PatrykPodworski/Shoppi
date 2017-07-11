@@ -10,7 +10,7 @@ namespace Shoppi.Data.Abstract
 
         Task<List<Product>> GetAllAsync();
 
-        bool Create(Product product);
+        void Create(Product product);
 
         Task<int> SaveAsync();
     }
