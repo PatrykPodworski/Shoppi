@@ -28,7 +28,6 @@ namespace Shoppi.Controllers
         {
             var categories = await _categoryServices.GetAllAsync();
             var model = new ProductCreateViewModel(categories);
-
             return View(model);
         }
 
@@ -41,16 +40,18 @@ namespace Shoppi.Controllers
             }
 
             var product = Mapper.Map<Product>(model);
-            var createStatus = await _productServices.Create(product);
 
-            if (createStatus)
+            try
             {
-                // success view
-                return RedirectToAction("Index");
+                await _productServices.Create(product);
+            }
+            catch (System.Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
             }
 
-            // failure screen
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }
