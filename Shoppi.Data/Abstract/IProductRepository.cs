@@ -8,6 +8,8 @@ namespace Shoppi.Data.Abstract
     {
         Task<Product> GetByIdAsync(int id);
 
+        Task<Product> GetByNameAsync(string name);
+
         Task<List<Product>> GetAllAsync();
 
         void Create(Product product);

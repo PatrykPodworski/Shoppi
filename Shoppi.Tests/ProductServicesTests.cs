@@ -4,6 +4,8 @@ using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Exceptions;
 using Shoppi.Logic.Implementation;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shoppi.Tests
@@ -13,17 +15,22 @@ namespace Shoppi.Tests
     {
         private Mock<IProductRepository> _mockRepository;
         private ProductServices _productServices;
+        private List<Product> _products;
 
         [TestInitialize]
         public void TestInitialize()
         {
+            _products = new List<Product>();
             _mockRepository = new Mock<IProductRepository>();
-            _mockRepository.Setup(x => x.Create(It.IsAny<Product>()));
+            _mockRepository.Setup(x => x.Create(It.IsAny<Product>()))
+                            .Callback<Product>(x => _products.Add(x));
+            _mockRepository.Setup(m => m.GetByNameAsync(It.IsAny<string>()))
+                            .Returns<string>(x => Task.FromResult(_products.FirstOrDefault(y => y.Name == x)));
             _productServices = new ProductServices(_mockRepository.Object);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidProductNameException))]
+        [ExpectedException(typeof(ProductValidationException))]
         public async Task ProductServices_CreateWithNoName_ThrowsException()
         {
             // Arrange
@@ -34,7 +41,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidProductNameException))]
+        [ExpectedException(typeof(ProductValidationException))]
         public async Task ProductServices_CreateWithWhitespacesName_ThrowsException()
         {
             // Arrange
@@ -45,7 +52,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NegativeProductQuantityException))]
+        [ExpectedException(typeof(ProductValidationException))]
         public async Task ProductServices_CreateWithNegativeAmount_ThrowsException()
         {
             // Arrange
@@ -87,6 +94,22 @@ namespace Shoppi.Tests
 
             // Assert
             _mockRepository.Verify(m => m.Create(It.IsAny<Product>()), Times.Once());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_CreateWithUnuniqueName_ThrowsException()
+        {
+            // Arrange
+            var productName = "Product";
+            var category = new Category("Category");
+            var quantity = 123;
+
+            var product = new Product(productName, category, quantity);
+            _products.Add(new Product(productName, new Category("Category1"), 12));
+
+            // Act
+            await _productServices.Create(product);
         }
     }
 }

@@ -43,8 +43,7 @@
   <ItemGroup>
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IProductServices.cs" />
-    <Compile Include="Exceptions\InvalidProductNameException.cs" />
-    <Compile Include="Exceptions\NegativeProductAmountException.cs" />
+    <Compile Include="Exceptions\ProductValidationException.cs" />
     <Compile Include="Implementation\CategoryServices.cs" />
     <Compile Include="Implementation\ProductServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

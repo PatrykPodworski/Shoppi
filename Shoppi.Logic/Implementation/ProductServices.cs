@@ -18,18 +18,42 @@ namespace Shoppi.Logic.Implementation
 
         public async Task Create(Product product)
         {
-            if (string.IsNullOrWhiteSpace(product.Name))
-            {
-                throw new InvalidProductNameException("Product name can't be null or whitespaces.");
-            }
-
-            if (product.Quantity < 0)
-            {
-                throw new NegativeProductQuantityException("Product quantity can't be negative.");
-            }
-
+            ValidateProduct(product);
             _productRepository.Create(product);
             await _productRepository.SaveAsync();
+        }
+
+        private void ValidateProduct(Product product)
+        {
+            if (!IsValidProductName(product.Name))
+            {
+                throw new ProductValidationException("Invalid product name.");
+            }
+
+            if (!IsValidProductQuantity(product.Quantity))
+            {
+                throw new ProductValidationException("Invalid product quantity.");
+            }
+
+            if (!IsUniqueProductName(product.Name))
+            {
+                throw new ProductValidationException("There already is a product with a given name.");
+            }
+        }
+
+        private bool IsUniqueProductName(string name)
+        {
+            return _productRepository.GetByNameAsync(name).Result == null;
+        }
+
+        private bool IsValidProductName(string name)
+        {
+            return !string.IsNullOrWhiteSpace(name);
+        }
+
+        private bool IsValidProductQuantity(int quantity)
+        {
+            return quantity >= 0;
         }
 
         public async Task<List<Product>> GetAllAsync()

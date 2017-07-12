@@ -30,6 +30,11 @@ namespace Shoppi.Data.Repositories
             return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<Product> GetByNameAsync(string name)
+        {
+            return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
+        }
+
         public async Task<int> SaveAsync()
         {
             return await _context.SaveChangesAsync();
