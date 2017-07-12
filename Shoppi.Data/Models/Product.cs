@@ -2,18 +2,18 @@
 {
     public class Product
     {
-        public Product(string name, Category category, int quantity = 0)
+        public Product(string name, int categoryId, int quantity = 0)
         {
             Name = name;
             Quantity = quantity;
-            Category = category;
+            CategoryId = categoryId;
         }
 
         private Product()
         {
         }
 
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
         public int CategoryId { get; set; }
 

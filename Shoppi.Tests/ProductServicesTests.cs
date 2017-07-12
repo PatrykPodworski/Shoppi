@@ -34,7 +34,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_CreateWithNoName_ThrowsException()
         {
             // Arrange
-            var product = new Product(null, new Category("Category"));
+            var product = new Product(null, 0);
 
             // Act
             await _productServices.Create(product);
@@ -45,7 +45,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_CreateWithWhitespacesName_ThrowsException()
         {
             // Arrange
-            var product = new Product("      ", new Category("Category"));
+            var product = new Product("      ", 0);
 
             // Act
             await _productServices.Create(product);
@@ -56,7 +56,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_CreateWithNegativeAmount_ThrowsException()
         {
             // Arrange
-            var product = new Product("Product", new Category("Category"), -100);
+            var product = new Product("Product", 0, -100);
 
             // Act
             await _productServices.Create(product);
@@ -67,10 +67,9 @@ namespace Shoppi.Tests
         {
             // Arrange
             var productName = "Product";
-            var category = new Category("Category");
             var quantity = 100;
 
-            var product = new Product(productName, category, quantity);
+            var product = new Product(productName, 0, quantity);
 
             // Act
             await _productServices.Create(product);
@@ -84,10 +83,9 @@ namespace Shoppi.Tests
         {
             // Arrange
             var productName = "Product";
-            var category = new Category("Category");
             var quantity = 0;
 
-            var product = new Product(productName, category, quantity);
+            var product = new Product(productName, 0, quantity);
 
             // Act
             await _productServices.Create(product);
@@ -102,11 +100,10 @@ namespace Shoppi.Tests
         {
             // Arrange
             var productName = "Product";
-            var category = new Category("Category");
             var quantity = 123;
 
-            var product = new Product(productName, category, quantity);
-            _products.Add(new Product(productName, new Category("Category1"), 12));
+            var product = new Product(productName, 0, quantity);
+            _products.Add(new Product(productName, 1, 12));
 
             // Act
             await _productServices.Create(product);
