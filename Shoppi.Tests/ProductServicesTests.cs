@@ -24,8 +24,8 @@ namespace Shoppi.Tests
             _mockRepository = new Mock<IProductRepository>();
             _mockRepository.Setup(x => x.Create(It.IsAny<Product>()))
                             .Callback<Product>(x => _products.Add(x));
-            _mockRepository.Setup(m => m.GetByNameAsync(It.IsAny<string>()))
-                            .Returns<string>(x => Task.FromResult(_products.FirstOrDefault(y => y.Name == x)));
+            _mockRepository.Setup(m => m.GetByName(It.IsAny<string>()))
+                            .Returns<string>(x => _products.FirstOrDefault(y => y.Name == x));
             _productServices = new ProductServices(_mockRepository.Object);
         }
 

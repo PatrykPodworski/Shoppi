@@ -18,12 +18,12 @@ namespace Shoppi.Logic.Implementation
 
         public async Task CreateAsync(Product product)
         {
-            ValidateProductAsync(product);
+            ValidateProduct(product);
             _productRepository.Create(product);
             await _productRepository.SaveAsync();
         }
 
-        private async void ValidateProductAsync(Product product)
+        private void ValidateProduct(Product product)
         {
             if (!IsValidProductName(product.Name))
             {
@@ -35,15 +35,15 @@ namespace Shoppi.Logic.Implementation
                 throw new ProductValidationException("Invalid product quantity.");
             }
 
-            if (!await IsUniqueProductNameAsync(product.Name))
+            if (!IsUniqueProductName(product.Name))
             {
                 throw new ProductValidationException("There already is a product with a given name.");
             }
         }
 
-        private async Task<bool> IsUniqueProductNameAsync(string name)
+        private bool IsUniqueProductName(string name)
         {
-            var productFromDb = await _productRepository.GetByNameAsync(name);
+            var productFromDb = _productRepository.GetByName(name);
             return productFromDb == null;
         }
 

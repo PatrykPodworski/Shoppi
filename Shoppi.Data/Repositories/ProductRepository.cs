@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shoppi.Data.Repositories
@@ -20,24 +21,24 @@ namespace Shoppi.Data.Repositories
             _context.Products.Add(product);
         }
 
-        public async Task<List<Product>> GetAllAsync()
+        public Task<List<Product>> GetAllAsync()
         {
-            return await _context.Products.ToListAsync();
+            return _context.Products.ToListAsync();
         }
 
-        public async Task<Product> GetByIdAsync(int id)
+        public Task<Product> GetByIdAsync(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<Product> GetByNameAsync(string name)
+        public Product GetByName(string name)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
+            return _context.Products.FirstOrDefault(p => p.Name == name);
         }
 
-        public async Task<int> SaveAsync()
+        public Task<int> SaveAsync()
         {
-            return await _context.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
     }
 }
