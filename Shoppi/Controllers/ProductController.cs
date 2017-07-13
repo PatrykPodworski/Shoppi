@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
+using Shoppi.Logic.Exceptions;
 using Shoppi.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -45,7 +46,7 @@ namespace Shoppi.Controllers
             {
                 await _productServices.Create(product);
             }
-            catch (System.Exception e)
+            catch (ProductValidationException e)
             {
                 ModelState.AddModelError("", e.Message);
                 return View(model);
