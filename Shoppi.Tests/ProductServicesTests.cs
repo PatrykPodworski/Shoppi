@@ -37,7 +37,7 @@ namespace Shoppi.Tests
             var product = new Product(null, 0);
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
         }
 
         [TestMethod]
@@ -48,7 +48,7 @@ namespace Shoppi.Tests
             var product = new Product("      ", 0);
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
         }
 
         [TestMethod]
@@ -59,7 +59,7 @@ namespace Shoppi.Tests
             var product = new Product("Product", 0, -100);
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Shoppi.Tests
             var product = new Product(productName, 0, quantity);
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
 
             // Assert
             _mockRepository.Verify(m => m.Create(It.IsAny<Product>()), Times.Once());
@@ -88,7 +88,7 @@ namespace Shoppi.Tests
             var product = new Product(productName, 0, quantity);
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
 
             // Assert
             _mockRepository.Verify(m => m.Create(It.IsAny<Product>()), Times.Once());
@@ -106,7 +106,7 @@ namespace Shoppi.Tests
             _products.Add(new Product(productName, 1, 12));
 
             // Act
-            await _productServices.Create(product);
+            await _productServices.CreateAsync(product);
         }
     }
 }

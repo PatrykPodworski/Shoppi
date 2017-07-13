@@ -8,6 +8,6 @@ namespace Shoppi.Logic.Abstract
     {
         Task<List<Product>> GetAllAsync();
 
-        Task Create(Product product);
+        Task CreateAsync(Product product);
     }
 }

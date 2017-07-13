@@ -44,7 +44,7 @@ namespace Shoppi.Controllers
 
             try
             {
-                await _productServices.Create(product);
+                await _productServices.CreateAsync(product);
             }
             catch (ProductValidationException e)
             {
