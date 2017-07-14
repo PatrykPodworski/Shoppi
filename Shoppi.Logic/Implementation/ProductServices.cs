@@ -57,6 +57,12 @@ namespace Shoppi.Logic.Implementation
             return quantity >= 0;
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            _productRepository.Delete(id);
+            await _productRepository.SaveAsync();
+        }
+
         public async Task<List<Product>> GetAllAsync()
         {
             return await _productRepository.GetAllAsync();

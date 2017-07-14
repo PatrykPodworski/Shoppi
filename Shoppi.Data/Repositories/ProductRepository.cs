@@ -21,6 +21,13 @@ namespace Shoppi.Data.Repositories
             _context.Products.Add(product);
         }
 
+        public void Delete(int id)
+        {
+            var product = new Product() { Id = id };
+            _context.Products.Attach(product);
+            _context.Products.Remove(product);
+        }
+
         public Task<List<Product>> GetAllAsync()
         {
             return _context.Products.ToListAsync();

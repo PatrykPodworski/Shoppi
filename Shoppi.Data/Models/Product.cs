@@ -9,7 +9,7 @@
             CategoryId = categoryId;
         }
 
-        private Product()
+        public Product()
         {
         }
 

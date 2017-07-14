@@ -9,5 +9,7 @@ namespace Shoppi.Logic.Abstract
         Task<List<Product>> GetAllAsync();
 
         Task CreateAsync(Product product);
+
+        Task DeleteAsync(int id);
     }
 }

@@ -26,6 +26,8 @@ namespace Shoppi.Tests
                             .Callback<Product>(x => _products.Add(x));
             _mockRepository.Setup(m => m.GetByName(It.IsAny<string>()))
                             .Returns<string>(x => _products.FirstOrDefault(y => y.Name == x));
+            _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
+                            .Callback<int>(x => _products.RemoveAll(y => y.Id == x));
             _productServices = new ProductServices(_mockRepository.Object);
         }
 
@@ -107,6 +109,38 @@ namespace Shoppi.Tests
 
             // Act
             await _productServices.CreateAsync(product);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_Delete_DeletesFromRepository()
+        {
+            // Arrange
+            var id = 1;
+            _products.Add(new Product("ProductName", 0) { Id = id });
+            _products.Add(new Product("ProductName2", 0) { Id = 2 });
+
+            // Act
+            await _productServices.DeleteAsync(id);
+
+            // Assert
+            _mockRepository.Verify(m => m.Delete(It.IsAny<int>()), Times.Once);
+            Assert.IsTrue(_products.Count == 1);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_DeleteNonExistingProduct_NothingHappens()
+        {
+            // Arrange
+            var id = 1;
+            _products.Add(new Product("ProductName", 0) { Id = 2 });
+            _products.Add(new Product("ProductName2", 0) { Id = 3 });
+
+            // Act
+            await _productServices.DeleteAsync(id);
+
+            // Assert
+            _mockRepository.Verify(m => m.Delete(It.IsAny<int>()), Times.Once);
+            Assert.IsTrue(_products.Count == 2);
         }
     }
 }
