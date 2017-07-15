@@ -20,6 +20,8 @@ namespace Shoppi.App_Start
         public ProductProfile()
         {
             CreateMap<ProductCreateViewModel, Product>();
+            CreateMap<Product, ProductEditViewModel>();
+            CreateMap<ProductEditViewModel, Product>();
             CreateMap<Product, ProductDeleteViewModel>();
         }
     }

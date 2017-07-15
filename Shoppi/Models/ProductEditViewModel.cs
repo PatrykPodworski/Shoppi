@@ -4,20 +4,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shoppi.Models
 {
-    public class ProductCreateViewModel
+    public class ProductEditViewModel
     {
-        public ProductCreateViewModel(List<Category> categories)
-        {
-            Categories = categories;
-        }
-
-        public ProductCreateViewModel()
+        public ProductEditViewModel()
         {
             Categories = new List<Category>();
         }
 
         [Required]
         public List<Category> Categories { get; set; }
+
+        [Required]
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }

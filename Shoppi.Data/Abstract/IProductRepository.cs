@@ -14,10 +14,10 @@ namespace Shoppi.Data.Abstract
 
         void Create(Product product);
 
-        void Edit(Product product);
+        Task EditAsync(Product product);
 
         void Delete(int idv);
 
-        Task<int> SaveAsync();
+        Task SaveAsync();
     }
 }

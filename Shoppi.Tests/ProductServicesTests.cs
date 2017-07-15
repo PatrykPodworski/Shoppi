@@ -54,7 +54,7 @@ namespace Shoppi.Tests
 
         private void SetUpEditMethod()
         {
-            _mockRepository.Setup(m => m.Edit(It.IsAny<Product>()))
+            _mockRepository.Setup(m => m.EditAsync(It.IsAny<Product>()))
                 .Callback<Product>(x =>
                 {
                     var productFromRepository = _products.FirstOrDefault(y => y.Id == x.Id);
@@ -198,7 +198,7 @@ namespace Shoppi.Tests
             await _productServices.EditAsync(newProduct);
 
             // Assert
-            _mockRepository.Verify(m => m.Edit(It.IsAny<Product>()), Times.Once);
+            _mockRepository.Verify(m => m.EditAsync(It.IsAny<Product>()), Times.Once);
             Assert.IsTrue(existingProduct.Name == productName);
             Assert.IsTrue(existingProduct.CategoryId == categoryId);
             Assert.IsTrue(existingProduct.Quantity == quantity);
@@ -221,7 +221,7 @@ namespace Shoppi.Tests
             await _productServices.EditAsync(newProduct);
 
             // Assert
-            _mockRepository.Verify(m => m.Edit(It.IsAny<Product>()), Times.Once);
+            _mockRepository.Verify(m => m.EditAsync(It.IsAny<Product>()), Times.Once);
             Assert.IsTrue(IsEdited(existingProduct, newProduct));
         }
 

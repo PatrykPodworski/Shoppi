@@ -6,9 +6,11 @@ namespace Shoppi.Logic.Abstract
 {
     public interface IProductServices
     {
+        Task CreateAsync(Product product);
+
         Task<List<Product>> GetAllAsync();
 
-        Task CreateAsync(Product product);
+        Task<Product> GetByIdAsync(int id);
 
         Task EditAsync(Product product);
 

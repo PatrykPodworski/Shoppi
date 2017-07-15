@@ -1,5 +1,4 @@
 ﻿@using Shoppi.Helpers;
-
 @model Shoppi.Models.ProductCreateViewModel
 
 <h1>Add a product</h1>
@@ -9,11 +8,17 @@
 
     @Html.HiddenForCategories(Model.Categories)
 
-    @Html.LabelFor(x => x.Name) @Html.EditorFor(x => x.Name)
-    <br />
-    @Html.Label("Category") @Html.DropDownListFor(x => x.CategoryId, Model.Categories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList())
-    <br />
-    @Html.LabelFor(x => x.Quantity) @Html.EditorFor(x => x.Quantity)
-    <br />
-    <input class="btn" type="submit" value="Add" />
+    <div class="form-group">
+        @Html.LabelFor(x => x.Name) @Html.EditorFor(x => x.Name)
+    </div>
+    <div class="form-group">
+        @Html.Label("Category") @Html.DropDownListFor(x => x.CategoryId, Model.Categories.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList())
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Quantity) @Html.EditorFor(x => x.Quantity)
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Cancel", "Index")
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
 }

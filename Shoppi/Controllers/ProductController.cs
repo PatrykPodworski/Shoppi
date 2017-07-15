@@ -55,6 +55,39 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> Edit(int id)
+        {
+            var product = await _productServices.GetByIdAsync(id);
+            var categories = await _categoryServices.GetAllAsync();
+            var model = Mapper.Map<ProductEditViewModel>(product);
+            model.Categories = categories;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(ProductEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var product = Mapper.Map<Product>(model);
+
+            try
+            {
+                await _productServices.EditAsync(product);
+            }
+            catch (ProductValidationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Delete(Product product)
         {
             var model = Mapper.Map<ProductDeleteViewModel>(product);

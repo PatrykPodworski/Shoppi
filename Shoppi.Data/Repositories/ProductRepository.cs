@@ -21,9 +21,18 @@ namespace Shoppi.Data.Repositories
             _context.Products.Add(product);
         }
 
-        public void Edit(Product product)
+        public async Task EditAsync(Product product)
         {
-            _context.Entry(product).State = EntityState.Modified;
+            var productToEdit = await _context.Products.FirstOrDefaultAsync(x => x.Id == product.Id);
+            _context.Entry(productToEdit).State = EntityState.Modified;
+            EditProductValues(productToEdit, product);
+        }
+
+        private void EditProductValues(Product toEdit, Product editValues)
+        {
+            toEdit.Name = editValues.Name;
+            toEdit.Quantity = editValues.Quantity;
+            toEdit.CategoryId = editValues.CategoryId;
         }
 
         public void Delete(int id)
@@ -48,7 +57,7 @@ namespace Shoppi.Data.Repositories
             return _context.Products.FirstOrDefault(p => p.Name == name);
         }
 
-        public Task<int> SaveAsync()
+        public Task SaveAsync()
         {
             return _context.SaveChangesAsync();
         }

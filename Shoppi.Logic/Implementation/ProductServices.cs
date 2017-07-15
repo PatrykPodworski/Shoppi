@@ -63,10 +63,20 @@ namespace Shoppi.Logic.Implementation
             return quantity >= 0;
         }
 
+        public Task<List<Product>> GetAllAsync()
+        {
+            return _productRepository.GetAllAsync();
+        }
+
+        public Task<Product> GetByIdAsync(int id)
+        {
+            return _productRepository.GetByIdAsync(id);
+        }
+
         public async Task EditAsync(Product product)
         {
             ValidateProduct(product);
-            _productRepository.Edit(product);
+            await _productRepository.EditAsync(product);
             await _productRepository.SaveAsync();
         }
 
@@ -74,11 +84,6 @@ namespace Shoppi.Logic.Implementation
         {
             _productRepository.Delete(id);
             await _productRepository.SaveAsync();
-        }
-
-        public async Task<List<Product>> GetAllAsync()
-        {
-            return await _productRepository.GetAllAsync();
         }
     }
 }
