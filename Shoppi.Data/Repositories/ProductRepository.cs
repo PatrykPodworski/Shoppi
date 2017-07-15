@@ -21,6 +21,11 @@ namespace Shoppi.Data.Repositories
             _context.Products.Add(product);
         }
 
+        public void Edit(Product product)
+        {
+            _context.Entry(product).State = EntityState.Modified;
+        }
+
         public void Delete(int id)
         {
             var product = new Product() { Id = id };

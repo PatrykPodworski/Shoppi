@@ -21,14 +21,53 @@ namespace Shoppi.Tests
         public void TestInitialize()
         {
             _products = new List<Product>();
-            _mockRepository = new Mock<IProductRepository>();
-            _mockRepository.Setup(x => x.Create(It.IsAny<Product>()))
-                            .Callback<Product>(x => _products.Add(x));
-            _mockRepository.Setup(m => m.GetByName(It.IsAny<string>()))
-                            .Returns<string>(x => _products.FirstOrDefault(y => y.Name == x));
-            _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
-                            .Callback<int>(x => _products.RemoveAll(y => y.Id == x));
+            SetUpMockRepository();
             _productServices = new ProductServices(_mockRepository.Object);
+        }
+
+        private void SetUpMockRepository()
+        {
+            _mockRepository = new Mock<IProductRepository>();
+            SetUpCreateMethod();
+            SetUpGetByNameMethod();
+            SetUpDeleteMethod();
+            SetUpEditMethod();
+        }
+
+        private void SetUpCreateMethod()
+        {
+            _mockRepository.Setup(x => x.Create(It.IsAny<Product>()))
+                .Callback<Product>(x => _products.Add(x));
+        }
+
+        private void SetUpGetByNameMethod()
+        {
+            _mockRepository.Setup(m => m.GetByName(It.IsAny<string>()))
+                .Returns<string>(x => _products.FirstOrDefault(y => y.Name == x));
+        }
+
+        private void SetUpDeleteMethod()
+        {
+            _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
+                .Callback<int>(x => _products.RemoveAll(y => y.Id == x));
+        }
+
+        private void SetUpEditMethod()
+        {
+            _mockRepository.Setup(m => m.Edit(It.IsAny<Product>()))
+                .Callback<Product>(x =>
+                {
+                    var productFromRepository = _products.FirstOrDefault(y => y.Id == x.Id);
+
+                    if (productFromRepository == null)
+                    {
+                        return;
+                    }
+
+                    productFromRepository.Name = x.Name;
+                    productFromRepository.CategoryId = x.CategoryId;
+                    productFromRepository.Quantity = x.Quantity;
+                });
         }
 
         [TestMethod]
@@ -105,7 +144,7 @@ namespace Shoppi.Tests
             var quantity = 123;
 
             var product = new Product(productName, 0, quantity);
-            _products.Add(new Product(productName, 1, 12));
+            _products.Add(new Product(productName, 1, 12) { Id = 1 });
 
             // Act
             await _productServices.CreateAsync(product);
@@ -128,7 +167,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_DeleteNonExistingProduct_NothingHappens()
+        public async Task ProductServices_DeleteNotExistingProduct_NothingHappens()
         {
             // Arrange
             var id = 1;
@@ -141,6 +180,133 @@ namespace Shoppi.Tests
             // Assert
             _mockRepository.Verify(m => m.Delete(It.IsAny<int>()), Times.Once);
             Assert.IsTrue(_products.Count == 2);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_EditNotExistingProduct_NothingHappens()
+        {
+            // Arrange
+            var productName = "Product";
+            var categoryId = 0;
+            var quantity = 100;
+            var existingProduct = new Product(productName, categoryId, quantity) { Id = 1 };
+            _products.Add(existingProduct);
+
+            var newProduct = new Product("NewProduct", 2, 10) { Id = 2 };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+
+            // Assert
+            _mockRepository.Verify(m => m.Edit(It.IsAny<Product>()), Times.Once);
+            Assert.IsTrue(existingProduct.Name == productName);
+            Assert.IsTrue(existingProduct.CategoryId == categoryId);
+            Assert.IsTrue(existingProduct.Quantity == quantity);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_EditExistingProduct_ChangesProductInRepository()
+        {
+            // Arrange
+            var productName = "NewProduct";
+            var categoryId = 0;
+            var quantity = 100;
+            var id = 1;
+            var existingProduct = new Product("Product", 2, 10) { Id = id };
+            _products.Add(existingProduct);
+
+            var newProduct = new Product(productName, categoryId, quantity) { Id = id };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+
+            // Assert
+            _mockRepository.Verify(m => m.Edit(It.IsAny<Product>()), Times.Once);
+            Assert.IsTrue(IsEdited(existingProduct, newProduct));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_EditToNoName_ThrowsException()
+        {
+            // Arrange
+            var newProduct = new Product(null, 0, 11) { Id = 1 };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_EditToWhiteSpaceName_ThrowsException()
+        {
+            // Arrange
+            var newProduct = new Product("  ", 0, 11) { Id = 1 };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_EditToInvalidQuantity_ThrowsException()
+        {
+            // Arrange
+            var newProduct = new Product("Product", 0, -13) { Id = 1 };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_EditToExistingName_ThrowsException()
+        {
+            // Arrange
+            var productName = "Product";
+            var existingProduct = new Product(productName, 2, 10) { Id = 2 };
+            _products.Add(existingProduct);
+
+            var newProduct = new Product(productName, 1, 13) { Id = 1 };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_EditWithUnchangedName_Passes()
+        {
+            // Arrange
+            var productName = "Product";
+            var id = 1;
+            var existingProduct = new Product(productName, 2, 10) { Id = id };
+            _products.Add(existingProduct);
+
+            var newProduct = new Product(productName, 1, 13) { Id = id };
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+
+            // Assert
+            Assert.IsTrue(IsEdited(existingProduct, newProduct));
+        }
+
+        private bool IsEdited(Product editedProduct, Product editValues)
+        {
+            if (editedProduct.Name != editValues.Name)
+            {
+                return false;
+            }
+            if (editedProduct.CategoryId != editValues.CategoryId)
+            {
+                return false;
+            }
+            if (editedProduct.Quantity != editValues.Quantity)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -35,16 +35,22 @@ namespace Shoppi.Logic.Implementation
                 throw new ProductValidationException("Invalid product quantity.");
             }
 
-            if (!IsUniqueProductName(product.Name))
+            if (!IsUniqueProduct(product))
             {
                 throw new ProductValidationException("There already is a product with a given name.");
             }
         }
 
-        private bool IsUniqueProductName(string name)
+        private bool IsUniqueProduct(Product product)
         {
-            var productFromDb = _productRepository.GetByName(name);
-            return productFromDb == null;
+            var productFromDb = _productRepository.GetByName(product.Name);
+
+            if (productFromDb == null)
+            {
+                return true;
+            }
+
+            return productFromDb.Id == product.Id;
         }
 
         private bool IsValidProductName(string name)
@@ -55,6 +61,13 @@ namespace Shoppi.Logic.Implementation
         private bool IsValidProductQuantity(int quantity)
         {
             return quantity >= 0;
+        }
+
+        public async Task EditAsync(Product product)
+        {
+            ValidateProduct(product);
+            _productRepository.Edit(product);
+            await _productRepository.SaveAsync();
         }
 
         public async Task DeleteAsync(int id)

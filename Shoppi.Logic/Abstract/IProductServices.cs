@@ -10,6 +10,8 @@ namespace Shoppi.Logic.Abstract
 
         Task CreateAsync(Product product);
 
+        Task EditAsync(Product product);
+
         Task DeleteAsync(int id);
     }
 }

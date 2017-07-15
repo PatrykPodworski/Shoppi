@@ -14,6 +14,8 @@ namespace Shoppi.Data.Abstract
 
         void Create(Product product);
 
+        void Edit(Product product);
+
         void Delete(int idv);
 
         Task<int> SaveAsync();
