@@ -55,7 +55,7 @@ namespace Shoppi.Tests
         private void SetUpEditMethod()
         {
             _mockRepository.Setup(m => m.EditAsync(It.IsAny<Product>()))
-                .Callback<Product>(x =>
+                .Returns<Product>(x => Task.Run(() =>
                 {
                     var productFromRepository = _products.FirstOrDefault(y => y.Id == x.Id);
 
@@ -67,7 +67,7 @@ namespace Shoppi.Tests
                     productFromRepository.Name = x.Name;
                     productFromRepository.CategoryId = x.CategoryId;
                     productFromRepository.Quantity = x.Quantity;
-                });
+                }));
         }
 
         [TestMethod]
