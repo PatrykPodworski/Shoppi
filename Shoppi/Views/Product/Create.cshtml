@@ -1,11 +1,14 @@
 ﻿@using Shoppi.Helpers;
 @model Shoppi.Models.ProductCreateViewModel
 
+@{
+    ViewBag.Title = "Add a product";
+}
+
 <h1>Add a product</h1>
-@using (Html.BeginForm("Create", "Product", FormMethod.Post))
+@using (Html.BeginForm())
 {
     @Html.ValidationSummary()
-
     @Html.HiddenForCategories(Model.Categories)
 
     <div class="form-group">

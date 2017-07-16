@@ -1,21 +1,25 @@
 ﻿@model Shoppi.Models.ProductDeleteViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete a product";
 }
 
-@using (Html.BeginForm("Delete", "Product", FormMethod.Post))
+@using (Html.BeginForm())
 {
-    @Html.Display("Are you sure you want to delete this product?");
-    <br />
+    <div class="form-group">
+        Are you sure you want to delete this product?
+    </div>
     @Html.HiddenFor(m => m.Id)
-
-    @Html.LabelFor(m => m.Name)
-    @Html.DisplayFor(m => m.Name)
-    <br />
-    @Html.LabelFor(m => m.Quantity)
-    @Html.DisplayFor(m => m.Quantity)
-    <br />
-    @Html.ActionLink("Cancel", "Index")
-    <button type="submit" class="btn btn-danger">Delete</button>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.DisplayFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Quantity)
+        @Html.DisplayFor(m => m.Quantity)
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Cancel", "Index")
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </div>
 }
