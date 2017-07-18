@@ -68,6 +68,11 @@ namespace Shoppi.Logic.Implementation
             return _productRepository.GetAllAsync();
         }
 
+        public Task<List<Product>> GetByCategoryIdAsync(int categoryId)
+        {
+            return _productRepository.GetByCategoryIdAsync(categoryId);
+        }
+
         public Task<Product> GetByIdAsync(int id)
         {
             return _productRepository.GetByIdAsync(id);

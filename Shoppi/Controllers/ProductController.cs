@@ -55,6 +55,33 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> List(int? id)
+        {
+            var model = await CreateProductListViewModel(id);
+            return View(model);
+        }
+
+        private async Task<ProductListViewModel> CreateProductListViewModel(int? categoryId)
+        {
+            if (categoryId == null)
+            {
+                return await CreateListModelWithoutCategory();
+            }
+            return await CreateListModelWithCategory(categoryId.Value);
+        }
+
+        private async Task<ProductListViewModel> CreateListModelWithoutCategory()
+        {
+            var products = await _productServices.GetAllAsync();
+            return new ProductListViewModel(products);
+        }
+
+        private async Task<ProductListViewModel> CreateListModelWithCategory(int categoryId)
+        {
+            var products = await _productServices.GetByCategoryIdAsync(categoryId);
+            return new ProductListViewModel(products, categoryId);
+        }
+
         public async Task<ActionResult> Edit(int id)
         {
             var product = await _productServices.GetByIdAsync(id);

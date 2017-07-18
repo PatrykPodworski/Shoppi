@@ -61,5 +61,10 @@ namespace Shoppi.Data.Repositories
         {
             return _context.SaveChangesAsync();
         }
+
+        public Task<List<Product>> GetByCategoryIdAsync(int categoryId)
+        {
+            return _context.Products.Where(x => x.CategoryId == categoryId).ToListAsync();
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace Shoppi.Logic.Abstract
 
         Task<List<Product>> GetAllAsync();
 
+        Task<List<Product>> GetByCategoryIdAsync(int categoryId);
+
         Task<Product> GetByIdAsync(int id);
 
         Task EditAsync(Product product);

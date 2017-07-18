@@ -12,6 +12,8 @@ namespace Shoppi.Data.Abstract
 
         Task<List<Product>> GetAllAsync();
 
+        Task<List<Product>> GetByCategoryIdAsync(int categoryId);
+
         void Create(Product product);
 
         Task EditAsync(Product product);

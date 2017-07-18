@@ -32,6 +32,7 @@ namespace Shoppi.Tests
             SetUpGetByNameMethod();
             SetUpDeleteMethod();
             SetUpEditMethod();
+            SetUpGetByCategoryIdMethod();
         }
 
         private void SetUpCreateMethod()
@@ -68,6 +69,12 @@ namespace Shoppi.Tests
                     productFromRepository.CategoryId = x.CategoryId;
                     productFromRepository.Quantity = x.Quantity;
                 }));
+        }
+
+        private void SetUpGetByCategoryIdMethod()
+        {
+            _mockRepository.Setup(m => m.GetByCategoryIdAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _products.Where(y => y.CategoryId == x).ToList()));
         }
 
         [TestMethod]
@@ -307,6 +314,47 @@ namespace Shoppi.Tests
             }
 
             return true;
+        }
+
+        [TestMethod]
+        public async Task ProductServices_GetByCategoryId_ReturnsAllProductsWithGivenCategoryId()
+        {
+            // Arrange
+            var categoryId = 1;
+            var numberOfProductsWithGivenCategoryId = 5;
+            for (int i = 0; i < numberOfProductsWithGivenCategoryId; i++)
+            {
+                _products.Add(new Product("Product" + i, categoryId));
+            }
+
+            _products.Add(new Product("Product6", 0));
+            _products.Add(new Product("Product6", 2));
+            _products.Add(new Product("Product6", 3));
+
+            // Act
+            var products = await _productServices.GetByCategoryIdAsync(categoryId);
+
+            // Assert
+            Assert.IsTrue(products.Count == numberOfProductsWithGivenCategoryId);
+            _mockRepository.Verify(m => m.GetByCategoryIdAsync(It.IsAny<int>()), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_GetByCategoryIdWithNoProductsWithGivenCategoryId_ReturnsEmptyList()
+        {
+            // Arrange
+            var categoryId = 1;
+
+            _products.Add(new Product("Product6", 0));
+            _products.Add(new Product("Product6", 2));
+            _products.Add(new Product("Product6", 3));
+
+            // Act
+            var products = await _productServices.GetByCategoryIdAsync(categoryId);
+
+            // Assert
+            Assert.IsTrue(products.Count == 0);
+            _mockRepository.Verify(m => m.GetByCategoryIdAsync(It.IsAny<int>()), Times.Once);
         }
     }
 }

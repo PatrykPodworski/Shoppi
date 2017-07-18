@@ -1,0 +1,27 @@
+﻿@model Shoppi.Models.ProductListViewModel
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Category</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Quantity</td>
+                <td>@(product.Category != null ? product.Category.Name : "null")</td>
+            </tr>
+        }
+    </tbody>
+</table>
