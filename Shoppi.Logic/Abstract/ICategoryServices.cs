@@ -7,5 +7,7 @@ namespace Shoppi.Logic.Abstract
     public interface ICategoryServices
     {
         Task<List<Category>> GetAllAsync();
+
+        void Create(Category category);
     }
 }

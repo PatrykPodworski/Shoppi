@@ -10,19 +10,30 @@ namespace Shoppi.App_Start
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.AddProfile(new ProductProfile());
+                cfg.AddProfile(new ShoppiProfile());
             });
         }
     }
 
-    public class ProductProfile : Profile
+    public class ShoppiProfile : Profile
     {
-        public ProductProfile()
+        public ShoppiProfile()
+        {
+            CreateProductMaps();
+            CreateCategoryMaps();
+        }
+
+        private void CreateProductMaps()
         {
             CreateMap<ProductCreateViewModel, Product>();
             CreateMap<Product, ProductEditViewModel>();
             CreateMap<ProductEditViewModel, Product>();
             CreateMap<Product, ProductDeleteViewModel>();
+        }
+
+        private void CreateCategoryMaps()
+        {
+            CreateMap<CategoryCreateViewModel, Category>();
         }
     }
 }

@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Abstract\ICategoryRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Migrations\201707012031582_Initial Product+Category.cs" />
     <Compile Include="Migrations\201707012031582_Initial Product+Category.Designer.cs">
       <DependentUpon>201707012031582_Initial Product+Category.cs</DependentUpon>
@@ -66,6 +65,10 @@
     <Compile Include="Migrations\201707042137229_Models cleanup.cs" />
     <Compile Include="Migrations\201707042137229_Models cleanup.Designer.cs">
       <DependentUpon>201707042137229_Models cleanup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707212124453_Added headCategory and removed list of subCategories.cs" />
+    <Compile Include="Migrations\201707212124453_Added headCategory and removed list of subCategories.Designer.cs">
+      <DependentUpon>201707212124453_Added headCategory and removed list of subCategories.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
@@ -91,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707042137229_Models cleanup.resx">
       <DependentUpon>201707042137229_Models cleanup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707212124453_Added headCategory and removed list of subCategories.resx">
+      <DependentUpon>201707212124453_Added headCategory and removed list of subCategories.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

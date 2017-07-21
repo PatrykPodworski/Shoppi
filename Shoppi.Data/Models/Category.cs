@@ -1,28 +1,23 @@
-﻿using System.Collections.Generic;
-
-namespace Shoppi.Data.Models
+﻿namespace Shoppi.Data.Models
 {
     public class Category
     {
-        public Category(string name, Category parentCategory = null)
+        public Category(string name, Category headCategory = null)
         {
-            SubCategories = new List<Category>();
             Name = name;
-
-            if (parentCategory != null)
-            {
-                parentCategory.SubCategories.Add(this);
-            }
+            HeadCategory = headCategory;
         }
 
         public Category()
         {
-            SubCategories = new List<Category>();
         }
 
         public int Id { get; set; }
-        public List<Category> SubCategories { get; set; }
 
         public string Name { get; set; }
+
+        public int? HeadCategoryId { get; set; }
+
+        public virtual Category HeadCategory { get; set; }
     }
 }

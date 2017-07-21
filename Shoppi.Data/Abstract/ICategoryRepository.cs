@@ -7,5 +7,9 @@ namespace Shoppi.Data.Abstract
     public interface ICategoryRepository
     {
         Task<List<Category>> GetAllAsync();
+
+        void Create(Category category);
+
+        Task SaveAsync();
     }
 }

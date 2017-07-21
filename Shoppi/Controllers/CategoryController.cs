@@ -1,4 +1,7 @@
-﻿using Shoppi.Logic.Abstract;
+﻿using AutoMapper;
+using Shoppi.Data.Models;
+using Shoppi.Logic.Abstract;
+using Shoppi.Logic.Exceptions;
 using Shoppi.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -19,6 +22,36 @@ namespace Shoppi.Controllers
             var categories = await _categoryServices.GetAllAsync();
             var model = new CategoryListViewModel(categories);
             return View(model);
+        }
+
+        public async Task<ActionResult> Create()
+        {
+            var categories = await _categoryServices.GetAllAsync();
+            var model = new CategoryCreateViewModel(categories);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Create(CategoryCreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var category = Mapper.Map<Category>(model);
+
+            try
+            {
+                _categoryServices.Create(category);
+            }
+            catch (CategoryValidationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
+
+            return RedirectToAction("List");
         }
     }
 }

@@ -19,5 +19,15 @@ namespace Shoppi.Data.Repositories
         {
             return await _context.Categories.ToListAsync();
         }
+
+        public void Create(Category category)
+        {
+            _context.Categories.Add(category);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

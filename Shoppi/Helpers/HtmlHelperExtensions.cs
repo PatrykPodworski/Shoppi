@@ -6,7 +6,7 @@ using System.Web.Mvc.Html;
 
 namespace Shoppi.Helpers
 {
-    public static class ProductHtmlHelperExtensions
+    public static class HtmlHelperExtensions
     {
         public static MvcHtmlString HiddenForCategories(this HtmlHelper htmlHelper, ICollection<Category> categories)
         {
@@ -18,6 +18,22 @@ namespace Shoppi.Helpers
             {
                 html.AppendLine(htmlHelper.Hidden($"Categories[{index}].Id", category.Id).ToString());
                 html.AppendLine(htmlHelper.Hidden($"Categories[{index}].Name", category.Name).ToString());
+                index++;
+            }
+
+            return MvcHtmlString.Create(html.ToString());
+        }
+
+        public static MvcHtmlString HiddenForSelectListItem(this HtmlHelper htmlHelper, ICollection<SelectListItem> items, string collectionName)
+        {
+            var html = new StringBuilder();
+
+            var index = 0;
+
+            foreach (var item in items)
+            {
+                html.AppendLine(htmlHelper.Hidden($"{collectionName}[{index}].Value", item.Value).ToString());
+                html.AppendLine(htmlHelper.Hidden($"{collectionName}[{index}].Text", item.Text).ToString());
                 index++;
             }
 
