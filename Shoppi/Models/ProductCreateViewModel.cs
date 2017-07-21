@@ -25,9 +25,11 @@ namespace Shoppi.Models
         public string Name { get; set; }
 
         [Required]
+        [Display(Name = "Category")]
         public int? CategoryId { get; set; }
 
         [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "The quantity must be greater than or equal to 0.")]
         public int Quantity { get; set; }
     }
 }
