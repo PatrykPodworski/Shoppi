@@ -9,6 +9,7 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Head Category</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +18,7 @@
             <tr>
                 <td>@category.Id</td>
                 <td>@category.Name</td>
+                <td>@(category.HeadCategory != null ? category.HeadCategory.Name : "None")</td>
             </tr>
         }
     </tbody>
