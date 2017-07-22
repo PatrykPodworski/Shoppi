@@ -32,7 +32,7 @@ namespace Shoppi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CategoryCreateViewModel model)
+        public async Task<ActionResult> Create(CategoryCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -43,7 +43,7 @@ namespace Shoppi.Controllers
 
             try
             {
-                _categoryServices.Create(category);
+                await _categoryServices.CreateAsync(category);
             }
             catch (CategoryValidationException e)
             {

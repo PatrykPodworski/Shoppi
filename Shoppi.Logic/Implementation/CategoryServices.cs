@@ -21,11 +21,11 @@ namespace Shoppi.Logic.Implementation
             return await _repository.GetAllAsync();
         }
 
-        public void Create(Category category)
+        public async Task CreateAsync(Category category)
         {
             ValidateCategory(category);
             _repository.Create(category);
-            _repository.SaveAsync();
+            await _repository.SaveAsync();
         }
 
         private void ValidateCategory(Category category)
