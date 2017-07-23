@@ -9,5 +9,7 @@ namespace Shoppi.Logic.Abstract
         Task<List<Category>> GetAllAsync();
 
         Task CreateAsync(Category category);
+
+        Task EditAsync(Category category);
     }
 }

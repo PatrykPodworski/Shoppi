@@ -40,5 +40,11 @@ namespace Shoppi.Logic.Implementation
         {
             return string.IsNullOrWhiteSpace(name);
         }
+
+        public async Task EditAsync(Category category)
+        {
+            ValidateCategory(category);
+            await _repository.EditAsync(category);
+        }
     }
 }

@@ -15,14 +15,27 @@ namespace Shoppi.Data.Repositories
             _context = context;
         }
 
+        public void Create(Category category)
+        {
+            _context.Categories.Add(category);
+        }
+
         public async Task<List<Category>> GetAllAsync()
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public void Create(Category category)
+        public async Task EditAsync(Category category)
         {
-            _context.Categories.Add(category);
+            var categoryToEdit = await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
+            _context.Entry(categoryToEdit).State = EntityState.Modified;
+            EditCategoryValues(categoryToEdit, category);
+        }
+
+        private void EditCategoryValues(Category categoryToEdit, Category editValues)
+        {
+            categoryToEdit.Name = editValues.Name;
+            categoryToEdit.HeadCategoryId = editValues.HeadCategoryId;
         }
 
         public async Task SaveAsync()

@@ -10,6 +10,8 @@ namespace Shoppi.Data.Abstract
 
         void Create(Category category);
 
+        Task EditAsync(Category category);
+
         Task SaveAsync();
     }
 }
