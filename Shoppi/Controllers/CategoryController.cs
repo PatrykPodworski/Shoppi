@@ -3,6 +3,7 @@ using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using Shoppi.Models;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -44,6 +45,40 @@ namespace Shoppi.Controllers
             try
             {
                 await _categoryServices.CreateAsync(category);
+            }
+            catch (CategoryValidationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
+
+            return RedirectToAction("List");
+        }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            var category = await _categoryServices.GetByIdAsync(id);
+            var headCategoryCandidates = await _categoryServices.GetAllAsync();
+            var model = Mapper.Map<CategoryEditViewModel>(category);
+            model.HeadCategoryCandidates = headCategoryCandidates
+                .Select(x => new SelectListItem() { Value = x.Id.ToString(), Text = x.Name }).ToList();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(CategoryEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var category = Mapper.Map<Category>(model);
+
+            try
+            {
+                await _categoryServices.EditAsync(category);
             }
             catch (CategoryValidationException e)
             {

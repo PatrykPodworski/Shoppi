@@ -50,6 +50,7 @@ namespace Shoppi.Logic.Implementation
         {
             ValidateCategory(category);
             await _repository.EditAsync(category);
+            await _repository.SaveAsync();
         }
     }
 }

@@ -152,6 +152,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Models\CategoryCreateViewModel.cs" />
+    <Compile Include="Models\CategoryEditViewModel.cs" />
     <Compile Include="Models\CategoryListViewModel.cs" />
     <Compile Include="Models\ProductDeleteViewModel.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
@@ -178,6 +179,7 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
