@@ -25,6 +25,11 @@ namespace Shoppi.Data.Repositories
             return await _context.Categories.ToListAsync();
         }
 
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task EditAsync(Category category)
         {
             var categoryToEdit = await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);

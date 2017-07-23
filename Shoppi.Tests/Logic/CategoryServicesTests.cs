@@ -30,6 +30,7 @@ namespace Shoppi.Tests
         {
             _mockRepository = new Mock<ICategoryRepository>();
             SetUpGetAllMethod();
+            SetUpGetByIdMethod();
             SetUpCreateMethod();
             SetUpEditMethod();
 
@@ -40,6 +41,12 @@ namespace Shoppi.Tests
         {
             _mockRepository.Setup(m => m.GetAllAsync())
                 .Returns(Task.Run(() => _categories));
+        }
+
+        private void SetUpGetByIdMethod()
+        {
+            _mockRepository.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _categories.FirstOrDefault(c => c.Id == x)));
         }
 
         private void SetUpCreateMethod()
@@ -234,6 +241,31 @@ namespace Shoppi.Tests
 
             // Act
             await _categoryServices.EditAsync(new Category("  ") { Id = id });
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_GetById_ReturnsCategoryWithProperIdFromRepository()
+        {
+            // Arrange
+            var id = 1;
+            var category = new Category("Category") { Id = id };
+            _categories.Add(category);
+
+            // Act
+            var result = await _categoryServices.GetByIdAsync(id);
+
+            // Assert
+            Assert.IsTrue(result.Id == id);
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_GetByIdWithNoProperCategoryInRepository_ReturnsNull()
+        {
+            // Act
+            var result = await _categoryServices.GetByIdAsync(1);
+
+            // Assert
+            Assert.IsTrue(result == null);
         }
     }
 }

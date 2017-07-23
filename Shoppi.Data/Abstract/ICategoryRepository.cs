@@ -8,6 +8,8 @@ namespace Shoppi.Data.Abstract
     {
         Task<List<Category>> GetAllAsync();
 
+        Task<Category> GetByIdAsync(int id);
+
         void Create(Category category);
 
         Task EditAsync(Category category);

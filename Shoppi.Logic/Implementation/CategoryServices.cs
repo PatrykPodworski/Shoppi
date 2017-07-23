@@ -21,6 +21,11 @@ namespace Shoppi.Logic.Implementation
             return await _repository.GetAllAsync();
         }
 
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
         public async Task CreateAsync(Category category)
         {
             ValidateCategory(category);
