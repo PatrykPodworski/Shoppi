@@ -31,8 +31,10 @@ namespace Shoppi.Tests
             _mockRepository = new Mock<ICategoryRepository>();
             SetUpGetAllMethod();
             SetUpGetByIdMethod();
+            SetUpGetSubCategoriesMethod();
             SetUpCreateMethod();
             SetUpEditMethod();
+            SetUpDeleteMethod();
 
             return _mockRepository;
         }
@@ -47,6 +49,12 @@ namespace Shoppi.Tests
         {
             _mockRepository.Setup(m => m.GetByIdAsync(It.IsAny<int>()))
                 .Returns<int>(x => Task.Run(() => _categories.FirstOrDefault(c => c.Id == x)));
+        }
+
+        private void SetUpGetSubCategoriesMethod()
+        {
+            _mockRepository.Setup(m => m.GetSubCategoriesAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _categories.Where(c => c.HeadCategoryId == x).ToList()));
         }
 
         private void SetUpCreateMethod()
@@ -70,6 +78,12 @@ namespace Shoppi.Tests
                     categoryFromRepository.Name = x.Name;
                     categoryFromRepository.HeadCategoryId = x.HeadCategoryId;
                 }));
+        }
+
+        private void SetUpDeleteMethod()
+        {
+            _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
+                .Callback<int>(x => _categories.RemoveAll(c => c.Id == x));
         }
 
         [TestMethod]
@@ -266,6 +280,88 @@ namespace Shoppi.Tests
 
             // Assert
             Assert.IsTrue(result == null);
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_Delete_DeletesOnlyCategoryWithGivenIdFromRepository()
+        {
+            // Arrange
+            var id = 13;
+            var numberOfCategories = 5;
+            var categoryInRepository = new Category("Name") { Id = id };
+
+            CreateCategoriesInMockRepository(numberOfCategories);
+            _categories.Add(categoryInRepository);
+
+            // Act
+            await _categoryServices.DeleteAsync(id);
+
+            // Assert
+            Assert.IsTrue(_categories.Count == numberOfCategories);
+        }
+
+        private void CreateCategoriesInMockRepository(int numberOfCategories)
+        {
+            for (int i = 0; i < numberOfCategories; i++)
+            {
+                _categories.Add(new Category("Category" + i) { Id = i });
+            }
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_DeleteWithNoCategoryWithGivenId_NothingHappens()
+        {
+            // Arrange
+            var id = 13;
+            var numberOfCategories = 5;
+
+            CreateCategoriesInMockRepository(numberOfCategories);
+
+            // Act
+            await _categoryServices.DeleteAsync(id);
+
+            // Assert
+            Assert.IsTrue(_categories.Count == numberOfCategories);
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_GetAllSubCategories_ReturnsListOfSubCategories()
+        {
+            // Arrange
+            var id = 13;
+            var numberOfSubCategories = 3;
+            var category = new Category("HeadCategory") { Id = id };
+            CreateCategoriesInMockRepository(5);
+            _categories.Add(category);
+            CreateSubCategoriesInMockRepository(numberOfSubCategories, id);
+
+            // Act
+            var result = await _categoryServices.GetSubCategoriesAsync(id);
+
+            // Assert
+            Assert.IsTrue(result.Count == numberOfSubCategories);
+        }
+
+        private void CreateSubCategoriesInMockRepository(int numberOfSubCategories, int headCategoryId)
+        {
+            for (int i = 0; i < numberOfSubCategories; i++)
+            {
+                _categories.Add(new Category("Category" + i) { Id = i, HeadCategoryId = headCategoryId });
+            }
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_GetAllSubCategoriesWithNoSubCategories_ReturnsEmptyList()
+        {
+            // Arrange
+            var id = 13;
+            CreateCategoriesInMockRepository(5);
+
+            // Act
+            var result = await _categoryServices.GetSubCategoriesAsync(id);
+
+            // Assert
+            Assert.IsTrue(result.Count == 0);
         }
     }
 }

@@ -6,12 +6,16 @@ namespace Shoppi.Logic.Abstract
 {
     public interface ICategoryServices
     {
+        Task CreateAsync(Category category);
+
         Task<List<Category>> GetAllAsync();
 
         Task<Category> GetByIdAsync(int id);
 
-        Task CreateAsync(Category category);
+        Task<List<Category>> GetSubCategoriesAsync(int id);
 
         Task EditAsync(Category category);
+
+        Task DeleteAsync(int id);
     }
 }

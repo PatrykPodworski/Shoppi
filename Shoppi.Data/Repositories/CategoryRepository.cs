@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shoppi.Data.Repositories
@@ -30,6 +31,11 @@ namespace Shoppi.Data.Repositories
             return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<List<Category>> GetSubCategoriesAsync(int id)
+        {
+            return await _context.Categories.Where(c => c.HeadCategoryId == id).ToListAsync();
+        }
+
         public async Task EditAsync(Category category)
         {
             var categoryToEdit = await _context.Categories.FirstOrDefaultAsync(c => c.Id == category.Id);
@@ -41,6 +47,13 @@ namespace Shoppi.Data.Repositories
         {
             categoryToEdit.Name = editValues.Name;
             categoryToEdit.HeadCategoryId = editValues.HeadCategoryId;
+        }
+
+        public void Delete(int id)
+        {
+            var category = new Category() { Id = id };
+            _context.Categories.Attach(category);
+            _context.Categories.Remove(category);
         }
 
         public async Task SaveAsync()

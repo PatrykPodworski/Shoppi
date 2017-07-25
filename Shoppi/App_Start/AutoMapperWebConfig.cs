@@ -36,6 +36,7 @@ namespace Shoppi.App_Start
             CreateMap<CategoryCreateViewModel, Category>();
             CreateMap<CategoryEditViewModel, Category>();
             CreateMap<Category, CategoryEditViewModel>();
+            CreateMap<Category, CategoryDeleteViewModel>();
         }
     }
 }

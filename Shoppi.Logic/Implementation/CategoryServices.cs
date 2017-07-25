@@ -16,16 +16,6 @@ namespace Shoppi.Logic.Implementation
             _repository = repository;
         }
 
-        public async Task<List<Category>> GetAllAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
-
-        public async Task<Category> GetByIdAsync(int id)
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-
         public async Task CreateAsync(Category category)
         {
             ValidateCategory(category);
@@ -46,10 +36,31 @@ namespace Shoppi.Logic.Implementation
             return string.IsNullOrWhiteSpace(name);
         }
 
+        public async Task<List<Category>> GetAllAsync()
+        {
+            return await _repository.GetAllAsync();
+        }
+
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task<List<Category>> GetSubCategoriesAsync(int id)
+        {
+            return await _repository.GetSubCategoriesAsync(id);
+        }
+
         public async Task EditAsync(Category category)
         {
             ValidateCategory(category);
             await _repository.EditAsync(category);
+            await _repository.SaveAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            _repository.Delete(id);
             await _repository.SaveAsync();
         }
     }

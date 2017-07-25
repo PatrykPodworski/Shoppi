@@ -88,5 +88,35 @@ namespace Shoppi.Controllers
 
             return RedirectToAction("List");
         }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var subCategories = await _categoryServices.GetSubCategoriesAsync(id);
+            var category = await _categoryServices.GetByIdAsync(id);
+
+            if (subCategories.Count > 0)
+            {
+                var model = new CategorySubCategoriesViewModel(category.Name, subCategories);
+                return View("SubCategories", model);
+            }
+            else
+            {
+                var model = Mapper.Map<CategoryDeleteViewModel>(category);
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(CategoryDeleteViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _categoryServices.DeleteAsync(model.Id);
+
+            return RedirectToAction("List");
+        }
     }
 }

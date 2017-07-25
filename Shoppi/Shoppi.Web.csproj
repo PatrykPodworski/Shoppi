@@ -152,8 +152,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Models\CategoryCreateViewModel.cs" />
+    <Compile Include="Models\CategoryDeleteViewModel.cs" />
     <Compile Include="Models\CategoryEditViewModel.cs" />
     <Compile Include="Models\CategoryListViewModel.cs" />
+    <Compile Include="Models\CategorySubCategoriesViewModel.cs" />
     <Compile Include="Models\ProductDeleteViewModel.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Models\ProductCreateViewModel.cs" />
@@ -180,6 +182,8 @@
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\SubCategories.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,6 +193,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\CategorySubCategoriesViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shoppi.Data\Shoppi.Data.csproj">
