@@ -26,15 +26,15 @@ namespace Shoppi.Data.Migrations
 
             var products = new[]
             {
-                new Product("Adidas Adizero 5-Star", categories[1].Id, 12),
-                new Product("Nike Inter Milan Prestige Football", categories[1].Id, 36),
-                new Product("Cannondale Synapse Sm 105 5 Disc Road", categories[2].Id, 2),
-                new Product("Altura Hammock Waist Short", categories[2].Id, 58),
-                new Product("Altura Icarus Short Sleeve Tee", categories[2].Id, 92),
-                new Product("Sealskinz Waterproof Bobble Hat", categories[2].Id, 24),
-                new Product("Uncharted: The Nathan Drake Collection", categories[3].Id, 111),
-                new Product("God of War Collection", categories[3].Id, 66),
-                new Product("Bayonetta 2", categories[3].Id, 39)
+                new Product("Adidas Adizero 5-Star", categories[1], 12),
+                new Product("Nike Inter Milan Prestige Football", categories[1], 36),
+                new Product("Cannondale Synapse Sm 105 5 Disc Road", categories[2], 2),
+                new Product("Altura Hammock Waist Short", categories[2], 58),
+                new Product("Altura Icarus Short Sleeve Tee", categories[2], 92),
+                new Product("Sealskinz Waterproof Bobble Hat", categories[2], 24),
+                new Product("Uncharted: The Nathan Drake Collection", categories[3], 111),
+                new Product("God of War Collection", categories[3], 66),
+                new Product("Bayonetta 2", categories[3], 39)
             };
 
             context.Products.AddOrUpdate(p => p.Name, products);

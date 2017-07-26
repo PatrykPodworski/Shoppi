@@ -3,16 +3,16 @@ namespace Shoppi.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Modelscleanup : DbMigration
+    public partial class UserName : DbMigration
     {
         public override void Up()
         {
-            AlterColumn("dbo.Categories", "Name", c => c.String());
+            AddColumn("dbo.AspNetUsers", "Name", c => c.String());
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.Categories", "Name", c => c.String(nullable: false));
+            DropColumn("dbo.AspNetUsers", "Name");
         }
     }
 }

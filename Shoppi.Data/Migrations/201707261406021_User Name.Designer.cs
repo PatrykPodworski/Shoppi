@@ -7,13 +7,13 @@ namespace Shoppi.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class Simplifiedproduct : IMigrationMetadata
+    public sealed partial class UserName : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Simplifiedproduct));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UserName));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707042111062_Simplified product"; }
+            get { return "201707261406021_User Name"; }
         }
         
         string IMigrationMetadata.Source

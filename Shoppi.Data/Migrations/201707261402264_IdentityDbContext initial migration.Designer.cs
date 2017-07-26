@@ -7,13 +7,13 @@ namespace Shoppi.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialProductCategory : IMigrationMetadata
+    public sealed partial class IdentityDbContextinitialmigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialProductCategory));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(IdentityDbContextinitialmigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "201707012031582_Initial Product+Category"; }
+            get { return "201707261402264_IdentityDbContext initial migration"; }
         }
         
         string IMigrationMetadata.Source

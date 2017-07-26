@@ -9,6 +9,13 @@
             CategoryId = categoryId;
         }
 
+        public Product(string name, Category category, int quantity = 0)
+        {
+            Name = name;
+            Quantity = quantity;
+            Category = category;
+        }
+
         public Product()
         {
         }
