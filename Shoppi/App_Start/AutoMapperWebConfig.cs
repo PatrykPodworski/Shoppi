@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
 using Shoppi.Models;
+using Shoppi.Models.Account;
 
 namespace Shoppi.App_Start
 {
@@ -21,6 +22,7 @@ namespace Shoppi.App_Start
         {
             CreateProductMaps();
             CreateCategoryMaps();
+            CreateAccountMaps();
         }
 
         private void CreateProductMaps()
@@ -37,6 +39,11 @@ namespace Shoppi.App_Start
             CreateMap<CategoryEditViewModel, Category>();
             CreateMap<Category, CategoryEditViewModel>();
             CreateMap<Category, CategoryDeleteViewModel>();
+        }
+
+        private void CreateAccountMaps()
+        {
+            CreateMap<AccountRegisterViewModel, ShoppiUser>();
         }
     }
 }

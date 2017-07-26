@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201707261406021_User Name.Designer.cs">
       <DependentUpon>201707261406021_User Name.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201707262101158_Deleted redundant user name.cs" />
+    <Compile Include="Migrations\201707262101158_Deleted redundant user name.Designer.cs">
+      <DependentUpon>201707262101158_Deleted redundant user name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ShoppiDbContext.cs" />
@@ -75,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707261402264_IdentityDbContext initial migration.resx">
@@ -83,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707261406021_User Name.resx">
       <DependentUpon>201707261406021_User Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707262101158_Deleted redundant user name.resx">
+      <DependentUpon>201707262101158_Deleted redundant user name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

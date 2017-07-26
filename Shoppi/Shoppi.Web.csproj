@@ -52,6 +52,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -151,19 +155,21 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Models\CategoryCreateViewModel.cs" />
-    <Compile Include="Models\CategoryDeleteViewModel.cs" />
-    <Compile Include="Models\CategoryEditViewModel.cs" />
-    <Compile Include="Models\CategoryListViewModel.cs" />
-    <Compile Include="Models\CategorySubCategoriesViewModel.cs" />
-    <Compile Include="Models\ProductDeleteViewModel.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\Account\AccountRegisterViewModel.cs" />
+    <Compile Include="Models\Category\CategoryCreateViewModel.cs" />
+    <Compile Include="Models\Category\CategoryDeleteViewModel.cs" />
+    <Compile Include="Models\Category\CategoryEditViewModel.cs" />
+    <Compile Include="Models\Category\CategoryListViewModel.cs" />
+    <Compile Include="Models\Category\CategorySubCategoriesViewModel.cs" />
+    <Compile Include="Models\Product\ProductDeleteViewModel.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
-    <Compile Include="Models\ProductCreateViewModel.cs" />
+    <Compile Include="Models\Product\ProductCreateViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductEditViewModel.cs" />
-    <Compile Include="Models\ProductListViewModel.cs" />
+    <Compile Include="Models\Product\ProductEditViewModel.cs" />
+    <Compile Include="Models\Product\ProductListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -184,6 +190,7 @@
     <Content Include="Views\Category\Edit.cshtml" />
     <Content Include="Views\Category\Delete.cshtml" />
     <Content Include="Views\Category\SubCategories.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

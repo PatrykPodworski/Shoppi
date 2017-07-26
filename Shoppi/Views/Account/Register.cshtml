@@ -1,0 +1,24 @@
+﻿@model Shoppi.Models.Account.AccountRegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.ValidationSummary()
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.EditorFor(m => m.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password)
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Cancel", "List", "Product")
+        <button class="btn btn-primary" type="submit">Register</button>
+    </div>
+}
