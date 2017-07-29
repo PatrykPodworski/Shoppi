@@ -71,5 +71,12 @@ namespace Shoppi.Controllers
 
             return RedirectToAction("List", "Product");
         }
+
+        [HttpPost]
+        public ActionResult SignOut()
+        {
+            _signInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
