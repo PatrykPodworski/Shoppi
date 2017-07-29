@@ -11,7 +11,7 @@ namespace Shoppi.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<ShoppiUser> _userManager => HttpContext.GetOwinContext().Get<UserManager<ShoppiUser>>();
+        private UserManager<ShoppiUser, string> _userManager => HttpContext.GetOwinContext().Get<UserManager<ShoppiUser, string>>();
         private SignInManager<ShoppiUser, string> _signInManager => HttpContext.GetOwinContext().Get<SignInManager<ShoppiUser, string>>();
 
         public ActionResult Register()
@@ -72,11 +72,58 @@ namespace Shoppi.Controllers
             return RedirectToAction("List", "Product");
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult SignOut()
         {
             _signInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize]
+        public ActionResult MyAccount()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> ChangePassword(AccountChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (NewPasswordAndConfirmationDoesNotMatch(model.NewPassword, model.NewPasswordConfirm))
+            {
+                ModelState.AddModelError("", "New password and confirmation does not match.");
+                return View(model);
+            }
+
+            var result = await _userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
+                }
+                return View(model);
+            }
+
+            return RedirectToAction("MyAccount");
+        }
+
+        private bool NewPasswordAndConfirmationDoesNotMatch(string newPassword, string confirmation)
+        {
+            return !newPassword.Equals(confirmation);
         }
     }
 }

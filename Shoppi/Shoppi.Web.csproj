@@ -171,6 +171,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\Account\AccountChangePasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountRegisterViewModel.cs" />
     <Compile Include="Models\Account\AccountSignInViewModel.cs" />
     <Compile Include="Models\Category\CategoryCreateViewModel.cs" />
@@ -213,6 +214,8 @@
     <Content Include="Views\Shared\Navbar.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\LoginNavbarPart.cshtml" />
+    <Content Include="Views\Account\MyAccount.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
