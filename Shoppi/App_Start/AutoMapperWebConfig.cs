@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Models;
 using Shoppi.Models.Account;
+using Shoppi.Models.Address;
 
 namespace Shoppi.App_Start
 {
@@ -23,6 +24,7 @@ namespace Shoppi.App_Start
             CreateProductMaps();
             CreateCategoryMaps();
             CreateAccountMaps();
+            CreateAddressMaps();
         }
 
         private void CreateProductMaps()
@@ -44,6 +46,11 @@ namespace Shoppi.App_Start
         private void CreateAccountMaps()
         {
             CreateMap<AccountRegisterViewModel, ShoppiUser>();
+        }
+
+        private void CreateAddressMaps()
+        {
+            CreateMap<Address, AddressIndexPart>();
         }
     }
 }

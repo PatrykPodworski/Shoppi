@@ -22,7 +22,7 @@ namespace Shoppi.Data.Migrations
                 new Category("Video games")
             };
 
-            context.Categories.AddOrUpdate(c => c.Name, categories);
+            context.Categories.AddOrUpdate(c => c.Name, sportCategory);
 
             var products = new[]
             {

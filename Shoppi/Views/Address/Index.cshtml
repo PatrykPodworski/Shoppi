@@ -1,0 +1,25 @@
+﻿@model Shoppi.Models.Address.AddressIndexViewModel
+@{
+    ViewBag.Title = "My Addresses";
+}
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Address line</th>
+        <th>City</th>
+        <th>Zip code</th>
+        <th>Country</th>
+    </tr>
+    <tr>
+        @foreach (var address in Model.Addresses)
+        {
+            <td>@address.Name</td>
+            <td>@address.AddressLine</td>
+            <td>@address.City</td>
+            <td>@address.ZipCode</td>
+            <td>@address.Country</td>
+        }
+    </tr>
+</table>

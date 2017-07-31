@@ -22,6 +22,8 @@ namespace Shoppi
             container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ICategoryServices, CategoryServices>();
             container.RegisterType<ICategoryRepository, CategoryRepository>();
+            container.RegisterType<IAddressRepository, AddressRepository>();
+            container.RegisterType<IAddressServices, AddressServices>();
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

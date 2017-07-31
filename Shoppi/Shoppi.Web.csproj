@@ -167,6 +167,7 @@
     <Compile Include="App_Start\AutoMapperWebConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Models\Account\AccountChangePasswordViewModel.cs" />
     <Compile Include="Models\Account\AccountRegisterViewModel.cs" />
     <Compile Include="Models\Account\AccountSignInViewModel.cs" />
+    <Compile Include="Models\Address\AddressIndexViewModel.cs" />
     <Compile Include="Models\Category\CategoryCreateViewModel.cs" />
     <Compile Include="Models\Category\CategoryDeleteViewModel.cs" />
     <Compile Include="Models\Category\CategoryEditViewModel.cs" />
@@ -216,6 +218,7 @@
     <Content Include="Views\Shared\LoginNavbarPart.cshtml" />
     <Content Include="Views\Account\MyAccount.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Address\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
