@@ -18,6 +18,10 @@
         @Html.PasswordFor(m => m.Password)
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.PasswordConfirm)
+        @Html.PasswordFor(m => m.PasswordConfirm)
+    </div>
+    <div class="form-group">
         @Html.ActionLink("Cancel", "List", "Product")
         <button class="btn btn-primary" type="submit">Register</button>
     </div>

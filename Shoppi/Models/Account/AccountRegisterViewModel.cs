@@ -11,5 +11,10 @@ namespace Shoppi.Models.Account
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
+        public string PasswordConfirm { get; set; }
     }
 }

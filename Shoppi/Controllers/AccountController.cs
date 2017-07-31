@@ -27,6 +27,11 @@ namespace Shoppi.Controllers
                 return View(model);
             }
 
+            if (PasswordsAreNotTheSame(model.Password, model.PasswordConfirm))
+            {
+                ModelState.AddModelError("", "Passwords do not match.");
+            }
+
             var user = Mapper.Map<ShoppiUser>(model);
             user.UserName = model.Email;
 
@@ -42,6 +47,11 @@ namespace Shoppi.Controllers
             }
 
             return RedirectToAction("List", "Product");
+        }
+
+        private bool PasswordsAreNotTheSame(string password, string confirmation)
+        {
+            return !password.Equals(confirmation);
         }
 
         public ActionResult SignIn()
@@ -101,9 +111,9 @@ namespace Shoppi.Controllers
                 return View(model);
             }
 
-            if (NewPasswordAndConfirmationDoesNotMatch(model.NewPassword, model.NewPasswordConfirm))
+            if (PasswordsAreNotTheSame(model.NewPassword, model.NewPasswordConfirm))
             {
-                ModelState.AddModelError("", "New password and confirmation does not match.");
+                ModelState.AddModelError("", "New passwords do not match.");
                 return View(model);
             }
 
@@ -119,11 +129,6 @@ namespace Shoppi.Controllers
             }
 
             return RedirectToAction("MyAccount");
-        }
-
-        private bool NewPasswordAndConfirmationDoesNotMatch(string newPassword, string confirmation)
-        {
-            return !newPassword.Equals(confirmation);
         }
     }
 }
