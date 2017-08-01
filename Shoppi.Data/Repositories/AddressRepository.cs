@@ -20,5 +20,15 @@ namespace Shoppi.Data.Repositories
         {
             return _context.Addresses.Where(x => x.UserId == userId).ToListAsync();
         }
+
+        public void Create(Address address)
+        {
+            _context.Addresses.Add(address);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

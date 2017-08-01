@@ -7,5 +7,9 @@ namespace Shoppi.Data.Abstract
     public interface IAddressRepository
     {
         Task<List<Address>> GetByUserIdAsync(string userId);
+
+        void Create(Address address);
+
+        Task SaveAsync();
     }
 }

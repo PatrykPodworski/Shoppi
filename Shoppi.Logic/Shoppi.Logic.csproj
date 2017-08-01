@@ -44,6 +44,7 @@
     <Compile Include="Abstract\IAddressServices.cs" />
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IProductServices.cs" />
+    <Compile Include="Exceptions\AddressValidationException.cs" />
     <Compile Include="Exceptions\CategoryValidationException.cs" />
     <Compile Include="Exceptions\ProductValidationException.cs" />
     <Compile Include="Implementation\AddressServices.cs" />

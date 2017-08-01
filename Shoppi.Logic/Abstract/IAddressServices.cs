@@ -7,5 +7,7 @@ namespace Shoppi.Logic.Abstract
     public interface IAddressServices
     {
         Task<List<Address>> GetByUserIdAsync(string userId);
+
+        Task CreateAsync(Address address);
     }
 }
