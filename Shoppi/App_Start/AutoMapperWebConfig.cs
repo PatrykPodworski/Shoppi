@@ -51,6 +51,7 @@ namespace Shoppi.App_Start
         private void CreateAddressMaps()
         {
             CreateMap<Address, AddressIndexPart>();
+            CreateMap<AddressCreateViewModel, Address>();
         }
     }
 }

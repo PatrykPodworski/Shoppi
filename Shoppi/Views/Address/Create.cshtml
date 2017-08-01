@@ -1,0 +1,34 @@
+﻿@model Shoppi.Models.Address.AddressCreateViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>ViewBag.Title</h2>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.EditorFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.AddressLine)
+        @Html.EditorFor(m => m.AddressLine)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.City)
+        @Html.EditorFor(m => m.City)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ZipCode)
+        @Html.EditorFor(m => m.ZipCode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country)
+        @Html.EditorFor(m => m.Country)
+    </div>
+    <div class="form-group">
+        @Html.ActionLink("Cancel", "MyAccount", "Account")
+        <button type="submit" class="btn btn-primary">Create</button>
+    </div>
+}

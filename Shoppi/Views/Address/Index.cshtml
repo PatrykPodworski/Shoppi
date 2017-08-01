@@ -4,6 +4,7 @@
 }
 <h2>@ViewBag.Title</h2>
 
+@Html.ActionLink("Add new address", "Create", "Address")
 <table class="table">
     <tr>
         <th>Name</th>
@@ -12,14 +13,14 @@
         <th>Zip code</th>
         <th>Country</th>
     </tr>
-    <tr>
-        @foreach (var address in Model.Addresses)
+    @foreach (var address in Model.Addresses)
         {
+        <tr>
             <td>@address.Name</td>
             <td>@address.AddressLine</td>
             <td>@address.City</td>
             <td>@address.ZipCode</td>
             <td>@address.Country</td>
+        </tr>
         }
-    </tr>
 </table>

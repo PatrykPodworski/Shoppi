@@ -2,6 +2,7 @@
 using Moq;
 using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Logic.Exceptions;
 using Shoppi.Logic.Implementation;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,151 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.IsTrue(result.Count == 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutName_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.Name = null;
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        private Address GenerateValidAddress()
+        {
+            return new Address()
+            {
+                Name = "Name",
+                AddressLine = "Adress line",
+                City = "City",
+                UserId = "UserId",
+                Country = "Country",
+                ZipCode = "Zip Code"
+            };
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithWhitespaceName_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.Name = "  ";
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutAddressLine_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.AddressLine = null;
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithWhitespaceAddressLine_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.AddressLine = "  ";
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutCity_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.City = null;
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithWhitespaceCity_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.City = "  ";
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutCountry_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.Country = null;
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithWhitespaceCountry_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.Country = "  ";
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutZipCode_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.ZipCode = null;
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithWhitespaceZipCode_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.ZipCode = "  ";
+
+            // Act
+            await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_CreateWithoutUserId_ThrowsException()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+            address.UserId = null;
+
+            // Act
+            await _services.CreateAsync(address);
         }
     }
 }
