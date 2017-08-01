@@ -15,26 +15,33 @@ namespace Shoppi.Tests.Logic
     {
         private List<Address> _addresses;
         private AddressServices _services;
-        private Mock<IAddressRepository> _MockRepository;
+        private Mock<IAddressRepository> _mockRepository;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _MockRepository = new Mock<IAddressRepository>();
+            _mockRepository = new Mock<IAddressRepository>();
             SetupMockMethods();
 
-            _services = new AddressServices(_MockRepository.Object);
+            _services = new AddressServices(_mockRepository.Object);
             _addresses = new List<Address>();
         }
 
         private void SetupMockMethods()
         {
+            SetupCreateMethod();
             SetupGetAllMethod();
+        }
+
+        private void SetupCreateMethod()
+        {
+            _mockRepository.Setup(x => x.Create(It.IsAny<Address>()))
+                .Callback<Address>(x => _addresses.Add(x));
         }
 
         private void SetupGetAllMethod()
         {
-            _MockRepository.Setup(x => x.GetByUserIdAsync(It.IsAny<string>()))
+            _mockRepository.Setup(x => x.GetByUserIdAsync(It.IsAny<string>()))
                 .Returns<string>(x => Task.Run(() => _addresses.Where(y => y.UserId == x).ToList()));
         }
 
@@ -218,6 +225,19 @@ namespace Shoppi.Tests.Logic
 
             // Act
             await _services.CreateAsync(address);
+        }
+
+        [TestMethod]
+        public async Task AddressServices_CreateWithValidAddress_AddsAddressToRepository()
+        {
+            // Arrange
+            var address = GenerateValidAddress();
+
+            // Act
+            await _services.CreateAsync(address);
+
+            // Assert
+            Assert.IsTrue(_addresses.Count == 1);
         }
     }
 }
