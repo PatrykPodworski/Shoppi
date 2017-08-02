@@ -31,6 +31,7 @@ namespace Shoppi.Tests.Logic
         {
             SetupCreateMethod();
             SetupGetAllMethod();
+            SetupDeleteMethod();
         }
 
         private void SetupCreateMethod()
@@ -43,6 +44,12 @@ namespace Shoppi.Tests.Logic
         {
             _mockRepository.Setup(x => x.GetByUserIdAsync(It.IsAny<string>()))
                 .Returns<string>(x => Task.Run(() => _addresses.Where(y => y.UserId == x).ToList()));
+        }
+
+        private void SetupDeleteMethod()
+        {
+            _mockRepository.Setup(x => x.Delete(It.IsAny<int>()))
+                .Callback<int>(x => _addresses.RemoveAll(a => a.Id == x));
         }
 
         [TestMethod]
@@ -238,6 +245,44 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.IsTrue(_addresses.Count == 1);
+        }
+
+        [TestMethod]
+        public async Task AddressServices_Delete_DeletesAddressWithGivenId()
+        {
+            // Arrange
+            var id = 11;
+            var numberOfAddresses = 5;
+            CreateAddressesInMockRepository(numberOfAddresses);
+            _addresses.Add(new Address() { Id = id });
+
+            // Act
+            await _services.DeleteAsync(id);
+
+            // Assert
+            Assert.IsTrue(_addresses.Count == numberOfAddresses);
+        }
+
+        private void CreateAddressesInMockRepository(int numberOfAddresses)
+        {
+            _addresses.AddRange(
+                Enumerable.Range(0, numberOfAddresses)
+                .Select(x => new Address() { Id = x }));
+        }
+
+        [TestMethod]
+        public async Task AddressServices_DeleteWithoutMatch_NothingHappens()
+        {
+            // Arrange
+            var id = 11;
+            var numberOfAddresses = 5;
+            CreateAddressesInMockRepository(numberOfAddresses);
+
+            // Act
+            await _services.DeleteAsync(id);
+
+            // Assert
+            Assert.IsTrue(_addresses.Count == numberOfAddresses);
         }
     }
 }

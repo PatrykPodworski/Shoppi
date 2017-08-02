@@ -16,11 +16,6 @@ namespace Shoppi.Logic.Implementation
             _repository = repository;
         }
 
-        public async Task<List<Address>> GetByUserIdAsync(string userId)
-        {
-            return await _repository.GetByUserIdAsync(userId);
-        }
-
         public async Task CreateAsync(Address address)
         {
             ValidateAddress(address);
@@ -58,6 +53,17 @@ namespace Shoppi.Logic.Implementation
             {
                 throw new AddressValidationException("Address must have an user.");
             }
+        }
+
+        public async Task<List<Address>> GetByUserIdAsync(string userId)
+        {
+            return await _repository.GetByUserIdAsync(userId);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            _repository.Delete(id);
+            await _repository.SaveAsync();
         }
     }
 }

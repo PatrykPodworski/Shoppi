@@ -6,8 +6,10 @@ namespace Shoppi.Logic.Abstract
 {
     public interface IAddressServices
     {
+        Task CreateAsync(Address address);
+
         Task<List<Address>> GetByUserIdAsync(string userId);
 
-        Task CreateAsync(Address address);
+        Task DeleteAsync(int id);
     }
 }

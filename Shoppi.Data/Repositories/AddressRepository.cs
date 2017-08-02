@@ -16,14 +16,21 @@ namespace Shoppi.Data.Repositories
             _context = context;
         }
 
+        public void Create(Address address)
+        {
+            _context.Addresses.Add(address);
+        }
+
         public Task<List<Address>> GetByUserIdAsync(string userId)
         {
             return _context.Addresses.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public void Create(Address address)
+        public void Delete(int id)
         {
-            _context.Addresses.Add(address);
+            var address = new Address() { Id = id };
+            _context.Addresses.Attach(address);
+            _context.Addresses.Remove(address);
         }
 
         public async Task SaveAsync()
