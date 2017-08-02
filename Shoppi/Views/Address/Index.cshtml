@@ -12,15 +12,20 @@
         <th>City</th>
         <th>Zip code</th>
         <th>Country</th>
+        <th>Action</th>
     </tr>
     @foreach (var address in Model.Addresses)
-        {
+    {
         <tr>
             <td>@address.Name</td>
             <td>@address.AddressLine</td>
             <td>@address.City</td>
             <td>@address.ZipCode</td>
             <td>@address.Country</td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = address.Id }) |
+                @Html.ActionLink("Edit", "Edit", new { id = address.Id })
+            </td>
         </tr>
-        }
+    }
 </table>

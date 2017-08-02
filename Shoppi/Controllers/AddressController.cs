@@ -60,5 +60,32 @@ namespace Shoppi.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> Delete(int id)
+        {
+            var address = await _addressServices.GetByIdAsync(id);
+            var userId = User.Identity.GetUserId();
+
+            if (address.UserId != userId)
+            {
+                return HttpNotFound();
+            }
+
+            var model = Mapper.Map<AddressDeleteViewModel>(address);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(AddressDeleteViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _addressServices.DeleteAsync(model.Id);
+
+            return RedirectToAction("Index");
+        }
     }
 }
