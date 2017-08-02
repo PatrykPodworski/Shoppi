@@ -60,6 +60,11 @@ namespace Shoppi.Logic.Implementation
             return await _repository.GetByUserIdAsync(userId);
         }
 
+        public async Task<Address> GetByIdAsync(int id)
+        {
+            return await _repository.GetByIdAsync(id);
+        }
+
         public async Task DeleteAsync(int id)
         {
             _repository.Delete(id);

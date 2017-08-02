@@ -26,6 +26,11 @@ namespace Shoppi.Data.Repositories
             return _context.Addresses.Where(x => x.UserId == userId).ToListAsync();
         }
 
+        public Task<Address> GetByIdAsync(int id)
+        {
+            return _context.Addresses.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public void Delete(int id)
         {
             var address = new Address() { Id = id };

@@ -30,7 +30,8 @@ namespace Shoppi.Tests.Logic
         private void SetupMockMethods()
         {
             SetupCreateMethod();
-            SetupGetAllMethod();
+            SetupGetByUserIdMethod();
+            SetubGetByIdMethod();
             SetupDeleteMethod();
         }
 
@@ -40,10 +41,16 @@ namespace Shoppi.Tests.Logic
                 .Callback<Address>(x => _addresses.Add(x));
         }
 
-        private void SetupGetAllMethod()
+        private void SetupGetByUserIdMethod()
         {
             _mockRepository.Setup(x => x.GetByUserIdAsync(It.IsAny<string>()))
                 .Returns<string>(x => Task.Run(() => _addresses.Where(y => y.UserId == x).ToList()));
+        }
+
+        private void SetubGetByIdMethod()
+        {
+            _mockRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _addresses.FirstOrDefault(a => a.Id == x)));
         }
 
         private void SetupDeleteMethod()
@@ -283,6 +290,38 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.IsTrue(_addresses.Count == numberOfAddresses);
+        }
+
+        [TestMethod]
+        public async Task AddressServices_GetById_ReturnsAddressWithGivenId()
+        {
+            // Arrange
+            var id = 11;
+            var numberOfAddresses = 5;
+            var address = new Address() { Id = id };
+            CreateAddressesInMockRepository(numberOfAddresses);
+            _addresses.Add(address);
+
+            // Act
+            var result = await _services.GetByIdAsync(id);
+
+            // Assert
+            Assert.IsTrue(address.Equals(result));
+        }
+
+        [TestMethod]
+        public async Task AddressServices_GetByIdWithNoMatch_ReturnsNull()
+        {
+            // Arrange
+            var id = 11;
+            var numberOfAddresses = 5;
+            CreateAddressesInMockRepository(numberOfAddresses);
+
+            // Act
+            var result = await _services.GetByIdAsync(id);
+
+            // Assert
+            Assert.IsTrue(result == null);
         }
     }
 }

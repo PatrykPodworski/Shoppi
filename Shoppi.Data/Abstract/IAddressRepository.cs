@@ -10,6 +10,8 @@ namespace Shoppi.Data.Abstract
 
         Task<List<Address>> GetByUserIdAsync(string userId);
 
+        Task<Address> GetByIdAsync(int id);
+
         void Delete(int id);
 
         Task SaveAsync();
