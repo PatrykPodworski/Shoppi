@@ -70,5 +70,33 @@ namespace Shoppi.Logic.Implementation
             _repository.Delete(id);
             await _repository.SaveAsync();
         }
+
+        public async Task DeleteUserAddressAsync(string userId, int addressId)
+        {
+            await CheckIfAddressBelongsToUser(userId, addressId);
+            _repository.Delete(addressId);
+            await _repository.SaveAsync();
+        }
+
+        private async Task CheckIfAddressBelongsToUser(string userId, int addressId)
+        {
+            var address = await _repository.GetByIdAsync(addressId);
+
+            if (address == null)
+            {
+                throw new AddressUnauthorizedAccessException("There is no address with given id.");
+            }
+
+            if (address.UserId != userId)
+            {
+                throw new AddressUnauthorizedAccessException("Address does not belong to given user.");
+            }
+        }
+
+        public async Task<Address> GetUserAddressByIdAsync(string userId, int addressId)
+        {
+            await CheckIfAddressBelongsToUser(userId, addressId);
+            return await _repository.GetByIdAsync(addressId);
+        }
     }
 }

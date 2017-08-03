@@ -323,5 +323,73 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.IsTrue(result == null);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_DeleteUserAddressWithWrongUserId_ThrowsException()
+        {
+            // Arrange
+            var id = 13;
+            var userId = "UserId";
+            var address = new Address() { Id = id, UserId = "AnotherUserId" };
+            _addresses.Add(address);
+
+            // Act
+            await _services.DeleteUserAddressAsync(userId, id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_DeleteUserAddressWithNotExisingAddress_ThrowsException()
+        {
+            // Arrange
+            var id = 13;
+
+            // Act
+            await _services.DeleteUserAddressAsync("userId", id);
+        }
+
+        [TestMethod]
+        public async Task AddressServices_DeleteUserAddressWithCorrectData_DeletesAddressFromRepository()
+        {
+            // Arrange
+            var id = 13;
+            var numberOfAddresses = 7;
+            var userId = "UserId";
+            var address = new Address() { Id = id, UserId = userId };
+            CreateAddressesInMockRepository(numberOfAddresses);
+            _addresses.Add(address);
+
+            // Act
+            await _services.DeleteUserAddressAsync(userId, id);
+
+            // Assert
+            Assert.IsTrue(_addresses.Count == numberOfAddresses);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_GetUserAddressByIdWithWrongUserId_ThrowException()
+        {
+            // Arrange
+            var id = 13;
+            var userId = "UserId";
+            var address = new Address() { Id = id, UserId = "AnotherUserId" };
+            _addresses.Add(address);
+
+            // Act
+            var result = await _services.GetUserAddressByIdAsync(userId, id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_GetUserAddressByIdWithNotExistingAddress_ThrowsException()
+        {
+            // Arrange
+            var id = 13;
+            var userId = "UserId";
+
+            var result = await _services.GetUserAddressByIdAsync(userId, id);
+        }
     }
 }

@@ -63,27 +63,31 @@ namespace Shoppi.Controllers
 
         public async Task<ActionResult> Delete(int id)
         {
-            var address = await _addressServices.GetByIdAsync(id);
-            var userId = User.Identity.GetUserId();
-
-            if (address.UserId != userId)
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var address = await _addressServices.GetUserAddressByIdAsync(userId, id);
+                var model = Mapper.Map<AddressDeleteViewModel>(address);
+                return View(model);
+            }
+            catch (AddressUnauthorizedAccessException)
             {
                 return HttpNotFound();
             }
-
-            var model = Mapper.Map<AddressDeleteViewModel>(address);
-            return View(model);
         }
 
         [HttpPost]
         public async Task<ActionResult> Delete(AddressDeleteViewModel model)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return View(model);
+                var userId = User.Identity.GetUserId();
+                await _addressServices.DeleteUserAddressAsync(userId, model.Id);
             }
-
-            await _addressServices.DeleteAsync(model.Id);
+            catch (AddressUnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
 
             return RedirectToAction("Index");
         }
