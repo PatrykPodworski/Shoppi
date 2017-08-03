@@ -98,5 +98,13 @@ namespace Shoppi.Logic.Implementation
             await CheckIfAddressBelongsToUser(userId, addressId);
             return await _repository.GetByIdAsync(addressId);
         }
+
+        public async Task EditUserAddressAsync(string userId, Address address)
+        {
+            ValidateAddress(address);
+            await CheckIfAddressBelongsToUser(userId, address.Id);
+            await _repository.EditAsync(address);
+            await _repository.SaveAsync();
+        }
     }
 }

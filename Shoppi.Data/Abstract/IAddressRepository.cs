@@ -14,6 +14,8 @@ namespace Shoppi.Data.Abstract
 
         void Delete(int id);
 
+        Task EditAsync(Address address);
+
         Task SaveAsync();
     }
 }

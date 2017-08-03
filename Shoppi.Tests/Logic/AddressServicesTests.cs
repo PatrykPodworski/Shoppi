@@ -369,7 +369,7 @@ namespace Shoppi.Tests.Logic
 
         [TestMethod]
         [ExpectedException(typeof(AddressUnauthorizedAccessException))]
-        public async Task AddressServices_GetUserAddressByIdWithWrongUserId_ThrowException()
+        public async Task AddressServices_GetUserAddressByIdWithWrongUserId_ThrowsException()
         {
             // Arrange
             var id = 13;
@@ -390,6 +390,201 @@ namespace Shoppi.Tests.Logic
             var userId = "UserId";
 
             var result = await _services.GetUserAddressByIdAsync(userId, id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_EditUserAddressWithWrongUserId_ThrowsException()
+        {
+            // Arrange
+            var id = 13;
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Id = id;
+            address.UserId = "AnotherUserId";
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressUnauthorizedAccessException))]
+        public async Task AddressServices_EditUserAddressWithNotExistingAddress_ThrowsException()
+        {
+            // Arrange
+            var id = 13;
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Id = id;
+            address.UserId = userId;
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutName_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Name = null;
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithWhitespaceName_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Name = "  ";
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutAddressLine_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.AddressLine = null;
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithWhitespaceAddressLine_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.AddressLine = "  ";
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutCity_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.City = null;
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithWhitespaceCity_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.City = "  ";
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutZipCode_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.ZipCode = null;
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithWhitespaceZipCode_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.ZipCode = "  ";
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutCountry_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Country = null;
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithWhitespaceCountry_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.Country = "  ";
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(AddressValidationException))]
+        public async Task AddressServices_EditUserAddressWithoutUserId_ThrowsException()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.UserId = null;
+            _addresses.Add(address);
+
+            // Act
+            await _services.EditUserAddressAsync(userId, address);
         }
     }
 }

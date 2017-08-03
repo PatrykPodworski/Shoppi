@@ -38,6 +38,22 @@ namespace Shoppi.Data.Repositories
             _context.Addresses.Remove(address);
         }
 
+        public async Task EditAsync(Address address)
+        {
+            var addressToEdit = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == address.Id);
+            _context.Entry(addressToEdit).State = EntityState.Modified;
+            EditAddressValues(addressToEdit, address);
+        }
+
+        private void EditAddressValues(Address addressToEdit, Address editValues)
+        {
+            addressToEdit.Name = editValues.Name;
+            addressToEdit.AddressLine = editValues.AddressLine;
+            addressToEdit.City = editValues.City;
+            addressToEdit.ZipCode = editValues.ZipCode;
+            addressToEdit.Country = editValues.Country;
+        }
+
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();

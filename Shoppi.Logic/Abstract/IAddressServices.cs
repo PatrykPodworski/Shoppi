@@ -17,5 +17,7 @@ namespace Shoppi.Logic.Abstract
         Task DeleteUserAddressAsync(string userId, int addressId);
 
         Task<Address> GetUserAddressByIdAsync(string userId, int addressId);
+
+        Task EditUserAddressAsync(string userId, Address address);
     }
 }
