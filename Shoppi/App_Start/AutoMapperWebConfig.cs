@@ -53,6 +53,8 @@ namespace Shoppi.App_Start
             CreateMap<Address, AddressIndexPart>();
             CreateMap<AddressCreateViewModel, Address>();
             CreateMap<Address, AddressDeleteViewModel>();
+            CreateMap<Address, AddressEditViewModel>();
+            CreateMap<AddressEditViewModel, Address>();
         }
     }
 }

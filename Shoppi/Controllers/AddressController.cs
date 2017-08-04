@@ -61,6 +61,47 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<ActionResult> Edit(int id)
+        {
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var address = await _addressServices.GetUserAddressByIdAsync(userId, id);
+                var model = Mapper.Map<AddressEditViewModel>(address);
+                return View(model);
+            }
+            catch (AddressUnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(AddressEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                var userId = User.Identity.GetUserId();
+                var address = Mapper.Map<Address>(model);
+                await _addressServices.EditUserAddressAsync(userId, address);
+                return RedirectToAction("Index");
+            }
+            catch (AddressValidationException e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
+            catch (AddressUnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
+        }
+
         public async Task<ActionResult> Delete(int id)
         {
             try
