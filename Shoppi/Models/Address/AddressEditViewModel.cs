@@ -23,5 +23,8 @@ namespace Shoppi.Models.Address
 
         [Required]
         public string Country { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
     }
 }

@@ -73,12 +73,12 @@ namespace Shoppi.Logic.Implementation
 
         public async Task DeleteUserAddressAsync(string userId, int addressId)
         {
-            await CheckIfAddressBelongsToUser(userId, addressId);
+            await ReturnAddressIfItBelongsToUser(userId, addressId);
             _repository.Delete(addressId);
             await _repository.SaveAsync();
         }
 
-        private async Task CheckIfAddressBelongsToUser(string userId, int addressId)
+        private async Task<Address> ReturnAddressIfItBelongsToUser(string userId, int addressId)
         {
             var address = await _repository.GetByIdAsync(addressId);
 
@@ -91,21 +91,34 @@ namespace Shoppi.Logic.Implementation
             {
                 throw new AddressUnauthorizedAccessException("Address does not belong to given user.");
             }
+
+            return address;
         }
 
         public async Task<Address> GetUserAddressByIdAsync(string userId, int addressId)
         {
-            await CheckIfAddressBelongsToUser(userId, addressId);
-            return await _repository.GetByIdAsync(addressId);
+            return await ReturnAddressIfItBelongsToUser(userId, addressId);
         }
 
         public async Task EditUserAddressAsync(string userId, Address address)
         {
-            address.UserId = userId;
             ValidateAddress(address);
-            await CheckIfAddressBelongsToUser(userId, address.Id);
+            await ReturnAddressIfItBelongsToUser(userId, address.Id);
             await _repository.EditAsync(address);
             await _repository.SaveAsync();
+        }
+
+        public async Task<bool> DoesAddressBelongsToUserAsync(string userId, int addressId)
+        {
+            try
+            {
+                await ReturnAddressIfItBelongsToUser(userId, addressId);
+            }
+            catch (AddressUnauthorizedAccessException)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
