@@ -1,4 +1,5 @@
 ﻿using Shoppi.Data.Abstract;
+using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using System.Threading.Tasks;
@@ -35,6 +36,11 @@ namespace Shoppi.Logic.Implementation
         {
             var temp = await _addressServices.DoesAddressBelongsToUserAsync(userId, addressId);
             return !(temp);
+        }
+
+        public async Task<ShoppiUser> GetByIdAsync(string id)
+        {
+            return await _repository.GetByIdAsync(id);
         }
     }
 }

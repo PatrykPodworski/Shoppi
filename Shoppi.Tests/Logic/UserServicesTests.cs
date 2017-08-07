@@ -38,6 +38,9 @@ namespace Shoppi.Tests.Logic
         {
             _mockRepository.Setup(x => x.SetDefaultAddressIdAsync(It.IsAny<string>(), It.IsAny<int>()))
                 .Returns<string, int>((uId, aId) => Task.Run(() => _users.FirstOrDefault(u => u.Id == uId).DefaultAddressId = aId));
+
+            _mockRepository.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+                .Returns<string>(x => Task.Run(() => _users.FirstOrDefault(u => u.Id == x)));
         }
 
         private void SetUpMockAddressServices()
@@ -79,6 +82,36 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.IsTrue(_users[0].DefaultAddressId == addressId);
+        }
+
+        [TestMethod]
+        public async Task UserServices_GetByIdAsync_ReturnsUserWithGivenId()
+        {
+            // Arrange
+            var userId = "UserId";
+            var user = new ShoppiUser() { Id = userId };
+            _users.Add(user);
+
+            // Act
+            var result = await _userServices.GetByIdAsync(userId);
+
+            // Assert
+            Assert.AreEqual(user, result);
+        }
+
+        [TestMethod]
+        public async Task UserServices_GetByIdAsyncWhenThereIsNotUserWithGivenId_ReturnsNull()
+        {
+            // Arrange
+            var userId = "UserId";
+            var user = new ShoppiUser() { Id = "AnotherUserId" };
+            _users.Add(user);
+
+            // Act
+            var result = await _userServices.GetByIdAsync(userId);
+
+            // Assert
+            Assert.IsTrue(result == null);
         }
     }
 }
