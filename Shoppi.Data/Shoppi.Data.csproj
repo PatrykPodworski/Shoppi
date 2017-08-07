@@ -82,6 +82,14 @@
     <Compile Include="Migrations\201708051536434_Default Address for User.Designer.cs">
       <DependentUpon>201708051536434_Default Address for User.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708071751301_DefaultAddress in ShoppiUser.cs" />
+    <Compile Include="Migrations\201708071751301_DefaultAddress in ShoppiUser.Designer.cs">
+      <DependentUpon>201708071751301_DefaultAddress in ShoppiUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708071758252_DefaultAddressId once again.cs" />
+    <Compile Include="Migrations\201708071758252_DefaultAddressId once again.Designer.cs">
+      <DependentUpon>201708071758252_DefaultAddressId once again.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Category.cs" />
@@ -117,6 +125,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708051536434_Default Address for User.resx">
       <DependentUpon>201708051536434_Default Address for User.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708071751301_DefaultAddress in ShoppiUser.resx">
+      <DependentUpon>201708071751301_DefaultAddress in ShoppiUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708071758252_DefaultAddressId once again.resx">
+      <DependentUpon>201708071758252_DefaultAddressId once again.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

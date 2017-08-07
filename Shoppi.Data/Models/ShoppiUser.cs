@@ -8,5 +8,6 @@ namespace Shoppi.Data.Models
         public virtual List<Address> Addresses { get; set; }
 
         public int? DefaultAddressId { get; set; }
+        public Address DefaultAddress { get; set; }
     }
 }
