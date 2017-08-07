@@ -588,6 +588,62 @@ namespace Shoppi.Tests.Logic
         }
 
         [TestMethod]
+        public async Task AddressServices_EditUserAddressWithValidAddress_ChangesAddressValues()
+        {
+            // Arrange
+            var userId = "UserId";
+            var address = GenerateValidAddress();
+            address.UserId = userId;
+            _addresses.Add(address);
+
+            // Act
+            ChangeAddressValues(address);
+            await _services.EditUserAddressAsync(userId, address);
+
+            // Assert
+            Assert.IsTrue(IsAddressEdited(_addresses[0]));
+        }
+
+        private void ChangeAddressValues(Address address)
+        {
+            address.Name += "Changed";
+            address.AddressLine += "Changed";
+            address.City += "Changed";
+            address.ZipCode += "Changed";
+            address.Country += "Changed";
+        }
+
+        private bool IsAddressEdited(Address address)
+        {
+            var sampleAddress = GenerateValidAddress();
+            ChangeAddressValues(sampleAddress);
+
+            if (sampleAddress.Name != address.Name)
+            {
+                return false;
+            }
+
+            if (sampleAddress.AddressLine != address.AddressLine)
+            {
+                return false;
+            }
+            if (sampleAddress.City != address.City)
+            {
+                return false;
+            }
+            if (sampleAddress.ZipCode != address.ZipCode)
+            {
+                return false;
+            }
+            if (sampleAddress.Country != address.Country)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        [TestMethod]
         public async Task AddressServices_DoesAddressBelongsToUserWhenCorrectUserIdIsGiven_ReturnsTrue()
         {
             // Arrange
