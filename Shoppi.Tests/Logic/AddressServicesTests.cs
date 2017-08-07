@@ -586,5 +586,41 @@ namespace Shoppi.Tests.Logic
             // Act
             await _services.EditUserAddressAsync(userId, address);
         }
+
+        [TestMethod]
+        public async Task AddressServices_DoesAddressBelongsToUserWhenCorrectUserIdIsGiven_ReturnsTrue()
+        {
+            // Arrange
+            var userId = "UserId";
+            var addressId = 5;
+            var address = GenerateValidAddress();
+            address.UserId = userId;
+            address.Id = addressId;
+            _addresses.Add(address);
+
+            // Act
+            var result = await _services.DoesAddressBelongsToUserAsync(userId, addressId);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public async Task AddressServices_DoesAddressBelongsToUserWhenWrongUserIdIsGiven_ReturnsFalse()
+        {
+            // Arrange
+            var userId = "UserId";
+            var addressId = 5;
+            var address = GenerateValidAddress();
+            address.UserId = "AnotherUserId";
+            address.Id = addressId;
+            _addresses.Add(address);
+
+            // Act
+            var result = await _services.DoesAddressBelongsToUserAsync(userId, addressId);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }

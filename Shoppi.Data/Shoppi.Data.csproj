@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IAddressRepository.cs" />
     <Compile Include="Abstract\ICategoryRepository.cs" />
+    <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
     <Compile Include="Migrations\201707261402264_IdentityDbContext initial migration.cs" />
     <Compile Include="Migrations\201707261402264_IdentityDbContext initial migration.Designer.cs">
@@ -76,6 +77,10 @@
     <Compile Include="Migrations\201707312039331_UserId in Address.cs" />
     <Compile Include="Migrations\201707312039331_UserId in Address.Designer.cs">
       <DependentUpon>201707312039331_UserId in Address.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708051536434_Default Address for User.cs" />
+    <Compile Include="Migrations\201708051536434_Default Address for User.Designer.cs">
+      <DependentUpon>201708051536434_Default Address for User.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
@@ -109,6 +114,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707312039331_UserId in Address.resx">
       <DependentUpon>201707312039331_UserId in Address.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708051536434_Default Address for User.resx">
+      <DependentUpon>201708051536434_Default Address for User.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

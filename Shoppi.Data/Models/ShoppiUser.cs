@@ -6,5 +6,7 @@ namespace Shoppi.Data.Models
     public class ShoppiUser : IdentityUser
     {
         public virtual List<Address> Addresses { get; set; }
+
+        public int? DefaultAddressId { get; set; }
     }
 }

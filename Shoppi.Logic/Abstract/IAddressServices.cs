@@ -19,5 +19,7 @@ namespace Shoppi.Logic.Abstract
         Task<Address> GetUserAddressByIdAsync(string userId, int addressId);
 
         Task EditUserAddressAsync(string userId, Address address);
+
+        Task<bool> DoesAddressBelongsToUserAsync(string userId, int addressId);
     }
 }
