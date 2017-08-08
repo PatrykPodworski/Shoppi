@@ -46,6 +46,8 @@ namespace Shoppi.App_Start
         private void CreateAccountMaps()
         {
             CreateMap<AccountRegisterViewModel, ShoppiUser>();
+            CreateMap<ShoppiUser, MyAccountViewModel>();
+            CreateMap<Address, DefaultAddressViewModel>();
         }
 
         private void CreateAddressMaps()

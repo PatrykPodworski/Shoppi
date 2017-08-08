@@ -18,14 +18,26 @@ namespace Shoppi
             // it is NOT necessary to register your controllers
 
             // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType<IProductServices, ProductServices>();
-            container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<ICategoryServices, CategoryServices>();
-            container.RegisterType<ICategoryRepository, CategoryRepository>();
-            container.RegisterType<IAddressRepository, AddressRepository>();
-            container.RegisterType<IAddressServices, AddressServices>();
+            RegisterServices(container);
+            RegisterRepositories(container);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        }
+
+        private static void RegisterServices(IUnityContainer container)
+        {
+            container.RegisterType<IProductServices, ProductServices>();
+            container.RegisterType<ICategoryServices, CategoryServices>();
+            container.RegisterType<IAddressServices, AddressServices>();
+            container.RegisterType<IUserServices, UserServices>();
+        }
+
+        private static void RegisterRepositories(IUnityContainer container)
+        {
+            container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<ICategoryRepository, CategoryRepository>();
+            container.RegisterType<IAddressRepository, AddressRepository>();
+            container.RegisterType<IUserRepository, UserRepository>();
         }
     }
 }

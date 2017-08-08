@@ -8,5 +8,7 @@ namespace Shoppi.Logic.Abstract
         Task SetDefaultAddressAsync(string userId, int addressId);
 
         Task<ShoppiUser> GetByIdAsync(string id);
+
+        Task<ShoppiUser> GetByIdWithDefaultAddressAsync(string id);
     }
 }

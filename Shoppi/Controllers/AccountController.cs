@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Shoppi.Data.Models;
+using Shoppi.Logic.Abstract;
 using Shoppi.Models.Account;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,6 +14,12 @@ namespace Shoppi.Controllers
     {
         private UserManager<ShoppiUser, string> _userManager => HttpContext.GetOwinContext().Get<UserManager<ShoppiUser, string>>();
         private SignInManager<ShoppiUser, string> _signInManager => HttpContext.GetOwinContext().Get<SignInManager<ShoppiUser, string>>();
+        private IUserServices _userServices;
+
+        public AccountController(IUserServices userServices)
+        {
+            _userServices = userServices;
+        }
 
         public ActionResult Register()
         {
@@ -91,9 +98,18 @@ namespace Shoppi.Controllers
         }
 
         [Authorize]
-        public ActionResult MyAccount()
+        public async Task<ActionResult> MyAccount()
         {
-            return View();
+            var model = await CreateMyAccountViewModel();
+            return View(model);
+        }
+
+        private async Task<MyAccountViewModel> CreateMyAccountViewModel()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await _userServices.GetByIdWithDefaultAddressAsync(userId);
+            var model = Mapper.Map<MyAccountViewModel>(user);
+            return model;
         }
 
         [Authorize]

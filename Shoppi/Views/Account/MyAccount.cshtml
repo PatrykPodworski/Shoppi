@@ -1,7 +1,30 @@
-﻿@{
+﻿@model Shoppi.Models.Account.MyAccountViewModel
+
+@{
     ViewBag.Title = "My Account";
 }
 <h2>My Account</h2>
 @Html.ActionLink("Change password", "ChangePassword")
-<br/>
+<br />
 @Html.ActionLink("Manage your addresses", "Index", "Address")
+
+@if (Model.DefaultAddress != null)
+{
+    <h3>Default Address</h3>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Address line</th>
+            <th>City</th>
+            <th>Zip code</th>
+            <th>Country</th>
+        </tr>
+        <tr>
+            <td>@Model.DefaultAddress.Name</td>
+            <td>@Model.DefaultAddress.AddressLine</td>
+            <td>@Model.DefaultAddress.City</td>
+            <td>@Model.DefaultAddress.ZipCode</td>
+            <td>@Model.DefaultAddress.Country</td>
+        </tr>
+    </table>
+}

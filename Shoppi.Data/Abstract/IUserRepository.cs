@@ -7,6 +7,8 @@ namespace Shoppi.Data.Abstract
     {
         Task<ShoppiUser> GetByIdAsync(string id);
 
+        Task<ShoppiUser> GetByIdWithDefaultAddressAsync(string id);
+
         Task SetDefaultAddressIdAsync(string userId, int addressId);
 
         Task SaveChangesAsync();
