@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\AddressServicesTests.cs" />
+    <Compile Include="Logic\CartServicesTests.cs" />
     <Compile Include="Logic\CategoryServicesTests.cs" />
     <Compile Include="Logic\ProductServicesTests.cs" />
     <Compile Include="Logic\UserServicesTests.cs" />

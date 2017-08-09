@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAddressServices.cs" />
+    <Compile Include="Abstract\ICartServices.cs" />
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IProductServices.cs" />
     <Compile Include="Abstract\IUserServices.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Implementation\AddressServices.cs" />
     <Compile Include="Implementation\CategoryServices.cs" />
     <Compile Include="Implementation\ProductServices.cs" />
+    <Compile Include="Implementation\CartServices.cs" />
     <Compile Include="Implementation\UserServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
