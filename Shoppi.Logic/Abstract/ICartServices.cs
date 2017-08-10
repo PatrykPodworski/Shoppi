@@ -1,4 +1,5 @@
 ﻿using Shoppi.Data.Models;
+using System.Threading.Tasks;
 
 namespace Shoppi.Logic.Abstract
 {
@@ -6,6 +7,6 @@ namespace Shoppi.Logic.Abstract
     {
         Cart GetCart();
 
-        void Add(Product product);
+        Task AddAsync(int productId);
     }
 }

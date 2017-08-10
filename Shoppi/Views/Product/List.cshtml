@@ -11,6 +11,7 @@
             <th>Name</th>
             <th>Quantity</th>
             <th>Category</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,19 @@
                 <td>@product.Name</td>
                 <td>@product.Quantity</td>
                 <td>@(product.Category != null ? product.Category.Name : "null")</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = product.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = product.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = product.Id, name = product.Name, quantity = product.Quantity })
+                </td>
+                <td>
+                    @using (Html.BeginForm("Add", "Cart"))
+                    {
+                        @Html.Hidden("ProductId", product.Id)
+                        @Html.Hidden("ReturnUrl", HttpContext.Current.Request.Url.AbsoluteUri)
+                        <button type="submit" class="btn btn-default">Add to cart</button>
+                    }
+                </td>
             </tr>
         }
     </tbody>

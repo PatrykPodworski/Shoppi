@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -180,6 +181,8 @@
     <Compile Include="Models\Address\AddressCreateViewModel.cs" />
     <Compile Include="Models\Address\AddressEditViewModel.cs" />
     <Compile Include="Models\Address\AddressIndexViewModel.cs" />
+    <Compile Include="Models\Cart\CartAddViewModel.cs" />
+    <Compile Include="Models\Cart\CartIndexViewModel.cs" />
     <Compile Include="Models\Category\CategoryCreateViewModel.cs" />
     <Compile Include="Models\Category\CategoryDeleteViewModel.cs" />
     <Compile Include="Models\Category\CategoryEditViewModel.cs" />
@@ -226,6 +229,7 @@
     <Content Include="Views\Address\Create.cshtml" />
     <Content Include="Views\Address\Delete.cshtml" />
     <Content Include="Views\Address\Edit.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

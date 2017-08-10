@@ -2,7 +2,11 @@
 using Moq;
 using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Implementation;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shoppi.Tests.Logic
 {
@@ -11,15 +15,23 @@ namespace Shoppi.Tests.Logic
     {
         private CartServices _services;
         private Mock<ICartRepository> _mockRepository;
+        private Mock<IProductServices> _mockProductServices;
         private Cart _cart;
+        private List<Product> _products;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _cart = new Cart();
+            _products = new List<Product>();
+
             _mockRepository = new Mock<ICartRepository>();
             SetUpMockRepository();
-            _services = new CartServices(_mockRepository.Object);
+
+            _mockProductServices = new Mock<IProductServices>();
+            SetUpMockProductServices();
+
+            _services = new CartServices(_mockRepository.Object, _mockProductServices.Object);
         }
 
         private void SetUpMockRepository()
@@ -39,6 +51,12 @@ namespace Shoppi.Tests.Logic
                            .Callback<Product>(x => _cart.Lines.Add(new CartLine() { Product = x, Quantity = 1 }));
         }
 
+        private void SetUpMockProductServices()
+        {
+            _mockProductServices.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _products.FirstOrDefault(p => p.Id == x)));
+        }
+
         [TestMethod]
         public void CartServices_GetCart_ReturnsCart()
         {
@@ -51,28 +69,31 @@ namespace Shoppi.Tests.Logic
         }
 
         [TestMethod]
-        public void CartServices_Add_WhenProductIsNotInTheCartYet_AddsNewCartLine()
+        public async Task CartServices_Add_WhenProductIsNotInTheCartYet_AddsNewCartLine()
         {
             // Arrange
-            var product = new Product() { Id = 1 };
+            var id = 42;
+            var product = new Product() { Id = id };
+            _products.Add(product);
 
             // Act
-            _services.Add(product);
+            await _services.AddAsync(id);
 
             // Assert
             Assert.IsTrue(_cart.Lines.Count == 1);
         }
 
         [TestMethod]
-        public void CartSerVices_Add_WhenProductIsInCart_IncrementQuantity()
+        public async Task CartSerVices_Add_WhenProductIsInCart_IncrementQuantity()
         {
             // Arrange
-            var product = new Product() { Id = 1 };
+            var id = 55;
+            var product = new Product() { Id = id };
             var previousQuantity = 4;
             _cart.Lines.Add(new CartLine() { Product = product, Quantity = previousQuantity });
 
             // Act
-            _services.Add(product);
+            await _services.AddAsync(id);
 
             // Assert
             Assert.IsTrue(_cart.Lines.Count == 1);

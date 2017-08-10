@@ -22,6 +22,7 @@ namespace Shoppi.Data.Repositories
         {
             var cart = GetCart();
             cart.Lines.Add(new CartLine() { Product = product, Quantity = 1 });
+            HttpContext.Current.Session["Cart"] = cart;
         }
     }
 }

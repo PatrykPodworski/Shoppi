@@ -30,6 +30,7 @@ namespace Shoppi
             container.RegisterType<ICategoryServices, CategoryServices>();
             container.RegisterType<IAddressServices, AddressServices>();
             container.RegisterType<IUserServices, UserServices>();
+            container.RegisterType<ICartServices, CartServices>();
         }
 
         private static void RegisterRepositories(IUnityContainer container)
@@ -38,6 +39,7 @@ namespace Shoppi
             container.RegisterType<ICategoryRepository, CategoryRepository>();
             container.RegisterType<IAddressRepository, AddressRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<ICartRepository, SessionCartRepository>();
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿@model Shoppi.Models.Cart.CartIndexViewModel
+@{
+    ViewBag.Title = "My Cart";
+}
+
+<h2>@ViewBag.Title</h2>
+@if (Model.Lines.Count == 0)
+{
+    <h4>Your cart is empty! :(</h4>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+        @foreach (var line in Model.Lines)
+        {
+            <tr>
+                <td>@line.ProductName</td>
+                <td>@line.Quantity</td>
+            </tr>
+        }
+    </table>
+}
