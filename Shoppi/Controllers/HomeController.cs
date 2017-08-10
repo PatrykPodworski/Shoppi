@@ -6,7 +6,7 @@ namespace Shoppi.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Product");
         }
     }
 }

@@ -19,12 +19,6 @@ namespace Shoppi.Controllers
             _categoryServices = categoryServices;
         }
 
-        public async Task<ActionResult> Index()
-        {
-            var model = await _productServices.GetAllAsync();
-            return View(model);
-        }
-
         public async Task<ActionResult> Create()
         {
             var categories = await _categoryServices.GetAllAsync();
@@ -55,7 +49,7 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> List(int? id)
+        public async Task<ActionResult> Index(int? id)
         {
             var model = await CreateProductListViewModel(id);
             return View(model);

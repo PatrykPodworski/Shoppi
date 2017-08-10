@@ -18,7 +18,7 @@ namespace Shoppi.Controllers
             _categoryServices = categoryServices;
         }
 
-        public async Task<ActionResult> List()
+        public async Task<ActionResult> Index()
         {
             var categories = await _categoryServices.GetAllAsync();
             var model = new CategoryListViewModel(categories);

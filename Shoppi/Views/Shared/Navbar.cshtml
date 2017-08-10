@@ -9,11 +9,8 @@
             @Html.ActionLink("Shoppi", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Products", "List", "Product")</li>
-                <li>@Html.ActionLink("Categories", "List", "Category")</li>
-            </ul>
-            @Html.Partial("LoginNavbarPart")
+            @Html.Partial("NavbarLeft")
+            @Html.Partial("NavbarRight")
         </div>
     </div>
 </div>
