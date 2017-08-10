@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201708071758252_DefaultAddressId once again.Designer.cs">
       <DependentUpon>201708071758252_DefaultAddressId once again.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708102221023_Price for product.cs" />
+    <Compile Include="Migrations\201708102221023_Price for product.Designer.cs">
+      <DependentUpon>201708102221023_Price for product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708071758252_DefaultAddressId once again.resx">
       <DependentUpon>201708071758252_DefaultAddressId once again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708102221023_Price for product.resx">
+      <DependentUpon>201708102221023_Price for product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
