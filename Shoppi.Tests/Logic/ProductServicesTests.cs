@@ -95,7 +95,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_CreateWithNoName_ThrowsException()
+        public async Task ProductServices_Create_WhenNameIsNull_ThrowsException()
         {
             // Arrange
             var product = new Product(null, 0);
@@ -106,7 +106,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_CreateWithWhitespacesName_ThrowsException()
+        public async Task ProductServices_Create_WhenNameIsWhitespace_ThrowsException()
         {
             // Arrange
             var product = new Product("      ", 0);
@@ -117,7 +117,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_CreateWithNegativeAmount_ThrowsException()
+        public async Task ProductServices_Create_WhenQuantityIsNegative_ThrowsException()
         {
             // Arrange
             var product = new Product("Product", 0, -100);
@@ -127,7 +127,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_CreateWithValidData_Passes()
+        public async Task ProductServices_Create_WhenValidDataIsGiven_AddsProductToRepository()
         {
             // Arrange
             var productName = "Product";
@@ -158,7 +158,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_CreateWithZeroQuantity_Passes()
+        public async Task ProductServices_Create_WhenQuantityIsZero_AddsProductToRepository()
         {
             // Arrange
             var productName = "Product";
@@ -176,7 +176,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_CreateWithUnuniqueName_ThrowsException()
+        public async Task ProductServices_Create_WhenNameIsNotUnique_ThrowsException()
         {
             // Arrange
             var productName = "Product";
@@ -190,7 +190,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_Delete_DeletesFromRepository()
+        public async Task ProductServices_Delete_WhenValidIdIsGiven_DeletesProductFromRepository()
         {
             // Arrange
             var id = 34;
@@ -215,7 +215,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_DeleteNotExistingProduct_NothingHappens()
+        public async Task ProductServices_Delete_WhenProductWithGivenIdDoesNotExist_DoesNothing()
         {
             // Arrange
             var numberOfProducts = 10;
@@ -231,7 +231,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_EditNotExistingProduct_NothingHappens()
+        public async Task ProductServices_Edit_WhenProductWithGivenIdDoesNotExists_DoesNothing()
         {
             // Arrange
             var productName = "Product";
@@ -253,7 +253,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_EditExistingProduct_ChangesProductInRepository()
+        public async Task ProductServices_Edit_WhenValidProductIsGiven_ChangesProductInRepository()
         {
             // Arrange
             var productName = "NewProduct";
@@ -275,7 +275,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_EditToNoName_ThrowsException()
+        public async Task ProductServices_Edit_WhenNameIsSetToNull_ThrowsException()
         {
             // Arrange
             var newProduct = new Product(null, 0, 11) { Id = 1 };
@@ -286,7 +286,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_EditToWhiteSpaceName_ThrowsException()
+        public async Task ProductServices_Edit_WhenNameIsSetToWhitespace_ThrowsException()
         {
             // Arrange
             var newProduct = new Product("  ", 0, 11) { Id = 1 };
@@ -297,7 +297,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_EditToInvalidQuantity_ThrowsException()
+        public async Task ProductServices_Edit_WhenQuantityIsNegative_ThrowsException()
         {
             // Arrange
             var newProduct = new Product("Product", 0, -13) { Id = 1 };
@@ -308,7 +308,7 @@ namespace Shoppi.Tests
 
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_EditToExistingName_ThrowsException()
+        public async Task ProductServices_Edit_WhenNewNameIsNotUnique_ThrowsException()
         {
             // Arrange
             var productName = "Product";
@@ -322,7 +322,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_EditWithUnchangedName_Passes()
+        public async Task ProductServices_Edit_WhenNameIsNotChanged_EditsProductInRepository()
         {
             // Arrange
             var productName = "Product";
@@ -376,7 +376,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_GetByCategoryIdWithNoProductsWithGivenCategoryId_ReturnsEmptyList()
+        public async Task ProductServices_GetByCategoryId_WhenThereAreNotProductsWithGivenCategoryId_ReturnsEmptyList()
         {
             // Arrange
             var categoryId = 1;
@@ -408,7 +408,7 @@ namespace Shoppi.Tests
         }
 
         [TestMethod]
-        public async Task ProductServices_GetAllWithEmptyRepository_ReturnsEmptyList()
+        public async Task ProductServices_GetAll_WhenRepositoryIsEmpty_ReturnsEmptyList()
         {
             // Act
             var result = await _productServices.GetAllAsync();
