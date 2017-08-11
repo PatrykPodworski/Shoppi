@@ -52,9 +52,9 @@ namespace Shoppi.Data.Repositories
             return _context.Products.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Product GetByName(string name)
+        public async Task<Product> GetByNameAsync(string name)
         {
-            return _context.Products.FirstOrDefault(p => p.Name == name);
+            return await _context.Products.FirstOrDefaultAsync(p => p.Name == name);
         }
 
         public Task SaveAsync()

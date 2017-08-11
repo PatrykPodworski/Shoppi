@@ -48,8 +48,8 @@ namespace Shoppi.Tests
 
         private void SetUpGetByNameMethod()
         {
-            _mockRepository.Setup(m => m.GetByName(It.IsAny<string>()))
-                .Returns<string>(x => _products.FirstOrDefault(y => y.Name == x));
+            _mockRepository.Setup(m => m.GetByNameAsync(It.IsAny<string>()))
+                .Returns<string>(x => Task.Run(() => _products.FirstOrDefault(y => y.Name == x)));
         }
 
         private void SetUpGetByCategoryIdMethod()
@@ -84,6 +84,7 @@ namespace Shoppi.Tests
                     productFromRepository.Name = x.Name;
                     productFromRepository.CategoryId = x.CategoryId;
                     productFromRepository.Quantity = x.Quantity;
+                    productFromRepository.Price = x.Price;
                 }));
         }
 
@@ -130,10 +131,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_Create_WhenValidDataIsGiven_AddsProductToRepository()
         {
             // Arrange
-            var productName = "Product";
-            var quantity = 100;
-
-            var product = new Product(productName, 0, quantity);
+            var product = GenerateValidProduct();
 
             // Act
             await _productServices.CreateAsync(product);
@@ -161,10 +159,9 @@ namespace Shoppi.Tests
         public async Task ProductServices_Create_WhenQuantityIsZero_AddsProductToRepository()
         {
             // Arrange
-            var productName = "Product";
             var quantity = 0;
-
-            var product = new Product(productName, 0, quantity);
+            var product = GenerateValidProduct();
+            product.Quantity = quantity;
 
             // Act
             await _productServices.CreateAsync(product);
@@ -172,6 +169,16 @@ namespace Shoppi.Tests
             // Assert
             _mockRepository.Verify(m => m.Create(It.IsAny<Product>()), Times.Once());
             Assert.IsTrue(IsCorrectlyCreatedAsOnlyProductInRepository(product));
+        }
+
+        private Product GenerateValidProduct()
+        {
+            return new Product()
+            {
+                Name = "ProductName",
+                Quantity = 0,
+                Price = 0.01m,
+            };
         }
 
         [TestMethod]
@@ -234,36 +241,31 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenProductWithGivenIdDoesNotExists_DoesNothing()
         {
             // Arrange
-            var productName = "Product";
-            var categoryId = 0;
-            var quantity = 100;
-            var existingProduct = new Product(productName, categoryId, quantity) { Id = 1 };
+            var existingProduct = GenerateValidProduct();
+            existingProduct.Id = 1;
             _products.Add(existingProduct);
 
-            var newProduct = new Product("NewProduct", 2, 10) { Id = 2 };
+            var newProduct = GenerateValidProduct();
+            EditProductValues(newProduct);
+            newProduct.Id = 2;
 
             // Act
             await _productServices.EditAsync(newProduct);
 
             // Assert
             _mockRepository.Verify(m => m.EditAsync(It.IsAny<Product>()), Times.Once);
-            Assert.IsTrue(existingProduct.Name == productName);
-            Assert.IsTrue(existingProduct.CategoryId == categoryId);
-            Assert.IsTrue(existingProduct.Quantity == quantity);
+            Assert.IsTrue(!IsEdited(existingProduct, newProduct));
         }
 
         [TestMethod]
         public async Task ProductServices_Edit_WhenValidProductIsGiven_ChangesProductInRepository()
         {
             // Arrange
-            var productName = "NewProduct";
-            var categoryId = 0;
-            var quantity = 100;
-            var id = 1;
-            var existingProduct = new Product("Product", 2, 10) { Id = id };
+            var existingProduct = GenerateValidProduct();
             _products.Add(existingProduct);
 
-            var newProduct = new Product(productName, categoryId, quantity) { Id = id };
+            var newProduct = GenerateValidProduct();
+            EditProductValues(newProduct);
 
             // Act
             await _productServices.EditAsync(newProduct);
@@ -325,18 +327,29 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenNameIsNotChanged_EditsProductInRepository()
         {
             // Arrange
-            var productName = "Product";
             var id = 1;
-            var existingProduct = new Product(productName, 2, 10) { Id = id };
+            var existingProduct = GenerateValidProduct();
+            existingProduct.Id = id;
             _products.Add(existingProduct);
 
-            var newProduct = new Product(productName, 1, 13) { Id = id };
+            var newProduct = GenerateValidProduct();
+            newProduct.Id = id;
+            EditProductValues(newProduct);
+            newProduct.Name = existingProduct.Name;
 
             // Act
             await _productServices.EditAsync(newProduct);
 
             // Assert
             Assert.IsTrue(IsEdited(existingProduct, newProduct));
+        }
+
+        private void EditProductValues(Product product)
+        {
+            product.Name = "New" + product.Name;
+            product.Price = product.Price * 2 + 1m;
+            product.Quantity = product.Quantity * 2 + 1;
+            product.CategoryId = product.CategoryId * 2 + 1;
         }
 
         private bool IsEdited(Product editedProduct, Product editValues)
@@ -350,6 +363,11 @@ namespace Shoppi.Tests
                 return false;
             }
             if (editedProduct.Quantity != editValues.Quantity)
+            {
+                return false;
+            }
+
+            if (editedProduct.Price != editValues.Price)
             {
                 return false;
             }
@@ -438,6 +456,64 @@ namespace Shoppi.Tests
             Assert.AreEqual(productName, result.Name);
             Assert.AreEqual(categoryId, result.CategoryId);
             Assert.AreEqual(quantity, result.Quantity);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Create_WhenPriceIsNegative_ThrowsException()
+        {
+            // Arrange
+            var price = -13.66m;
+            var product = GenerateValidProduct();
+            product.Price = price;
+
+            // Act
+            await _productServices.CreateAsync(product);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Create_WhenPriceIsZero_ThrowsException()
+        {
+            // Arrange
+            var price = 0m;
+            var product = GenerateValidProduct();
+            product.Price = price;
+
+            // Act
+            await _productServices.CreateAsync(product);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Edit_WhenPriceIsNegative_ThrowsException()
+        {
+            // Arrange
+            var price = -10m;
+            var product = GenerateValidProduct();
+            _products.Add(product);
+
+            var newProduct = GenerateValidProduct();
+            newProduct.Price = price;
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Edit_WhenPriceIsZero_ThrowsException()
+        {
+            // Arrange
+            var price = 0m;
+            var product = GenerateValidProduct();
+            _products.Add(product);
+
+            var newProduct = GenerateValidProduct();
+            newProduct.Price = price;
+
+            // Act
+            await _productServices.EditAsync(newProduct);
         }
     }
 }

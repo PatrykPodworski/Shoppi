@@ -18,49 +18,59 @@ namespace Shoppi.Logic.Implementation
 
         public async Task CreateAsync(Product product)
         {
-            ValidateProduct(product);
+            await ValidateProduct(product);
             _productRepository.Create(product);
             await _productRepository.SaveAsync();
         }
 
-        private void ValidateProduct(Product product)
+        private async Task ValidateProduct(Product product)
         {
-            if (!IsValidProductName(product.Name))
+            if (IsInvalidProductName(product.Name))
             {
-                throw new ProductValidationException("Invalid product name.");
+                throw new ProductValidationException("Invalid product name: " + product.Name);
             }
 
-            if (!IsValidProductQuantity(product.Quantity))
+            if (IsInvalidProductQuantity(product.Quantity))
             {
-                throw new ProductValidationException("Invalid product quantity.");
+                throw new ProductValidationException("Invalid product quantity: " + product.Quantity);
             }
 
-            if (!IsUniqueProduct(product))
+            if (IsInvalidPrice(product.Price))
+            {
+                throw new ProductValidationException("Invalid product price: " + product.Price);
+            }
+
+            if (await IsNotUniqueProduct(product))
             {
                 throw new ProductValidationException("There already is a product with a given name.");
             }
         }
 
-        private bool IsUniqueProduct(Product product)
+        private bool IsInvalidProductName(string name)
         {
-            var productFromDb = _productRepository.GetByName(product.Name);
+            return string.IsNullOrWhiteSpace(name);
+        }
+
+        private bool IsInvalidProductQuantity(int quantity)
+        {
+            return quantity < 0;
+        }
+
+        private bool IsInvalidPrice(decimal price)
+        {
+            return price <= 0m;
+        }
+
+        private async Task<bool> IsNotUniqueProduct(Product product)
+        {
+            var productFromDb = await _productRepository.GetByNameAsync(product.Name);
 
             if (productFromDb == null)
             {
-                return true;
+                return false;
             }
 
-            return productFromDb.Id == product.Id;
-        }
-
-        private bool IsValidProductName(string name)
-        {
-            return !string.IsNullOrWhiteSpace(name);
-        }
-
-        private bool IsValidProductQuantity(int quantity)
-        {
-            return quantity >= 0;
+            return productFromDb.Id != product.Id;
         }
 
         public Task<List<Product>> GetAllAsync()
@@ -80,7 +90,7 @@ namespace Shoppi.Logic.Implementation
 
         public async Task EditAsync(Product product)
         {
-            ValidateProduct(product);
+            await ValidateProduct(product);
             await _productRepository.EditAsync(product);
             await _productRepository.SaveAsync();
         }
