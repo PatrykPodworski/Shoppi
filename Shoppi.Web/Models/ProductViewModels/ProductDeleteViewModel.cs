@@ -12,5 +12,8 @@ namespace Shoppi.Web.Models.ProductViewModels
 
         [Required]
         public int Quantity { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
     }
 }

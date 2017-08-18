@@ -110,8 +110,9 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(Product product)
+        public async Task<ActionResult> Delete(int id)
         {
+            var product = await _productServices.GetByIdAsync(id);
             var model = Mapper.Map<ProductDeleteViewModel>(product);
             return View(model);
         }
