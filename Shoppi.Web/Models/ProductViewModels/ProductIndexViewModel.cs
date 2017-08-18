@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.ProductViewModels
 {
-    public class ProductListViewModel
+    public class ProductIndexViewModel
     {
-        public ProductListViewModel()
+        public ProductIndexViewModel()
         {
             Products = new List<Product>();
         }
 
-        public ProductListViewModel(List<Product> products)
+        public ProductIndexViewModel(List<Product> products)
         {
             Products = products;
         }
 
-        public ProductListViewModel(List<Product> products, int categoryId)
+        public ProductIndexViewModel(List<Product> products, int categoryId)
         {
             Products = products;
             ChosenCategoryId = categoryId;

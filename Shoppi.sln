@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Web", "Shoppi\Shoppi.Web.csproj", "{2630A75A-6286-4153-B31B-E9EBB516B8AD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Tests", "Shoppi.Tests\Shoppi.Tests.csproj", "{84FC6CA1-EBDB-4E64-BCB9-5557CBA596AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E37CB743-BD8A-444D-B3D9-6A9D9A57C8F3} = {E37CB743-BD8A-444D-B3D9-6A9D9A57C8F3}
@@ -15,16 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Data", "Shoppi.Data\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Logic", "Shoppi.Logic\Shoppi.Logic.csproj", "{8202FDC9-65DD-454A-9A4B-F861E918C452}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shoppi.Web", "Shoppi.Web\Shoppi.Web.csproj", "{2630A75A-6286-4153-B31B-E9EBB516B8AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84FC6CA1-EBDB-4E64-BCB9-5557CBA596AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84FC6CA1-EBDB-4E64-BCB9-5557CBA596AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84FC6CA1-EBDB-4E64-BCB9-5557CBA596AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,6 +33,10 @@ Global
 		{8202FDC9-65DD-454A-9A4B-F861E918C452}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8202FDC9-65DD-454A-9A4B-F861E918C452}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8202FDC9-65DD-454A-9A4B-F861E918C452}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2630A75A-6286-4153-B31B-E9EBB516B8AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

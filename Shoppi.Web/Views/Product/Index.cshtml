@@ -1,4 +1,4 @@
-﻿@model Shoppi.Models.ProductListViewModel
+﻿@model Shoppi.Web.Models.ProductViewModels.ProductIndexViewModel
 @{
     ViewBag.Title = "List";
 }
@@ -16,7 +16,7 @@
     </thead>
     <tbody>
         @foreach (var product in Model.Products)
-        {
+            {
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>

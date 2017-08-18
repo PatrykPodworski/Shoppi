@@ -1,18 +1,18 @@
-﻿using Shoppi.Data.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.ProductViewModels
 {
     public class ProductEditViewModel
     {
         public ProductEditViewModel()
         {
-            Categories = new List<Category>();
+            Categories = new List<SelectListItem>();
         }
 
         [Required]
-        public List<Category> Categories { get; set; }
+        public List<SelectListItem> Categories { get; set; }
 
         [Required]
         public int Id { get; set; }

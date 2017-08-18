@@ -2,7 +2,8 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
-using Shoppi.Models;
+using Shoppi.Web.Models.ProductViewModels;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -55,7 +56,7 @@ namespace Shoppi.Controllers
             return View(model);
         }
 
-        private async Task<ProductListViewModel> CreateProductListViewModel(int? categoryId)
+        private async Task<ProductIndexViewModel> CreateProductListViewModel(int? categoryId)
         {
             if (categoryId == null)
             {
@@ -64,16 +65,16 @@ namespace Shoppi.Controllers
             return await CreateListModelWithCategory(categoryId.Value);
         }
 
-        private async Task<ProductListViewModel> CreateListModelWithoutCategory()
+        private async Task<ProductIndexViewModel> CreateListModelWithoutCategory()
         {
             var products = await _productServices.GetAllAsync();
-            return new ProductListViewModel(products);
+            return new ProductIndexViewModel(products);
         }
 
-        private async Task<ProductListViewModel> CreateListModelWithCategory(int categoryId)
+        private async Task<ProductIndexViewModel> CreateListModelWithCategory(int categoryId)
         {
             var products = await _productServices.GetByCategoryIdAsync(categoryId);
-            return new ProductListViewModel(products, categoryId);
+            return new ProductIndexViewModel(products, categoryId);
         }
 
         public async Task<ActionResult> Edit(int id)
@@ -81,7 +82,7 @@ namespace Shoppi.Controllers
             var product = await _productServices.GetByIdAsync(id);
             var categories = await _categoryServices.GetAllAsync();
             var model = Mapper.Map<ProductEditViewModel>(product);
-            model.Categories = categories;
+            model.Categories = categories.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
 
             return View(model);
         }

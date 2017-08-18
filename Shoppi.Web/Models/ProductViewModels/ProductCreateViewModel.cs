@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.ProductViewModels
 {
     public class ProductCreateViewModel
     {
@@ -31,5 +31,9 @@ namespace Shoppi.Models
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The quantity must be greater than or equal to 0.")]
         public int Quantity { get; set; }
+
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "The price must be greater than 0.")]
+        public decimal Price { get; set; }
     }
 }

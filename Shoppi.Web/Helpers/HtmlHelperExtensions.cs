@@ -3,7 +3,7 @@ using System.Text;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
-namespace Shoppi.Helpers
+namespace Shoppi.Web.Helpers
 {
     public static class HtmlHelperExtensions
     {
