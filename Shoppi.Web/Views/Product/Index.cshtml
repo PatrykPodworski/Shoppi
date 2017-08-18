@@ -24,7 +24,7 @@
                 <td>@(product.Category != null ? product.Category.Name : "null")</td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = product.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = product.Id, name = product.Name, quantity = product.Quantity })
+                    @Html.ActionLink("Delete", "Delete", new { id = product.Id })
                 </td>
                 <td>
                     @using (Html.BeginForm("Add", "Cart"))
