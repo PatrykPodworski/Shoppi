@@ -1,7 +1,7 @@
 ﻿using Shoppi.Data.Models;
 using System.Collections.Generic;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.CategoryViewModels
 {
     public class CategoryListViewModel
     {

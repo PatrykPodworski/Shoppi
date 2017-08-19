@@ -183,11 +183,11 @@
     <Compile Include="Models\Address\AddressIndexViewModel.cs" />
     <Compile Include="Models\Cart\CartAddViewModel.cs" />
     <Compile Include="Models\Cart\CartIndexViewModel.cs" />
-    <Compile Include="Models\Category\CategoryCreateViewModel.cs" />
-    <Compile Include="Models\Category\CategoryDeleteViewModel.cs" />
-    <Compile Include="Models\Category\CategoryEditViewModel.cs" />
-    <Compile Include="Models\Category\CategoryListViewModel.cs" />
-    <Compile Include="Models\Category\CategorySubCategoriesViewModel.cs" />
+    <Compile Include="Models\CategoryViewModels\CategoryCreateViewModel.cs" />
+    <Compile Include="Models\CategoryViewModels\CategoryDeleteViewModel.cs" />
+    <Compile Include="Models\CategoryViewModels\CategoryEditViewModel.cs" />
+    <Compile Include="Models\CategoryViewModels\CategoryListViewModel.cs" />
+    <Compile Include="Models\CategoryViewModels\CategorySubCategoriesViewModel.cs" />
     <Compile Include="Models\ProductViewModels\ProductDeleteViewModel.cs" />
     <Compile Include="Helpers\HtmlHelperExtensions.cs" />
     <Compile Include="Models\ProductViewModels\ProductCreateViewModel.cs" />

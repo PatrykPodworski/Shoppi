@@ -2,7 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
-using Shoppi.Models;
+using Shoppi.Web.Models.CategoryViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;

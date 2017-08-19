@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.CategoryViewModels
 {
     public class CategoryDeleteViewModel
     {

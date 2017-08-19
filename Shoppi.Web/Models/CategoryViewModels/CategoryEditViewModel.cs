@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Shoppi.Models
+namespace Shoppi.Web.Models.CategoryViewModels
 {
     public class CategoryEditViewModel
     {
