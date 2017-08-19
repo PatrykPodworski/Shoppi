@@ -1,14 +1,18 @@
 ﻿@model Shoppi.Web.Models.ProductViewModels.ProductIndexViewModel
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "Products";
 }
 
-<h2>List</h2>
+<div class="page-header">
+    <h1>@ViewBag.Title</h1>
+</div>
+@Html.ActionLink("Add new product", "Create")
 <table class="table">
     <thead>
         <tr>
             <th>Id</th>
             <th>Name</th>
+            <th>Price</th>
             <th>Quantity</th>
             <th>Category</th>
             <th>Action</th>
@@ -20,6 +24,7 @@
             <tr>
                 <td>@product.Id</td>
                 <td>@product.Name</td>
+                <td>@product.Price</td>
                 <td>@product.Quantity</td>
                 <td>@(product.Category != null ? product.Category.Name : "null")</td>
                 <td>
