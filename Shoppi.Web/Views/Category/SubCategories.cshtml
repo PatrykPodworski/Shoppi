@@ -1,23 +1,27 @@
 ﻿@model Shoppi.Web.Models.CategoryViewModels.CategorySubCategoriesViewModel
 @{
-    ViewBag.Title = "SubCategories";
+    ViewBag.Title = "Unable to delete \"" + @Model.HeadCategoryName + "\" category";
 }
 
-<p>Category @Model.HeadCategoryName has following sub categories (you must delete them before deleting @Model.HeadCategoryName):</p>
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Action</th>
-        </tr>
-        @foreach (var category in Model.SubCategories)
-        {
+@Html.Partial("PageHeader")
+    <h3>@Model.HeadCategoryName has following sub categories (you must delete them before deleting @Model.HeadCategoryName):</h3>
+    <table class="table">
+        <tbody>
             <tr>
-                <td>@category.Id</td>
-                <td>@category.Name</td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = category.Id })</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+            @foreach (var category in Model.SubCategories)
+            {
+                <tr>
+                    <td>@category.Id</td>
+                    <td>@category.Name</td>
+                    <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = category.Id }) |
+                        @Html.ActionLink("Edit", "Edit", new { id = category.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
