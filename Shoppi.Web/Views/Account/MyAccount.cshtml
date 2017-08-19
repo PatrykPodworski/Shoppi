@@ -3,28 +3,22 @@
 @{
     ViewBag.Title = "My Account";
 }
-<h2>My Account</h2>
-@Html.ActionLink("Change password", "ChangePassword")
-<br />
-@Html.ActionLink("Manage your addresses", "Index", "Address")
-
-@if (Model.DefaultAddress != null)
-{
-    <h3>Default Address</h3>
-    <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>Address line</th>
-            <th>City</th>
-            <th>Zip code</th>
-            <th>Country</th>
-        </tr>
-        <tr>
-            <td>@Model.DefaultAddress.Name</td>
-            <td>@Model.DefaultAddress.AddressLine</td>
-            <td>@Model.DefaultAddress.City</td>
-            <td>@Model.DefaultAddress.ZipCode</td>
-            <td>@Model.DefaultAddress.Country</td>
-        </tr>
-    </table>
-}
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @Html.ActionLink("Change password", "ChangePassword")
+        <br />
+        @Html.ActionLink("Manage your addresses", "Index", "Address")
+        @if (Model.DefaultAddress != null)
+        {
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-info text-center">Default Address</li>
+                <li class="list-group-item"><label>Name:</label> @Model.DefaultAddress.Name</li>
+                <li class="list-group-item"><label>Address line:</label> @Model.DefaultAddress.AddressLine</li>
+                <li class="list-group-item"><label>City:</label> @Model.DefaultAddress.City</li>
+                <li class="list-group-item"><label>Zip code:</label> @Model.DefaultAddress.ZipCode</li>
+                <li class="list-group-item"><label>Country:</label> @Model.DefaultAddress.Country</li>
+            </ul>
+        }
+    </div>
+</div>
