@@ -3,7 +3,8 @@
     ViewBag.Title = "Categories";
 }
 
-<h2>List</h2>
+@Html.Partial("PageHeader")
+@Html.ActionLink("Add new category", "Create")
 <table class="table">
     <thead>
         <tr>
@@ -15,7 +16,7 @@
     </thead>
     <tbody>
         @foreach (var category in Model.Categories)
-        {
+            {
             <tr>
                 <td>@category.Id</td>
                 <td>@category.Name</td>
