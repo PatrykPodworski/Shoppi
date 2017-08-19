@@ -9,5 +9,9 @@ namespace Shoppi.Web.Models.CategoryViewModels
 
         [Required]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Head category")]
+        public string HeadCategoryName { get; set; }
     }
 }

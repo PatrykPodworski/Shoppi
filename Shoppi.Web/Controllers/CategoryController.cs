@@ -102,6 +102,10 @@ namespace Shoppi.Controllers
             else
             {
                 var model = Mapper.Map<CategoryDeleteViewModel>(category);
+                if (model.HeadCategoryName == null)
+                {
+                    model.HeadCategoryName = "None";
+                }
                 return View(model);
             }
         }

@@ -1,21 +1,28 @@
 ﻿@model Shoppi.Web.Models.CategoryViewModels.CategoryDeleteViewModel
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete a category";
 }
 
-@using (Html.BeginForm())
-{
-    <div class="form-group">
-        Are you sure you want to delete this product?
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.Id);
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.DisplayFor(m => m.Name, "BootstrapString")
+                @Html.HiddenFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HeadCategoryName)
+                @Html.DisplayFor(m => m.HeadCategoryName, "BootstrapString")
+                @Html.HiddenFor(m => m.HeadCategoryName)
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Cancel", "Index")
+                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+            </div>
+        }
     </div>
-    @Html.HiddenFor(m => m.Id);
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.DisplayFor(m => m.Name)
-        @Html.HiddenFor(m => m.Name)
-    </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "List")
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </div>
-}
+</div>
