@@ -1,4 +1,4 @@
-﻿namespace Shoppi.Models.Account
+﻿namespace Shoppi.Web.Models.AccountViewModels
 {
     public class MyAccountViewModel
     {

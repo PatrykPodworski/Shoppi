@@ -173,10 +173,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Models\Account\AccountChangePasswordViewModel.cs" />
-    <Compile Include="Models\Account\AccountRegisterViewModel.cs" />
-    <Compile Include="Models\Account\AccountSignInViewModel.cs" />
-    <Compile Include="Models\Account\MyAccountViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\AccountChangePasswordViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\AccountRegisterViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\AccountSignInViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\MyAccountViewModel.cs" />
     <Compile Include="Models\Address\AddressDeleteViewModel.cs" />
     <Compile Include="Models\Address\AddressCreateViewModel.cs" />
     <Compile Include="Models\Address\AddressEditViewModel.cs" />

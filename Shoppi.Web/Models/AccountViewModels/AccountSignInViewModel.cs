@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shoppi.Models.Account
+namespace Shoppi.Web.Models.AccountViewModels
 {
-    public class AccountRegisterViewModel
+    public class AccountSignInViewModel
     {
         [Required]
         [DataType(DataType.EmailAddress)]
@@ -12,9 +12,7 @@ namespace Shoppi.Models.Account
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required]
-        [Display(Name = "Confirm Password")]
-        [DataType(DataType.Password)]
-        public string PasswordConfirm { get; set; }
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
     }
 }

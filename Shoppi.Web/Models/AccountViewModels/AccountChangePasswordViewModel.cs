@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shoppi.Models.Account
+namespace Shoppi.Web.Models.AccountViewModels
 {
     public class AccountChangePasswordViewModel
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
-using Shoppi.Models.Account;
+using Shoppi.Web.Models.AccountViewModels;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
