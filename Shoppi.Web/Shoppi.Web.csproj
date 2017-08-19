@@ -233,6 +233,7 @@
     <Content Include="Views\Shared\EditorTemplates\BootstrapString.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BootstrapDecimal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BootstrapInt.cshtml" />
+    <Content Include="Views\Shared\PageHeader.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

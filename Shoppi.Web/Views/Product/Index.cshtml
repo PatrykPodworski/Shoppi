@@ -3,9 +3,7 @@
     ViewBag.Title = "Products";
 }
 
-<div class="page-header">
-    <h1>@ViewBag.Title</h1>
-</div>
+@Html.Partial("PageHeader")
 @Html.ActionLink("Add new product", "Create")
 <table class="table">
     <thead>
