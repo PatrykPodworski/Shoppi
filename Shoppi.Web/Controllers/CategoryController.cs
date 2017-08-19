@@ -86,7 +86,7 @@ namespace Shoppi.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Delete(int id)
@@ -120,7 +120,7 @@ namespace Shoppi.Controllers
 
             await _categoryServices.DeleteAsync(model.Id);
 
-            return RedirectToAction("List");
+            return RedirectToAction("Index");
         }
     }
 }

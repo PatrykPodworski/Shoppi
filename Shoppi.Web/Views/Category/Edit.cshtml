@@ -1,26 +1,30 @@
 ﻿@using Shoppi.Web.Helpers
 @model Shoppi.Web.Models.CategoryViewModels.CategoryEditViewModel
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit a category";
 }
 
-<h2>Edit Category</h2>
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary()
-    @Html.HiddenFor(m => m.Id)
-    @Html.HiddenForSelectListItem(Model.HeadCategoryCandidates, "HeadCategoryCandidates")
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.EditorFor(m => m.Name)
-    </div>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenForSelectListItem(Model.HeadCategoryCandidates, "HeadCategoryCandidates")
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.EditorFor(m => m.Name, "BootstrapString")
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.HeadCategoryId)
-        @Html.DropDownListFor(m => m.HeadCategoryId, Model.HeadCategoryCandidates, "None")
+            <div class="form-group">
+                @Html.LabelFor(m => m.HeadCategoryId)
+                @Html.DropDownListFor(m => m.HeadCategoryId, Model.HeadCategoryCandidates, "None", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Cancel", "Index")
+                <button type="submit" class="btn btn-primary pull-right">Edit</button>
+            </div>
+        }
     </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "List")
-        <button type="submit" class="btn btn-primary">Edit</button>
-    </div>
-}
+</div>
