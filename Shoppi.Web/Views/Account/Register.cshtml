@@ -3,26 +3,30 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
-@using (Html.BeginForm())
-{
-    <div class="form-group">
-        @Html.ValidationSummary()
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.ValidationSummary()
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.EditorFor(m => m.Email, "BootstrapString")
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password)
+                @Html.EditorFor(m => m.Password, "BootstrapPassword")
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PasswordConfirm)
+                @Html.EditorFor(m => m.PasswordConfirm, "BootstrapPassword")
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Cancel", "Index", "Product")
+                <button class="btn btn-primary pull-right" type="submit">Register</button>
+            </div>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.EditorFor(m => m.Email)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password)
-        @Html.PasswordFor(m => m.Password)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.PasswordConfirm)
-        @Html.PasswordFor(m => m.PasswordConfirm)
-    </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "List", "Product")
-        <button class="btn btn-primary" type="submit">Register</button>
-    </div>
-}
+</div>

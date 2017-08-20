@@ -23,6 +23,10 @@ namespace Shoppi.Controllers
 
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -53,7 +57,7 @@ namespace Shoppi.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("List", "Product");
+            return RedirectToAction("Index", "Product");
         }
 
         private bool PasswordsAreNotTheSame(string password, string confirmation)
