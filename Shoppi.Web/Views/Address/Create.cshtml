@@ -3,32 +3,40 @@
     ViewBag.Title = "Add an address";
 }
 
-<h2>@ViewBag.Title</h2>
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary()
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.EditorFor(m => m.Name)
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.EditorFor(m => m.Name, "BootstrapString")
+                @Html.ValidationMessageFor(m=>m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.AddressLine)
+                @Html.EditorFor(m => m.AddressLine, "BootstrapString")
+                @Html.ValidationMessageFor(m => m.AddressLine)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City)
+                @Html.EditorFor(m => m.City, "BootstrapString")
+                @Html.ValidationMessageFor(m => m.City)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ZipCode)
+                @Html.EditorFor(m => m.ZipCode, "BootstrapString")
+                @Html.ValidationMessageFor(m => m.ZipCode)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Country)
+                @Html.EditorFor(m => m.Country, "BootstrapString")
+                @Html.ValidationMessageFor(m => m.Country)
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Cancel", "Index")
+                <button type="submit" class="btn btn-primary pull-right">Create</button>
+            </div>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AddressLine)
-        @Html.EditorFor(m => m.AddressLine)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.City)
-        @Html.EditorFor(m => m.City)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ZipCode)
-        @Html.EditorFor(m => m.ZipCode)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Country)
-        @Html.EditorFor(m => m.Country)
-    </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "Index")
-        <button type="submit" class="btn btn-primary">Create</button>
-    </div>
-}
+</div>
