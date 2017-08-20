@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
-using Shoppi.Models.Address;
 using Shoppi.Models.Cart;
 using Shoppi.Web.Models.AccountViewModels;
+using Shoppi.Web.Models.AddressViewModels;
 using Shoppi.Web.Models.CategoryViewModels;
 using Shoppi.Web.Models.ProductViewModels;
 

@@ -177,10 +177,10 @@
     <Compile Include="Models\AccountViewModels\AccountRegisterViewModel.cs" />
     <Compile Include="Models\AccountViewModels\AccountSignInViewModel.cs" />
     <Compile Include="Models\AccountViewModels\MyAccountViewModel.cs" />
-    <Compile Include="Models\Address\AddressDeleteViewModel.cs" />
-    <Compile Include="Models\Address\AddressCreateViewModel.cs" />
-    <Compile Include="Models\Address\AddressEditViewModel.cs" />
-    <Compile Include="Models\Address\AddressIndexViewModel.cs" />
+    <Compile Include="Models\AddressViewModels\AddressDeleteViewModel.cs" />
+    <Compile Include="Models\AddressViewModels\AddressCreateViewModel.cs" />
+    <Compile Include="Models\AddressViewModels\AddressEditViewModel.cs" />
+    <Compile Include="Models\AddressViewModels\AddressIndexViewModel.cs" />
     <Compile Include="Models\Cart\CartAddViewModel.cs" />
     <Compile Include="Models\Cart\CartIndexViewModel.cs" />
     <Compile Include="Models\CategoryViewModels\CategoryCreateViewModel.cs" />

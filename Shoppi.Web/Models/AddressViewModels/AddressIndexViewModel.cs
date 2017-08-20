@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Shoppi.Models.Address
+namespace Shoppi.Web.Models.AddressViewModels
 {
     public class AddressIndexViewModel
     {

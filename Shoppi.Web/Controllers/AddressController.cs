@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
-using Shoppi.Models.Address;
+using Shoppi.Web.Models.AddressViewModels;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
