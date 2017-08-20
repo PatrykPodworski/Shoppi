@@ -1,34 +1,25 @@
 ﻿@model Shoppi.Web.Models.AddressViewModels.AddressDeleteViewModel
 @{
-    ViewBag.Title = "Delete an address";
+    ViewBag.Title = "Delete address";
 }
 
-<h2>Are you sure you want to delete this address?</h2>
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(m => m.Id)
-    <div class="form-group">
-        @Html.LabelFor(m => m.Name)
-        @Html.DisplayFor(m => m.Name)
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.Id)
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-info text-center">@Model.Name</li>
+                <li class="list-group-item"><label>Address line:</label> @Model.AddressLine</li>
+                <li class="list-group-item"><label>City:</label> @Model.City</li>
+                <li class="list-group-item"><label>Zip code:</label> @Model.ZipCode</li>
+                <li class="list-group-item"><label>Country:</label> @Model.Country</li>
+            </ul>
+            <div class="form-group">
+                @Html.ActionLink("Cancel", "Index")
+                <button type="submit" class="btn btn-danger pull-right">Delete</button>
+            </div>
+        }
     </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.AddressLine)
-        @Html.DisplayFor(m => m.AddressLine)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.City)
-        @Html.DisplayFor(m => m.City)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ZipCode)
-        @Html.DisplayFor(m => m.ZipCode)
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Country)
-        @Html.DisplayFor(m => m.Country)
-    </div>
-    <div class="form-group">
-        @Html.ActionLink("Cancel", "Index")
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </div>
-}
+</div>
