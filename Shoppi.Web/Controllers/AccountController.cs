@@ -27,6 +27,7 @@ namespace Shoppi.Controllers
             {
                 return HttpNotFound();
             }
+
             return View();
         }
 
@@ -67,6 +68,11 @@ namespace Shoppi.Controllers
 
         public ActionResult SignIn()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return HttpNotFound();
+            }
+
             return View();
         }
 
@@ -90,7 +96,7 @@ namespace Shoppi.Controllers
                 return View("Lockout");
             }
 
-            return RedirectToAction("List", "Product");
+            return RedirectToAction("Index", "Product");
         }
 
         [Authorize]
