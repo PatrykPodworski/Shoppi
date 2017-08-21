@@ -95,6 +95,7 @@ namespace Shoppi.Data.Migrations
         {
             var userId = GetUserId(userName);
             CreateSampleAddresses(numberOfAddresses, userId);
+            SetDefaultAddress(userId);
         }
 
         private string GetUserId(string userName)
@@ -123,6 +124,13 @@ namespace Shoppi.Data.Migrations
                 Country = "Sample country " + addressIndex,
                 UserId = userId
             };
+        }
+
+        private void SetDefaultAddress(string userId)
+        {
+            var addressId = _context.Addresses.FirstOrDefault(x => x.UserId == userId).Id;
+            var user = _context.Users.FirstOrDefault(x => x.Id == userId);
+            user.DefaultAddressId = addressId;
         }
     }
 }
