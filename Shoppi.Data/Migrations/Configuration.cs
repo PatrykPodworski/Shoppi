@@ -21,6 +21,7 @@ namespace Shoppi.Data.Migrations
 
             SeedRoles();
             SeedUsers();
+            SeedAddresses();
 
             base.Seed(context);
         }
@@ -81,6 +82,47 @@ namespace Shoppi.Data.Migrations
 
             userManager.Create(user, "password");
             userManager.AddToRole(user.Id, role);
+        }
+
+        private void SeedAddresses()
+        {
+            SeedAddressesForUser("Admin@admin.com", 4);
+            SeedAddressesForUser("SampleUser@user.com", 3);
+            SeedAddressesForUser("SampleUser2@user.com", 7);
+        }
+
+        private void SeedAddressesForUser(string userName, int numberOfAddresses)
+        {
+            var userId = GetUserId(userName);
+            CreateSampleAddresses(numberOfAddresses, userId);
+        }
+
+        private string GetUserId(string userName)
+        {
+            var userStore = new UserStore<ShoppiUser>(_context);
+            var userManager = new UserManager<ShoppiUser>(userStore);
+            return userManager.FindByName(userName).Id;
+        }
+
+        private void CreateSampleAddresses(int numberOfAddresses, string userId)
+        {
+            for (int i = 0; i < numberOfAddresses; i++)
+            {
+                _context.Addresses.AddOrUpdate(y => new { y.Name, y.UserId }, GetSampleAddress(i, userId));
+            }
+        }
+
+        private Address GetSampleAddress(int addressIndex, string userId)
+        {
+            return new Address
+            {
+                Name = "Sample address " + addressIndex,
+                AddressLine = "Sample address line " + addressIndex,
+                City = "Sample city" + addressIndex,
+                ZipCode = "Sample zip code " + addressIndex,
+                Country = "Sample country " + addressIndex,
+                UserId = userId
+            };
         }
     }
 }
