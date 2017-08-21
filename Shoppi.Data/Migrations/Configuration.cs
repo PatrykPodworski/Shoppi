@@ -1,10 +1,15 @@
 namespace Shoppi.Data.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Shoppi.Data.Models;
     using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ShoppiDbContext>
     {
+        private ShoppiDbContext _context;
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -12,33 +17,39 @@ namespace Shoppi.Data.Migrations
 
         protected override void Seed(ShoppiDbContext context)
         {
-            var sportCategory = new Category("Sport");
+            _context = context;
 
-            var categories = new[]
+            SeedRoles();
+
+            base.Seed(context);
+        }
+
+        private void SeedRoles()
+        {
+            SeedRole("Admin");
+            SeedRole("User");
+        }
+
+        private void SeedRole(string name)
+        {
+            if (RoleDoesNotExists(name))
             {
-                sportCategory,
-                new Category("Football", sportCategory),
-                new Category("Cycling", sportCategory),
-                new Category("Video games")
-            };
+                CreateRole(name);
+            }
+        }
 
-            context.Categories.AddOrUpdate(c => c.Name, sportCategory);
+        private bool RoleDoesNotExists(string name)
+        {
+            return !_context.Roles.Any(x => x.Name == name);
+        }
 
-            var products = new[]
-            {
-                new Product("Adidas Adizero 5-Star", categories[1], 12),
-                new Product("Nike Inter Milan Prestige Football", categories[1], 36),
-                new Product("Cannondale Synapse Sm 105 5 Disc Road", categories[2], 2),
-                new Product("Altura Hammock Waist Short", categories[2], 58),
-                new Product("Altura Icarus Short Sleeve Tee", categories[2], 92),
-                new Product("Sealskinz Waterproof Bobble Hat", categories[2], 24),
-                new Product("Uncharted: The Nathan Drake Collection", categories[3], 111),
-                new Product("God of War Collection", categories[3], 66),
-                new Product("Bayonetta 2", categories[3], 39)
-            };
+        private void CreateRole(string name)
+        {
+            var roleStore = new RoleStore<IdentityRole>(_context);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            var adminRole = new IdentityRole { Name = name };
 
-            context.Products.AddOrUpdate(p => p.Name, products);
-            context.SaveChanges();
+            roleManager.Create(adminRole);
         }
     }
 }
