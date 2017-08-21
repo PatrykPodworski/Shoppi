@@ -31,10 +31,9 @@ namespace Shoppi.Data.Repositories
             return _context.Addresses.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var address = new Address() { Id = id };
-            _context.Addresses.Attach(address);
+            var address = await _context.Addresses.FirstOrDefaultAsync(x => x.Id == id);
             _context.Addresses.Remove(address);
         }
 

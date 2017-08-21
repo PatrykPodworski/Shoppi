@@ -12,7 +12,7 @@ namespace Shoppi.Data.Abstract
 
         Task<Address> GetByIdAsync(int id);
 
-        void Delete(int id);
+        Task DeleteAsync(int id);
 
         Task EditAsync(Address address);
 

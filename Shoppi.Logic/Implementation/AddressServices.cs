@@ -67,14 +67,14 @@ namespace Shoppi.Logic.Implementation
 
         public async Task DeleteAsync(int id)
         {
-            _repository.Delete(id);
+            await _repository.DeleteAsync(id);
             await _repository.SaveAsync();
         }
 
         public async Task DeleteUserAddressAsync(string userId, int addressId)
         {
             await ReturnAddressIfItBelongsToUser(userId, addressId);
-            _repository.Delete(addressId);
+            await _repository.DeleteAsync(addressId);
             await _repository.SaveAsync();
         }
 

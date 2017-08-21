@@ -55,8 +55,8 @@ namespace Shoppi.Tests.Logic
 
         private void SetupDeleteMethod()
         {
-            _mockRepository.Setup(x => x.Delete(It.IsAny<int>()))
-                .Callback<int>(x => _addresses.RemoveAll(a => a.Id == x));
+            _mockRepository.Setup(x => x.DeleteAsync(It.IsAny<int>()))
+                .Returns<int>(x => Task.Run(() => _addresses.RemoveAll(a => a.Id == x)));
         }
 
         [TestMethod]
