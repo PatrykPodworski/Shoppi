@@ -20,6 +20,7 @@ namespace Shoppi.Data.Migrations
             _context = context;
 
             SeedRoles();
+            SeedUsers();
 
             base.Seed(context);
         }
@@ -32,13 +33,13 @@ namespace Shoppi.Data.Migrations
 
         private void SeedRole(string name)
         {
-            if (RoleDoesNotExists(name))
+            if (RoleDoesNotExist(name))
             {
                 CreateRole(name);
             }
         }
 
-        private bool RoleDoesNotExists(string name)
+        private bool RoleDoesNotExist(string name)
         {
             return !_context.Roles.Any(x => x.Name == name);
         }
@@ -50,6 +51,36 @@ namespace Shoppi.Data.Migrations
             var adminRole = new IdentityRole { Name = name };
 
             roleManager.Create(adminRole);
+        }
+
+        private void SeedUsers()
+        {
+            SeedUser("Admin@admin.com", "Admin");
+            SeedUser("SampleUser@user.com", "User");
+            SeedUser("SampleUser2@user.com", "User");
+        }
+
+        private void SeedUser(string userName, string role)
+        {
+            if (UserDoesNotExist(userName))
+            {
+                CreateUser(userName, role);
+            }
+        }
+
+        private bool UserDoesNotExist(string name)
+        {
+            return !_context.Users.Any(x => x.UserName == name);
+        }
+
+        private void CreateUser(string userName, string role)
+        {
+            var userStore = new UserStore<ShoppiUser>(_context);
+            var userManager = new UserManager<ShoppiUser>(userStore);
+            var user = new ShoppiUser { UserName = userName, Email = userName };
+
+            userManager.Create(user, "password");
+            userManager.AddToRole(user.Id, role);
         }
     }
 }
