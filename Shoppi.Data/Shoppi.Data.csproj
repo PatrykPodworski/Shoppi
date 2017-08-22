@@ -110,6 +110,9 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SessionCartRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Seeders\CategorySeeder.cs" />
+    <Compile Include="Seeders\ProductSeeder.cs" />
+    <Compile Include="Seeders\UserSeeder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
