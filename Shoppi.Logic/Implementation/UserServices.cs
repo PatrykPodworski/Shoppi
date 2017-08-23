@@ -47,5 +47,10 @@ namespace Shoppi.Logic.Implementation
         {
             return await _repository.GetByIdWithDefaultAddressAsync(id);
         }
+
+        public async Task<int?> GetUsersDefaultAddressIdAsync(string id)
+        {
+            return (await GetByIdAsync(id)).DefaultAddressId;
+        }
     }
 }

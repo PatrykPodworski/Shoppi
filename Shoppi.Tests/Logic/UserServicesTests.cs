@@ -113,5 +113,36 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.IsTrue(result == null);
         }
+
+        [TestMethod]
+        public async Task UserServices_GetUsersDefaultAddressIdAsync_WhenUserDoesNotHaveDefaultAddress_ReturnsNull()
+        {
+            // Arrange
+            var userId = "UserId";
+            var user = new ShoppiUser { Id = userId };
+            _users.Add(user);
+
+            // Act
+            var result = await _userServices.GetUsersDefaultAddressIdAsync(userId);
+
+            // Assert
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public async Task UserServices_GetUsersDefaultAddressIdAsync_WhenUserHaveDefaultAddress_ReturnsItsId()
+        {
+            // Arrange
+            var userId = "UserId";
+            var defaultAddressId = 13;
+            var user = new ShoppiUser { Id = userId, DefaultAddressId = defaultAddressId };
+            _users.Add(user);
+
+            // Act
+            var result = await _userServices.GetUsersDefaultAddressIdAsync(userId);
+
+            // Assert
+            Assert.IsTrue(result == defaultAddressId);
+        }
     }
 }
