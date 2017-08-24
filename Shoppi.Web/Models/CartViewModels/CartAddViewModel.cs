@@ -1,4 +1,4 @@
-﻿namespace Shoppi.Models.Cart
+﻿namespace Shoppi.Web.Models.CartViewModels
 {
     public class CartAddViewModel
     {

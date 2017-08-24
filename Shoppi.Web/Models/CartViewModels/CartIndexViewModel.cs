@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Shoppi.Models.Cart
+namespace Shoppi.Web.Models.CartViewModels
 {
     public class CartIndexViewModel
     {

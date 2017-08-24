@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Shoppi.Logic.Abstract;
-using Shoppi.Models.Cart;
+using Shoppi.Web.Models.CartViewModels;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
