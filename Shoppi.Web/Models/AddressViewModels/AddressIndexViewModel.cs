@@ -8,6 +8,9 @@ namespace Shoppi.Web.Models.AddressViewModels
         [Required]
         public List<AddressIndexPart> Addresses { get; set; }
 
+        [Required]
+        public int? DefaultAddressId { get; set; }
+
         public AddressIndexViewModel()
         {
             Addresses = new List<AddressIndexPart>();

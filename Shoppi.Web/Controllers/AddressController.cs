@@ -14,20 +14,23 @@ namespace Shoppi.Controllers
     public class AddressController : Controller
     {
         private IAddressServices _addressServices;
+        private IUserServices _userServices;
 
-        public AddressController(IAddressServices addressServices)
+        public AddressController(IAddressServices addressServices, IUserServices userServices)
         {
             _addressServices = addressServices;
+            _userServices = userServices;
         }
 
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
-
+            var defaultAddressId = await _userServices.GetUsersDefaultAddressIdAsync(userId);
             var userAddresses = await _addressServices.GetByUserIdAsync(userId);
 
             var model = new AddressIndexViewModel();
             model.Addresses.AddRange(userAddresses.Select(x => Mapper.Map<AddressIndexPart>(x)));
+            model.DefaultAddressId = defaultAddressId;
 
             return View(model);
         }

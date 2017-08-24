@@ -12,6 +12,7 @@
         <th>City</th>
         <th>Zip code</th>
         <th>Country</th>
+        <th>Default</th>
         <th>Action</th>
     </tr>
     @foreach (var address in Model.Addresses)
@@ -22,6 +23,21 @@
             <td>@address.City</td>
             <td>@address.ZipCode</td>
             <td>@address.Country</td>
+            <td>
+                @if (address.Id == Model.DefaultAddressId)
+                {
+                    <span class="label-btn label label-success">Default</span>
+                }
+                else
+                {
+                    using (Html.BeginForm("SetDefaultAddress", "Account", FormMethod.Post))
+                    {
+                        @Html.Hidden("Id", address.Id);
+                        @Html.Hidden("ReturnUrl", Request.Url.ToString())
+                        <button type="submit" class="btn btn-primary">Set as default</button>
+                    }
+                }
+            </td>
             <td>
                 @Html.ActionLink("Delete", "Delete", new { id = address.Id }) |
                 @Html.ActionLink("Edit", "Edit", new { id = address.Id })

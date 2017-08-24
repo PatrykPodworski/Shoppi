@@ -175,6 +175,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Models\AccountViewModels\AccountChangePasswordViewModel.cs" />
     <Compile Include="Models\AccountViewModels\AccountRegisterViewModel.cs" />
+    <Compile Include="Models\AccountViewModels\AccountSetDefaultAddressViewModel.cs" />
     <Compile Include="Models\AccountViewModels\AccountSignInViewModel.cs" />
     <Compile Include="Models\AccountViewModels\MyAccountViewModel.cs" />
     <Compile Include="Models\AddressViewModels\AddressDeleteViewModel.cs" />

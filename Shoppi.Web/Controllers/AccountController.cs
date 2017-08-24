@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
+using Shoppi.Logic.Exceptions;
 using Shoppi.Web.Models.AccountViewModels;
 using System.Threading.Tasks;
 using System.Web;
@@ -155,6 +156,23 @@ namespace Shoppi.Controllers
             }
 
             return RedirectToAction("MyAccount");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> SetDefaultAddress(AccountSetDefaultAddressViewModel model)
+        {
+            var userId = User.Identity.GetUserId();
+
+            try
+            {
+                await _userServices.SetDefaultAddressAsync(userId, model.Id);
+                return Redirect(model.ReturnUrl);
+            }
+            catch (AddressUnauthorizedAccessException)
+            {
+                return HttpNotFound();
+            }
         }
     }
 }
