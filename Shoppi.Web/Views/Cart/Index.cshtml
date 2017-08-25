@@ -52,6 +52,9 @@
                 url: '@Url.Action("DecrementQuantity","Cart")',
                 data: { id: productId },
                 success: (data) => {
+                    if (data.quantity==0) {
+                        $('#' + productId).closest('tr').remove();
+                    }
                     $('#' + productId).html(data.quantity);
                 }
             });
