@@ -3,24 +3,58 @@
     ViewBag.Title = "My Cart";
 }
 
-<h2>@ViewBag.Title</h2>
-@if (Model.Lines.Count == 0)
-{
-    <h4>Your cart is empty! :(</h4>
-}
-else
-{
-    <table class="table">
-        <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-        </tr>
-        @foreach (var line in Model.Lines)
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        @Html.Partial("PageHeader")
+        @if (Model.Lines.Count == 0)
         {
-            <tr>
-                <td>@line.ProductName</td>
-                <td>@line.Quantity</td>
-            </tr>
+            <h4>Your cart is empty! :(</h4>
         }
-    </table>
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th></th>
+                </tr>
+                @foreach (var line in Model.Lines)
+                {
+                    <tr>
+                        <td>@line.ProductName</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn js-decrement-button" data-id=@line.ProductId>-</button>
+                                <button type="button" class="btn" disabled id=@line.ProductId>@line.Quantity</button>
+                                <button type="button" class="btn js-increment-button">+</button>
+                            </div>
+                        </td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Cart", FormMethod.Post))
+                            {
+                                @Html.Hidden("Id", line.ProductId);
+                                <button class="btn btn-danger" type="submit">x</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(".js-decrement-button").click((e) => {
+            var productId = $(e.target).attr('data-id');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DecrementQuantity","Cart")',
+                data: { id: productId },
+                success: (data) => {
+                    $('#' + productId).html(data.quantity);
+                }
+            });
+        });
+    </script>
 }
