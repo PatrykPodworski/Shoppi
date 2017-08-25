@@ -7,5 +7,7 @@ namespace Shoppi.Data.Abstract
         Cart GetCart();
 
         void AddLine(Product product);
+
+        void DeleteLine(int productId);
     }
 }

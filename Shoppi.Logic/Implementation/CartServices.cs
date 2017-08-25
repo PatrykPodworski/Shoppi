@@ -38,5 +38,16 @@ namespace Shoppi.Logic.Implementation
                 productLine.Quantity++;
             }
         }
+
+        public int Remove(int productId)
+        {
+            var cart = _repository.GetCart();
+            var newQuantity = --cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
+            if (newQuantity == 0)
+            {
+                _repository.DeleteLine(productId);
+            }
+            return newQuantity;
+        }
     }
 }

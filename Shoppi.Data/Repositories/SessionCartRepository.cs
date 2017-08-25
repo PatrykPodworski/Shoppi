@@ -24,5 +24,11 @@ namespace Shoppi.Data.Repositories
             cart.Lines.Add(new CartLine() { Product = product, Quantity = 1 });
             HttpContext.Current.Session["Cart"] = cart;
         }
+
+        public void DeleteLine(int productId)
+        {
+            var cart = GetCart();
+            cart.Lines.RemoveAll(x => x.Product.Id == productId);
+        }
     }
 }

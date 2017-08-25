@@ -28,5 +28,12 @@ namespace Shoppi.Controllers
             await _cartServices.AddAsync(model.ProductId);
             return Redirect(model.ReturnUrl);
         }
+
+        [HttpPost]
+        public ActionResult DecrementQuantity(int id)
+        {
+            var newQuantity = _cartServices.Remove(id);
+            return Json(new { quantity = newQuantity });
+        }
     }
 }

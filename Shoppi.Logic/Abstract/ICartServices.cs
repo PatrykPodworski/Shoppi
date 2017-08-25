@@ -8,5 +8,7 @@ namespace Shoppi.Logic.Abstract
         Cart GetCart();
 
         Task AddAsync(int productId);
+
+        int Remove(int productId);
     }
 }
