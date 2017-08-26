@@ -30,11 +30,7 @@
                             </div>
                         </td>
                         <td>
-                            @using (Html.BeginForm("Delete", "Cart", FormMethod.Post))
-                            {
-                                @Html.Hidden("Id", line.ProductId);
-                                <button class="btn btn-danger" type="submit">x</button>
-                            }
+                            <button class="btn btn-danger js-delete-button" data-id=@line.ProductId>x</button>
                         </td>
                     </tr>
                 }
@@ -62,6 +58,16 @@
                 url: '@Url.Action("IncrementQuantity","Cart")',
                 data: { id: productId },
                 success: (data) => $('#' + productId).html(data.quantity)
+            });
+        });
+
+        $('.js-delete-button').click((e) => {
+            var productId = $(e.target).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete", "Cart")',
+                data: { id: productId },
+                success: () => $('#' + productId).closest('tr').remove()
             });
         });
     </script>

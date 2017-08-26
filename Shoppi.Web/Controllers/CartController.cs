@@ -42,5 +42,11 @@ namespace Shoppi.Controllers
             var newQuantity = _cartServices.IncrementProductQuantity(id);
             return Json(new { quantity = newQuantity });
         }
+
+        [HttpPost]
+        public void Delete(int id)
+        {
+            _cartServices.Delete(id);
+        }
     }
 }
