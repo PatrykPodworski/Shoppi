@@ -26,7 +26,7 @@
                             <div class="btn-group" role="group">
                                 <button type="button" class="btn js-decrement-button" data-id=@line.ProductId>-</button>
                                 <button type="button" class="btn" disabled id=@line.ProductId>@line.Quantity</button>
-                                <button type="button" class="btn js-increment-button">+</button>
+                                <button type="button" class="btn js-increment-button" data-id=@line.ProductId>+</button>
                             </div>
                         </td>
                         <td>
@@ -46,17 +46,22 @@
 @section scripts {
     <script>
         $(".js-decrement-button").click((e) => {
-            var productId = $(e.target).attr('data-id');
+            var productId = $(e.target).data('id');
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("DecrementQuantity","Cart")',
                 data: { id: productId },
-                success: (data) => {
-                    if (data.quantity==0) {
-                        $('#' + productId).closest('tr').remove();
-                    }
-                    $('#' + productId).html(data.quantity);
-                }
+                success: (data) => $('#' + productId).html(data.quantity)
+            });
+        });
+
+        $(".js-increment-button").click((e) => {
+            var productId = $(e.target).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("IncrementQuantity","Cart")',
+                data: { id: productId },
+                success: (data) => $('#' + productId).html(data.quantity)
             });
         });
     </script>
