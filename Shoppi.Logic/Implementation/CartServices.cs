@@ -39,7 +39,7 @@ namespace Shoppi.Logic.Implementation
             }
         }
 
-        public void Remove(int productId)
+        public void Delete(int productId)
         {
             var cart = _repository.GetCart();
             _repository.DeleteLine(productId);

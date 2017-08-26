@@ -9,7 +9,7 @@ namespace Shoppi.Logic.Abstract
 
         Task AddAsync(int productId);
 
-        void Remove(int productId);
+        void Delete(int productId);
 
         int DecrementProductQuantity(int productId);
 

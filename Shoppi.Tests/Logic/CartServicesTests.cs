@@ -108,7 +108,7 @@ namespace Shoppi.Tests.Logic
         }
 
         [TestMethod]
-        public void CartServices_Remove_RemovesProductFromCart()
+        public void CartServices_Delete_RemovesProductFromCart()
         {
             // Arrange
             var id = 14;
@@ -117,7 +117,7 @@ namespace Shoppi.Tests.Logic
             _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
 
             // Act
-            _services.Remove(id);
+            _services.Delete(id);
 
             // Assert
             Assert.IsTrue(_cart.Lines.Count == 0);
