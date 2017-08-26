@@ -10,5 +10,7 @@ namespace Shoppi.Logic.Abstract
         Task AddAsync(int productId);
 
         int Remove(int productId);
+
+        int IncrementProductQuantity(int productId);
     }
 }

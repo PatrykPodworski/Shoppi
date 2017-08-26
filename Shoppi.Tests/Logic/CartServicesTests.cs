@@ -155,5 +155,37 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.IsTrue(_cart.Lines.Count == 0);
         }
+
+        [TestMethod]
+        public void CartServices_IncrementProductQuantity_IncrementsProductQuantity()
+        {
+            // Arrange
+            var id = 82;
+            var product = new Product() { Id = id };
+            var quantity = 3;
+            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+
+            // Act
+            _services.IncrementProductQuantity(id);
+
+            // Assert
+            Assert.IsTrue(_cart.Lines[0].Quantity == quantity + 1);
+        }
+
+        [TestMethod]
+        public void CartServices_IncrementProductQuantity_ReturnsNewQuantity()
+        {
+            // Arrange
+            var id = 56;
+            var product = new Product() { Id = id };
+            var quantity = 7;
+            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+
+            // Act
+            var result = _services.IncrementProductQuantity(id);
+
+            // Assert
+            Assert.IsTrue(result == quantity + 1);
+        }
     }
 }

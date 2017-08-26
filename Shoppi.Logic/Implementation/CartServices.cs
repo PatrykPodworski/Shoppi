@@ -49,5 +49,11 @@ namespace Shoppi.Logic.Implementation
             }
             return newQuantity;
         }
+
+        public int IncrementProductQuantity(int productId)
+        {
+            var cart = _repository.GetCart();
+            return ++cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
+        }
     }
 }
