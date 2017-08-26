@@ -32,7 +32,7 @@ namespace Shoppi.Controllers
         [HttpPost]
         public ActionResult DecrementQuantity(int id)
         {
-            var newQuantity = _cartServices.Remove(id);
+            var newQuantity = _cartServices.DecrementProductQuantity(id);
             return Json(new { quantity = newQuantity });
         }
     }

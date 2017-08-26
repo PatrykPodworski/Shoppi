@@ -39,15 +39,22 @@ namespace Shoppi.Logic.Implementation
             }
         }
 
-        public int Remove(int productId)
+        public void Remove(int productId)
         {
             var cart = _repository.GetCart();
-            var newQuantity = --cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
-            if (newQuantity == 0)
+            _repository.DeleteLine(productId);
+        }
+
+        public int DecrementProductQuantity(int productId)
+        {
+            var cart = _repository.GetCart();
+            var quantity = cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
+            if (quantity > 1)
             {
-                _repository.DeleteLine(productId);
+                quantity = --cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
             }
-            return newQuantity;
+
+            return quantity;
         }
 
         public int IncrementProductQuantity(int productId)

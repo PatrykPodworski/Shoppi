@@ -108,45 +108,12 @@ namespace Shoppi.Tests.Logic
         }
 
         [TestMethod]
-        public void CartServices_Remove_WhenQuantityIsGreaterThanOne_DecrementQuantity()
+        public void CartServices_Remove_RemovesProductFromCart()
         {
             // Arrange
             var id = 14;
             var product = new Product() { Id = id };
             var quantity = 2;
-            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
-
-            // Act
-            _services.Remove(id);
-
-            // Assert
-            Assert.IsTrue(_cart.Lines.Count == 1);
-            Assert.IsTrue(_cart.Lines[0].Quantity == quantity - 1);
-        }
-
-        [TestMethod]
-        public void CartServices_Remove_ReturnsNewProductQuantity()
-        {
-            // Arrange
-            var id = 14;
-            var product = new Product() { Id = id };
-            var quantity = 2;
-            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
-
-            // Act
-            var result = _services.Remove(id);
-
-            // Assert
-            Assert.IsTrue(result == quantity - 1);
-        }
-
-        [TestMethod]
-        public void CartServices_Remove_WhenQuantityIsEqualOne_RemovesProductFromCart()
-        {
-            // Arrange
-            var id = 14;
-            var product = new Product() { Id = id };
-            var quantity = 1;
             _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
 
             // Act
@@ -186,6 +153,54 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.IsTrue(result == quantity + 1);
+        }
+
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_WhenQuantityIsGreaterThanOne_DecrementsProductQuantity()
+        {
+            // Arrange
+            var id = 72;
+            var product = new Product() { Id = id };
+            var quantity = 2;
+            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+
+            // Act
+            _services.DecrementProductQuantity(id);
+
+            // Assert
+            Assert.IsTrue(_cart.Lines[0].Quantity == quantity - 1);
+        }
+
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_WhenQuantityIsEqualOne_DoesNotChangeQuantity()
+        {
+            // Arrange
+            var id = 72;
+            var product = new Product() { Id = id };
+            var quantity = 1;
+            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+
+            // Act
+            _services.DecrementProductQuantity(id);
+
+            // Assert
+            Assert.IsTrue(_cart.Lines[0].Quantity == quantity);
+        }
+
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_ReturnsNewQuantity()
+        {
+            // Arrange
+            var id = 72;
+            var product = new Product() { Id = id };
+            var quantity = 4;
+            _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+
+            // Act
+            var result = _services.DecrementProductQuantity(id);
+
+            // Assert
+            Assert.IsTrue(result == quantity - 1);
         }
     }
 }
