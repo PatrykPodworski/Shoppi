@@ -30,14 +30,20 @@
                     @Html.ActionLink("Delete", "Delete", new { id = product.Id })
                 </td>
                 <td>
-                    @using (Html.BeginForm("Add", "Cart"))
-                    {
-                        @Html.Hidden("ProductId", product.Id)
-                        @Html.Hidden("ReturnUrl", HttpContext.Current.Request.Url.AbsoluteUri)
-                        <button type="submit" class="btn btn-default">Add to cart</button>
-                    }
+                    <button type="submit" class="btn btn-default js-add-to-cart" data-id=@product.Id>Add to cart</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@section scripts {
+    <script>
+        $('.js-add-to-cart').click((e) => $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Add", "Cart")',
+            data: { id: $(e.target).data('id') },
+            success: (data) => $('.js-cart-badge').html(data.numberOfProducts)
+        }));
+    </script>
+}

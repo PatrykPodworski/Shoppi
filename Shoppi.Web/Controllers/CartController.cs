@@ -23,10 +23,10 @@ namespace Shoppi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(CartAddViewModel model)
+        public async Task<ActionResult> Add(int id)
         {
-            await _cartServices.AddAsync(model.ProductId);
-            return Redirect(model.ReturnUrl);
+            await _cartServices.AddAsync(id);
+            return Json(new { numberOfProducts = _cartServices.GetNumberOfProducts() });
         }
 
         [HttpPost]

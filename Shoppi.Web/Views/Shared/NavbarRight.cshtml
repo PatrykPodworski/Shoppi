@@ -18,5 +18,5 @@
     {
         @Html.Partial("UnauthenticatedNavbarPartial")
     }
-    <li>@Html.ActionLink("My Cart", "Index", "Cart")</li>
+    <li><a href=@Url.Action("Index", "Cart")>My Cart <span class="badge js-cart-badge"></span></a></li>
 </ul>
