@@ -105,7 +105,7 @@ namespace Shoppi.Controllers
         public ActionResult SignOut()
         {
             _signInManager.AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return PartialView("UnauthenticatedNavbarPartial");
         }
 
         [Authorize]
