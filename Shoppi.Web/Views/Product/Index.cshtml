@@ -43,7 +43,7 @@
             type: 'POST',
             url: '@Url.Action("Add", "Cart")',
             data: { id: $(e.target).data('id') },
-            success: (data) => $('.js-cart-badge').html(data.numberOfProducts)
+            success: (data) => updateCartBadge(data.numberOfProducts)
         }));
     </script>
 }

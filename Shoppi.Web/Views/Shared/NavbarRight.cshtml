@@ -8,7 +8,6 @@
             <button type="submit" class="btn btn-default btn-sm">Search</button>
         }
     </li>
-    }
     <li class="js-login-menu"></li>
     @if (Request.IsAuthenticated)
     {
@@ -18,5 +17,5 @@
     {
         @Html.Partial("UnauthenticatedNavbarPartial")
     }
-    <li><a href=@Url.Action("Index", "Cart")>My Cart <span class="badge js-cart-badge"></span></a></li>
+    <li><a href=@Url.Action("Index", "Cart")>My Cart <span class="badge js-cart-badge" data-url=@Url.Action("GetNumberOfProducts", "Cart")></span></a></li>
 </ul>

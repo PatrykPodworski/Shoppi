@@ -47,7 +47,10 @@
                 type: 'POST',
                 url: '@Url.Action("DecrementQuantity","Cart")',
                 data: { id: productId },
-                success: (data) => $('#' + productId).html(data.quantity)
+                success: (data) => {
+                    $('#' + productId).html(data.quantity);
+                    updateCart();
+                }
             });
         });
 
@@ -57,7 +60,10 @@
                 type: 'POST',
                 url: '@Url.Action("IncrementQuantity","Cart")',
                 data: { id: productId },
-                success: (data) => $('#' + productId).html(data.quantity)
+                success: (data) => {
+                    $('#' + productId).html(data.quantity);
+                    updateCart();
+                }
             });
         });
 
@@ -67,7 +73,10 @@
                 type: 'POST',
                 url: '@Url.Action("Delete", "Cart")',
                 data: { id: productId },
-                success: () => $('#' + productId).closest('tr').remove()
+                success: () => {
+                    $('#' + productId).closest('tr').remove();
+                    updateCart();
+                }
             });
         });
     </script>

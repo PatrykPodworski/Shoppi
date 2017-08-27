@@ -29,6 +29,11 @@ namespace Shoppi.Controllers
             return Json(new { numberOfProducts = _cartServices.GetNumberOfProducts() });
         }
 
+        public ActionResult GetNumberOfProducts()
+        {
+            return Json(new { numberOfProducts = _cartServices.GetNumberOfProducts() }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public ActionResult DecrementQuantity(int id)
         {
