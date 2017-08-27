@@ -159,6 +159,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\shoppi.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -236,6 +237,8 @@
     <Content Include="Views\Shared\EditorTemplates\BootstrapInt.cshtml" />
     <Content Include="Views\Shared\PageHeader.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\BootstrapPassword.cshtml" />
+    <Content Include="Views\Shared\UnauthenticatedNavbarPartial.cshtml" />
+    <Content Include="Views\Shared\AuthenticatedNavbarPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -59,8 +59,14 @@ namespace Shoppi.Logic.Implementation
 
         public int IncrementProductQuantity(int productId)
         {
-            var cart = _repository.GetCart();
-            return ++cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
+            return ++_repository.GetCart().Lines
+                .FirstOrDefault(x => x.Product.Id == productId).Quantity;
+        }
+
+        public int GetNumberOfProducts()
+        {
+            return _repository.GetCart().Lines
+                .Sum(x => x.Quantity);
         }
     }
 }

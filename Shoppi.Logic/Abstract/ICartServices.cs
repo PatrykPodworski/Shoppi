@@ -14,5 +14,7 @@ namespace Shoppi.Logic.Abstract
         int DecrementProductQuantity(int productId);
 
         int IncrementProductQuantity(int productId);
+
+        int GetNumberOfProducts();
     }
 }

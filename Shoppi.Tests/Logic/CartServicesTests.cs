@@ -200,7 +200,66 @@ namespace Shoppi.Tests.Logic
             var result = _services.DecrementProductQuantity(id);
 
             // Assert
-            Assert.IsTrue(result == quantity - 1);
+            Assert.AreEqual(quantity - 1, result);
+        }
+
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhenCartIsEmpty_ReturnsZero()
+        {
+            // Act
+            var result = _services.GetNumberOfProducts();
+
+            // Assert
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhenThereIsSingleProduct_ReturnsOne()
+        {
+            // Arrange
+            _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = 1 });
+
+            // Act
+            var result = _services.GetNumberOfProducts();
+
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhereThereAreManyProductsWithQuantityOfOne_ReturnsSumOfProducts()
+        {
+            // Arrange
+            var numberOfProducts = 13;
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = 1 });
+            }
+
+            // Act
+            var result = _services.GetNumberOfProducts();
+
+            // Assert
+            Assert.AreEqual(numberOfProducts, result);
+        }
+
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhereThereAreProductsWithDiffrentQuantity_ReturnsSumOfQuantities()
+        {
+            // Arrange
+            var numberOfProducts = 5;
+            var sum = 0;
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = i });
+                sum += i;
+            }
+
+            // Act
+            var result = _services.GetNumberOfProducts();
+
+            // Assert
+            Assert.AreEqual(sum, result);
         }
     }
 }
