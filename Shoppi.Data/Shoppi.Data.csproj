@@ -96,6 +96,10 @@
     <Compile Include="Migrations\201708102221023_Price for product.Designer.cs">
       <DependentUpon>201708102221023_Price for product.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708282202162_ImagePath in Product.cs" />
+    <Compile Include="Migrations\201708282202162_ImagePath in Product.Designer.cs">
+      <DependentUpon>201708282202162_ImagePath in Product.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708102221023_Price for product.resx">
       <DependentUpon>201708102221023_Price for product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708282202162_ImagePath in Product.resx">
+      <DependentUpon>201708282202162_ImagePath in Product.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
