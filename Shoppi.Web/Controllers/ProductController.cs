@@ -135,5 +135,13 @@ namespace Shoppi.Controllers
             var file = File(Server.MapPath("~") + product.ImagePath, "image/jpeg");
             return file;
         }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            var product = await _productServices.GetByIdAsync(id);
+            var model = Mapper.Map<ProductDetailsViewModel>(product);
+
+            return View(model);
+        }
     }
 }

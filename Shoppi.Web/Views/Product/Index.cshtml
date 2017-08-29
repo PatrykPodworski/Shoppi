@@ -10,16 +10,18 @@
     @foreach (var product in Model.Products)
     {
         <div class="col-md-4 col-sm-6">
-            <div class="thumbnail thumbnail-product">
-                @if (product.ImagePath != null)
+            <a href=@Url.Action("Details", "Product", new { id = @product.Id })>
+                <div class="thumbnail thumbnail-product">
+                    @if (product.ImagePath != null)
                 {
-                    <img src=@Url.Action("GetImage", new { id = @product.Id }) alt=@product.Name class="img-responsive" />
-                }
-                <div class="caption row">
-                    <div class="col-sm-9">@product.Name</div>
-                    <div class="col-sm-3">@product.Price</div>
+                        <img src=@Url.Action("GetImage", new { id = @product.Id }) alt=@product.Name />
+                    }
+                    <div class="caption row">
+                        <div class="col-sm-9">@product.Name</div>
+                        <div class="col-sm-3">@product.Price</div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     }
 </div>

@@ -12,5 +12,8 @@
 .thumbnail-product {
     padding: 0px;
     margin-bottom: 5%;
-    cursor:pointer;
+}
+
+.product-details {
+    padding-top: 5%;
 }

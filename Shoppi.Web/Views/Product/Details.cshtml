@@ -1,0 +1,40 @@
+﻿@model Shoppi.Web.Models.ProductViewModels.ProductDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+<div class="product-details">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="gallery"> </div>
+                </div>
+                <div class="col-sm-10">
+                    <img src=@Url.Action("GetImage", new { id = @Model.Id }) alt=@Model.Name class="img-responsive" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-sm-offset-1">
+            <h5>Brand Logo <b>Brand Name</b></h5>
+            <h4>@Model.Name</h4>
+            <h4><b>@Model.Price $</b> <small>VAT included</small></h4>
+            <button class="btn btn-primary btn-block js-add-to-cart">Add To Cart</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Description</h2>
+            <h4>Materials & Care</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id congue lorem, nec auctor lorem. Pellentesque arcu leo, cursus ac tristique ac, volutpat eget ligula. Aliquam consequat leo id lorem consectetur vulputate. Integer a sem eget justo congue rhoncus eget eget neque. Nam dapibus nec odio in luctus. Etiam a rhoncus augue, quis rhoncus risus.</p>
+            <h4>Details</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id congue lorem, nec auctor lorem. Pellentesque arcu leo, cursus ac tristique ac, volutpat eget ligula. Aliquam consequat leo id lorem consectetur vulputate. Integer a sem eget justo congue rhoncus eget eget neque. Nam dapibus nec odio in luctus. Etiam a rhoncus augue, quis rhoncus risus.</p>
+            <h4>Size & Fit</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id congue lorem, nec auctor lorem. Pellentesque arcu leo, cursus ac tristique ac, volutpat eget ligula. Aliquam consequat leo id lorem consectetur vulputate. Integer a sem eget justo congue rhoncus eget eget neque. Nam dapibus nec odio in luctus. Etiam a rhoncus augue, quis rhoncus risus.</p>
+        </div>
+        <div class="col-sm-6">
+            <h2>Delivery</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id congue lorem, nec auctor lorem. Pellentesque arcu leo, cursus ac tristique ac, volutpat eget ligula. Aliquam consequat leo id lorem consectetur vulputate. Integer a sem eget justo congue rhoncus eget eget neque. Nam dapibus nec odio in luctus. Etiam a rhoncus augue, quis rhoncus risus.</p>
+        </div>
+    </div>
+</div>
