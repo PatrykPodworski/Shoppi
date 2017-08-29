@@ -213,7 +213,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Product\Delete.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\IndexTemp.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
@@ -239,6 +239,7 @@
     <Content Include="Views\Shared\EditorTemplates\BootstrapPassword.cshtml" />
     <Content Include="Views\Shared\UnauthenticatedNavbarPartial.cshtml" />
     <Content Include="Views\Shared\AuthenticatedNavbarPartial.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -128,5 +128,12 @@ namespace Shoppi.Controllers
             await _productServices.DeleteAsync(model.Id);
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> GetImage(int id)
+        {
+            var product = await _productServices.GetByIdAsync(id);
+            var file = File(Server.MapPath("~") + product.ImagePath, "image/jpeg");
+            return file;
+        }
     }
 }

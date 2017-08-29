@@ -5,45 +5,21 @@
 
 @Html.Partial("PageHeader")
 @Html.ActionLink("Add new product", "Create")
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Category</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.Products)
-            {
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Quantity</td>
-                <td>@(product.Category != null ? product.Category.Name : "null")</td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = product.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = product.Id })
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-default js-add-to-cart" data-id=@product.Id>Add to cart</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
-@section scripts {
-    <script>
-        $('.js-add-to-cart').click((e) => $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Add", "Cart")',
-            data: { id: $(e.target).data('id') },
-            success: (data) => updateCartBadge(data.numberOfProducts)
-        }));
-    </script>
-}
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4 col-sm-6">
+            <div class="thumbnail thumbnail-product">
+                @if (product.ImagePath != null)
+                {
+                    <img src=@Url.Action("GetImage", new { id = @product.Id }) alt=@product.Name class="img-responsive" />
+                }
+                <div class="caption row">
+                    <div class="col-sm-9">@product.Name</div>
+                    <div class="col-sm-3">@product.Price</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

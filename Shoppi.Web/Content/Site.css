@@ -8,3 +8,9 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+
+.thumbnail-product {
+    padding: 0px;
+    margin-bottom: 5%;
+    cursor:pointer;
+}
