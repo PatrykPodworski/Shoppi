@@ -24,13 +24,9 @@ namespace Shoppi.Data.Migrations
             categorySeeder.Seed();
 
             var productSeeder = new ProductSeeder(context);
-            productSeeder.Seed();
+            //productSeeder.Seed();
 
             base.Seed(context);
-        }
-
-        private void SeedProducts()
-        {
         }
     }
 }
