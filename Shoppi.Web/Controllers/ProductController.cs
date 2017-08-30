@@ -13,11 +13,13 @@ namespace Shoppi.Controllers
     {
         private readonly IProductServices _productServices;
         private readonly ICategoryServices _categoryServices;
+        private readonly IImageServices _imageServices;
 
-        public ProductController(IProductServices productServices, ICategoryServices categoryServices)
+        public ProductController(IProductServices productServices, ICategoryServices categoryServices, IImageServices imageServices)
         {
             _productServices = productServices;
             _categoryServices = categoryServices;
+            _imageServices = imageServices;
         }
 
         public async Task<ActionResult> Create()
@@ -132,8 +134,8 @@ namespace Shoppi.Controllers
         public async Task<ActionResult> GetImage(int id)
         {
             var product = await _productServices.GetByIdAsync(id);
-            var file = File(Server.MapPath("~") + product.ImagePath, "image/jpeg");
-            return file;
+            var file = await _imageServices.GetImage(Server.MapPath("~") + product.ImagePath);
+            return File(file, "image/jpeg");
         }
 
         public async Task<ActionResult> Details(int id)

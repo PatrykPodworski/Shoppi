@@ -31,6 +31,7 @@ namespace Shoppi
             container.RegisterType<IAddressServices, AddressServices>();
             container.RegisterType<IUserServices, UserServices>();
             container.RegisterType<ICartServices, CartServices>();
+            container.RegisterType<IImageServices, ImageServices>();
         }
 
         private static void RegisterRepositories(IUnityContainer container)
