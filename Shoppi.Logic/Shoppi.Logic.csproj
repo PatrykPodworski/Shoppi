@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAddressServices.cs" />
+    <Compile Include="Abstract\IBrandServices.cs" />
     <Compile Include="Abstract\ICartServices.cs" />
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IImageServices.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Exceptions\CategoryValidationException.cs" />
     <Compile Include="Exceptions\ProductValidationException.cs" />
     <Compile Include="Implementation\AddressServices.cs" />
+    <Compile Include="Implementation\BrandServices.cs" />
     <Compile Include="Implementation\CategoryServices.cs" />
     <Compile Include="Implementation\ImageServices.cs" />
     <Compile Include="Implementation\ProductServices.cs" />
