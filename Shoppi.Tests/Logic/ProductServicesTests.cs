@@ -83,7 +83,6 @@ namespace Shoppi.Tests
 
                     productFromRepository.Name = x.Name;
                     productFromRepository.CategoryId = x.CategoryId;
-                    productFromRepository.Quantity = x.Quantity;
                     productFromRepository.Price = x.Price;
                 }));
         }
@@ -99,7 +98,8 @@ namespace Shoppi.Tests
         public async Task ProductServices_Create_WhenNameIsNull_ThrowsException()
         {
             // Arrange
-            var product = new Product(null, 0);
+            var product = GenerateValidProduct();
+            product.Name = null;
 
             // Act
             await _productServices.CreateAsync(product);
@@ -110,18 +110,8 @@ namespace Shoppi.Tests
         public async Task ProductServices_Create_WhenNameIsWhitespace_ThrowsException()
         {
             // Arrange
-            var product = new Product("      ", 0);
-
-            // Act
-            await _productServices.CreateAsync(product);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_Create_WhenQuantityIsNegative_ThrowsException()
-        {
-            // Arrange
-            var product = new Product("Product", 0, -100);
+            var product = GenerateValidProduct();
+            product.Name = "  ";
 
             // Act
             await _productServices.CreateAsync(product);
@@ -155,28 +145,11 @@ namespace Shoppi.Tests
             return true;
         }
 
-        [TestMethod]
-        public async Task ProductServices_Create_WhenQuantityIsZero_AddsProductToRepository()
-        {
-            // Arrange
-            var quantity = 0;
-            var product = GenerateValidProduct();
-            product.Quantity = quantity;
-
-            // Act
-            await _productServices.CreateAsync(product);
-
-            // Assert
-            _mockRepository.Verify(m => m.Create(It.IsAny<Product>()), Times.Once());
-            Assert.IsTrue(IsCorrectlyCreatedAsOnlyProductInRepository(product));
-        }
-
         private Product GenerateValidProduct()
         {
             return new Product()
             {
                 Name = "ProductName",
-                Quantity = 0,
                 Price = 0.01m,
             };
         }
@@ -187,10 +160,9 @@ namespace Shoppi.Tests
         {
             // Arrange
             var productName = "Product";
-            var quantity = 123;
 
-            var product = new Product(productName, 0, quantity);
-            _products.Add(new Product(productName, 1, 12) { Id = 1 });
+            var product = new Product { Name = productName };
+            _products.Add(new Product { Name = productName, Id = 1 });
 
             // Act
             await _productServices.CreateAsync(product);
@@ -201,40 +173,30 @@ namespace Shoppi.Tests
         {
             // Arrange
             var id = 34;
-            var numberOfProducts = 5;
-            CreateProductsInMockRepository(numberOfProducts);
-            _products.Add(new Product("ProductName", 0) { Id = 34 });
+            var product = new Product { Id = id };
+            _products.Add(product);
 
             // Act
             await _productServices.DeleteAsync(id);
 
             // Assert
             _mockRepository.Verify(m => m.Delete(It.IsAny<int>()), Times.Once);
-            Assert.IsTrue(_products.Count == 5);
-        }
-
-        private void CreateProductsInMockRepository(int numberOfProducts, int categoryId = 0)
-        {
-            for (var i = 0; i < numberOfProducts; i++)
-            {
-                _products.Add(new Product("Product" + i, categoryId));
-            }
+            Assert.IsTrue(_products.Count == 0);
         }
 
         [TestMethod]
         public async Task ProductServices_Delete_WhenProductWithGivenIdDoesNotExist_DoesNothing()
         {
             // Arrange
-            var numberOfProducts = 10;
             var id = 33;
-            CreateProductsInMockRepository(numberOfProducts);
+            _products.Add(new Product { Id = id - 2 });
 
             // Act
             await _productServices.DeleteAsync(id);
 
             // Assert
             _mockRepository.Verify(m => m.Delete(It.IsAny<int>()), Times.Once);
-            Assert.IsTrue(_products.Count == numberOfProducts);
+            Assert.AreEqual(_products.Count, 1);
         }
 
         [TestMethod]
@@ -280,7 +242,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenNameIsSetToNull_ThrowsException()
         {
             // Arrange
-            var newProduct = new Product(null, 0, 11) { Id = 1 };
+            var newProduct = new Product { Id = 1 };
 
             // Act
             await _productServices.EditAsync(newProduct);
@@ -291,18 +253,7 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenNameIsSetToWhitespace_ThrowsException()
         {
             // Arrange
-            var newProduct = new Product("  ", 0, 11) { Id = 1 };
-
-            // Act
-            await _productServices.EditAsync(newProduct);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_Edit_WhenQuantityIsNegative_ThrowsException()
-        {
-            // Arrange
-            var newProduct = new Product("Product", 0, -13) { Id = 1 };
+            var newProduct = new Product { Name = "  ", Id = 1 };
 
             // Act
             await _productServices.EditAsync(newProduct);
@@ -314,10 +265,10 @@ namespace Shoppi.Tests
         {
             // Arrange
             var productName = "Product";
-            var existingProduct = new Product(productName, 2, 10) { Id = 2 };
+            var existingProduct = new Product { Name = productName, Id = 2 };
             _products.Add(existingProduct);
 
-            var newProduct = new Product(productName, 1, 13) { Id = 1 };
+            var newProduct = new Product { Name = productName, Id = 1 };
 
             // Act
             await _productServices.EditAsync(newProduct);
@@ -348,7 +299,6 @@ namespace Shoppi.Tests
         {
             product.Name = "New" + product.Name;
             product.Price = product.Price * 2 + 1m;
-            product.Quantity = product.Quantity * 2 + 1;
             product.CategoryId = product.CategoryId * 2 + 1;
         }
 
@@ -359,10 +309,6 @@ namespace Shoppi.Tests
                 return false;
             }
             if (editedProduct.CategoryId != editValues.CategoryId)
-            {
-                return false;
-            }
-            if (editedProduct.Quantity != editValues.Quantity)
             {
                 return false;
             }
@@ -381,16 +327,17 @@ namespace Shoppi.Tests
             // Arrange
             var categoryId = 1;
             var numberOfProductsWithGivenCategoryId = 5;
-            CreateProductsInMockRepository(numberOfProductsWithGivenCategoryId, categoryId);
-            CreateProductsInMockRepository(3, 3);
-            CreateProductsInMockRepository(3, 4);
+            for (int i = 0; i < numberOfProductsWithGivenCategoryId; i++)
+            {
+                _products.Add(new Product { CategoryId = categoryId });
+            }
 
             // Act
             var products = await _productServices.GetByCategoryIdAsync(categoryId);
 
             // Assert
-            Assert.IsTrue(products.Count == numberOfProductsWithGivenCategoryId);
             _mockRepository.Verify(m => m.GetByCategoryIdAsync(It.IsAny<int>()), Times.Once);
+            Assert.IsTrue(products.Count == numberOfProductsWithGivenCategoryId);
         }
 
         [TestMethod]
@@ -399,15 +346,14 @@ namespace Shoppi.Tests
             // Arrange
             var categoryId = 1;
 
-            CreateProductsInMockRepository(3, 3);
-            CreateProductsInMockRepository(3, 4);
+            _products.Add(new Product { CategoryId = categoryId * 2 + 1 });
 
             // Act
-            var products = await _productServices.GetByCategoryIdAsync(categoryId);
+            var result = await _productServices.GetByCategoryIdAsync(categoryId);
 
             // Assert
-            Assert.IsTrue(products.Count == 0);
             _mockRepository.Verify(m => m.GetByCategoryIdAsync(It.IsAny<int>()), Times.Once);
+            Assert.IsTrue(result.Count == 0);
         }
 
         [TestMethod]
@@ -415,14 +361,16 @@ namespace Shoppi.Tests
         {
             // Arrange
             var numberOfProducts = 5;
-            CreateProductsInMockRepository(numberOfProducts);
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _products.Add(new Product());
+            }
 
             // Act
             var result = await _productServices.GetAllAsync();
 
             // Assert
             Assert.AreEqual(numberOfProducts, result.Count);
-            Assert.AreEqual(_products, result);
         }
 
         [TestMethod]
@@ -439,23 +387,15 @@ namespace Shoppi.Tests
         public async Task ProductServices_GetById_ReturnsProductWithMatchingId()
         {
             // Arrange
-            var numberOfProducts = 5;
-            var productName = "Product";
-            var categoryId = 1;
-            var quantity = 333;
             var id = 10;
-
-            CreateProductsInMockRepository(numberOfProducts);
-            _products.Add(new Product(productName, categoryId, quantity) { Id = id });
+            var product = new Product { Id = id };
+            _products.Add(product);
 
             // Act
             var result = await _productServices.GetByIdAsync(id);
 
             // Assert
-            Assert.AreEqual(id, result.Id);
-            Assert.AreEqual(productName, result.Name);
-            Assert.AreEqual(categoryId, result.CategoryId);
-            Assert.AreEqual(quantity, result.Quantity);
+            Assert.AreEqual(product, result);
         }
 
         [TestMethod]
