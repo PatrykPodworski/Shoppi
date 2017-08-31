@@ -14,10 +14,6 @@ namespace Shoppi
         {
             var container = new UnityContainer();
 
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-
-            // e.g. container.RegisterType<ITestService, TestService>();
             RegisterServices(container);
             RegisterRepositories(container);
 
@@ -32,6 +28,7 @@ namespace Shoppi
             container.RegisterType<IUserServices, UserServices>();
             container.RegisterType<ICartServices, CartServices>();
             container.RegisterType<IImageServices, ImageServices>();
+            container.RegisterType<IBrandServices, BrandServices>();
         }
 
         private static void RegisterRepositories(IUnityContainer container)
@@ -41,6 +38,7 @@ namespace Shoppi
             container.RegisterType<IAddressRepository, AddressRepository>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<ICartRepository, SessionCartRepository>();
+            container.RegisterType<IBrandRepository, BrandRepository>();
         }
     }
 }
