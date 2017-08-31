@@ -30,11 +30,6 @@ namespace Shoppi.Logic.Implementation
                 throw new ProductValidationException("Invalid product name: " + product.Name);
             }
 
-            if (IsInvalidProductQuantity(product.Quantity))
-            {
-                throw new ProductValidationException("Invalid product quantity: " + product.Quantity);
-            }
-
             if (IsInvalidPrice(product.Price))
             {
                 throw new ProductValidationException("Invalid product price: " + product.Price);

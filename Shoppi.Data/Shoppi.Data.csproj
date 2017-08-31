@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201708302256147_Brand.Designer.cs">
       <DependentUpon>201708302256147_Brand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708312203165_Added types for product and removed product quantity %28it is in types now%29.cs" />
+    <Compile Include="Migrations\201708312203165_Added types for product and removed product quantity %28it is in types now%29.Designer.cs">
+      <DependentUpon>201708312203165_Added types for product and removed product quantity %28it is in types now%29.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Models\ShoppiDbContext.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ShoppiUser.cs" />
+    <Compile Include="Models\Type.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AddressRepository.cs" />
     <Compile Include="Repositories\BrandRepository.cs" />
@@ -165,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708302256147_Brand.resx">
       <DependentUpon>201708302256147_Brand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708312203165_Added types for product and removed product quantity %28it is in types now%29.resx">
+      <DependentUpon>201708312203165_Added types for product and removed product quantity %28it is in types now%29.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

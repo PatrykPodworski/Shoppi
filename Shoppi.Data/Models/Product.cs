@@ -1,23 +1,12 @@
-﻿namespace Shoppi.Data.Models
+﻿using System.Collections.Generic;
+
+namespace Shoppi.Data.Models
 {
     public class Product
     {
-        public Product(string name, int categoryId, int quantity = 0)
-        {
-            Name = name;
-            Quantity = quantity;
-            CategoryId = categoryId;
-        }
-
-        public Product(string name, Category category, int quantity = 0)
-        {
-            Name = name;
-            Quantity = quantity;
-            Category = category;
-        }
-
         public Product()
         {
+            TypeName = "Size";
         }
 
         public int Id { get; set; }
@@ -28,8 +17,6 @@
 
         public string Name { get; set; }
 
-        public int Quantity { get; set; }
-
         public decimal Price { get; set; }
 
         public string ImagePath { get; set; }
@@ -37,5 +24,9 @@
         public int BrandId { get; set; }
 
         public virtual Brand Brand { get; set; }
+
+        public List<Type> Types { get; set; }
+
+        public string TypeName { get; set; }
     }
 }

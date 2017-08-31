@@ -32,7 +32,6 @@ namespace Shoppi.Data.Repositories
         {
             toEdit.Name = editValues.Name;
             toEdit.Price = editValues.Price;
-            toEdit.Quantity = editValues.Quantity;
             toEdit.CategoryId = editValues.CategoryId;
         }
 
