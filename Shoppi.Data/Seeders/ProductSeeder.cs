@@ -1,4 +1,6 @@
 ﻿using Shoppi.Data.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
 
@@ -8,9 +10,17 @@ namespace Shoppi.Data.Seeders
     {
         private ShoppiDbContext _context;
 
+        private List<int> _brandIds;
+
+        private Random _random;
+
         public ProductSeeder(ShoppiDbContext context)
         {
             _context = context;
+
+            _random = new Random();
+
+            _brandIds = _context.Brands.Where(x => true).Select(x => x.Id).ToList();
         }
 
         public void Seed()
@@ -47,7 +57,13 @@ namespace Shoppi.Data.Seeders
 
         private void SeedProduct(Product product)
         {
+            product.BrandId = PickRandomBrandId();
             _context.Products.AddOrUpdate(x => new { x.Name, x.CategoryId }, product);
+        }
+
+        private int PickRandomBrandId()
+        {
+            return _brandIds[_random.Next(_brandIds.Count)];
         }
 
         private void SeedTops()
