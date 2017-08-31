@@ -9,5 +9,9 @@
         public string CategoryName { get; set; }
 
         public decimal Price { get; set; }
+
+        public int BrandId { get; set; }
+
+        public string BrandName { get; set; }
     }
 }

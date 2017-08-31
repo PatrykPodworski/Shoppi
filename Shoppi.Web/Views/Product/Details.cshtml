@@ -16,7 +16,8 @@
             </div>
         </div>
         <div class="col-sm-5 col-sm-offset-1">
-            <h5>Brand Logo <b>Brand Name</b></h5>
+            <img src=@Url.Action("GetImage", "Brand", new { id = Model.BrandId }) alt=@Model.BrandName class="img-responsive img-brand" />
+            <h4>@Model.BrandName</h4>
             <h4>@Model.Name</h4>
             <h4><b>@Model.Price $</b> <small>VAT included</small></h4>
             <button class="btn btn-primary btn-block js-add-to-cart">Add To Cart</button>
