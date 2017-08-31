@@ -82,6 +82,12 @@ namespace Shoppi.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var product = await _productServices.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
             var categories = await _categoryServices.GetAllAsync();
             var model = Mapper.Map<ProductEditViewModel>(product);
             model.Categories = categories.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
@@ -115,6 +121,12 @@ namespace Shoppi.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             var product = await _productServices.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
             var model = Mapper.Map<ProductDeleteViewModel>(product);
             return View(model);
         }
@@ -141,6 +153,12 @@ namespace Shoppi.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var product = await _productServices.GetByIdAsync(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
             var model = Mapper.Map<ProductDetailsViewModel>(product);
 
             return View(model);
