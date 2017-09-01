@@ -25,7 +25,7 @@ namespace Shoppi.Data.Models
 
         public virtual Brand Brand { get; set; }
 
-        public List<ProductType> Types { get; set; }
+        public virtual List<ProductType> Types { get; set; }
 
         public string TypeName { get; set; }
     }
