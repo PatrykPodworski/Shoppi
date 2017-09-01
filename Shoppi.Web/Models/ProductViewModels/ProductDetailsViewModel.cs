@@ -1,4 +1,7 @@
-﻿namespace Shoppi.Web.Models.ProductViewModels
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
+
+namespace Shoppi.Web.Models.ProductViewModels
 {
     public class ProductDetailsViewModel
     {
@@ -13,5 +16,9 @@
         public int BrandId { get; set; }
 
         public string BrandName { get; set; }
+
+        public List<SelectListItem> Types { get; set; }
+
+        public string TypeName { get; set; }
     }
 }

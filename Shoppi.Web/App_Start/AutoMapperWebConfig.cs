@@ -5,6 +5,7 @@ using Shoppi.Web.Models.AddressViewModels;
 using Shoppi.Web.Models.CartViewModels;
 using Shoppi.Web.Models.CategoryViewModels;
 using Shoppi.Web.Models.ProductViewModels;
+using System.Web.Mvc;
 
 namespace Shoppi.App_Start
 {
@@ -37,6 +38,9 @@ namespace Shoppi.App_Start
             CreateMap<ProductEditViewModel, Product>();
             CreateMap<Product, ProductDeleteViewModel>();
             CreateMap<Product, ProductDetailsViewModel>();
+            CreateMap<ProductType, SelectListItem>()
+                .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id.ToString()));
         }
 
         private void CreateCategoryMaps()
