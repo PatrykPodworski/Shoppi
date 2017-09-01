@@ -58,7 +58,26 @@ namespace Shoppi.Data.Seeders
         private void SeedProduct(Product product)
         {
             product.BrandId = PickRandomBrandId();
+            product.Types = GenerateTypes();
             _context.Products.AddOrUpdate(x => new { x.Name, x.CategoryId }, product);
+        }
+
+        private List<ProductType> GenerateTypes()
+        {
+            return new List<ProductType>
+            {
+                new ProductType {Name="XS", Quantity = GetRandomQuantity()},
+                new ProductType {Name="S", Quantity = GetRandomQuantity()},
+                new ProductType {Name="M", Quantity = GetRandomQuantity()},
+                new ProductType {Name="L", Quantity = GetRandomQuantity()},
+                new ProductType {Name="XL", Quantity = GetRandomQuantity()},
+                new ProductType {Name="XXL", Quantity = GetRandomQuantity()},
+            };
+        }
+
+        private int GetRandomQuantity()
+        {
+            return _random.Next(1, 1000);
         }
 
         private int PickRandomBrandId()
