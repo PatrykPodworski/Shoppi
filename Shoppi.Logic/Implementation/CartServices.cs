@@ -9,12 +9,12 @@ namespace Shoppi.Logic.Implementation
     public class CartServices : ICartServices
     {
         private ICartRepository _repository;
-        private IProductServices _productServices;
+        private ITypeServices _typeServices;
 
-        public CartServices(ICartRepository repository, IProductServices productServices)
+        public CartServices(ICartRepository repository, ITypeServices typeServices)
         {
             _repository = repository;
-            _productServices = productServices;
+            _typeServices = typeServices;
         }
 
         public Cart GetCart()
@@ -22,45 +22,38 @@ namespace Shoppi.Logic.Implementation
             return _repository.GetCart();
         }
 
-        public async Task AddAsync(int productId)
+        public async Task AddAsync(int typeId)
         {
-            var cart = _repository.GetCart();
+            var cartLine = _repository.GetCartLine(typeId);
 
-            var productLine = cart.Lines.FirstOrDefault(x => x.Product.Id == productId);
-
-            if (productLine == null)
+            if (cartLine != null)
             {
-                var product = await _productServices.GetByIdAsync(productId);
-                _repository.AddLine(product);
+                _repository.IncrementCartLineQuantity(typeId);
             }
             else
             {
-                productLine.Quantity++;
+                var type = await _typeServices.GetByIdAsync(typeId);
+                _repository.AddLine(type);
             }
         }
 
-        public void Delete(int productId)
+        public void Delete(int typeId)
         {
-            var cart = _repository.GetCart();
-            _repository.DeleteLine(productId);
+            _repository.DeleteLine(typeId);
         }
 
-        public int DecrementProductQuantity(int productId)
+        public int DecrementProductQuantity(int typeId)
         {
-            var cart = _repository.GetCart();
-            var quantity = cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
-            if (quantity > 1)
-            {
-                quantity = --cart.Lines.FirstOrDefault(x => x.Product.Id == productId).Quantity;
-            }
+            var cartLine = _repository.GetCartLine(typeId);
 
-            return quantity;
+            return cartLine.Quantity;
         }
 
-        public int IncrementProductQuantity(int productId)
+        public int IncrementProductQuantity(int typeId)
         {
-            return ++_repository.GetCart().Lines
-                .FirstOrDefault(x => x.Product.Id == productId).Quantity;
+            _repository.IncrementCartLineQuantity(typeId);
+
+            return _repository.GetCartLine(typeId).Quantity;
         }
 
         public int GetNumberOfProducts()

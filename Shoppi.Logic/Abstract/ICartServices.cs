@@ -7,13 +7,13 @@ namespace Shoppi.Logic.Abstract
     {
         Cart GetCart();
 
-        Task AddAsync(int productId);
+        Task AddAsync(int typeId);
 
-        void Delete(int productId);
+        void Delete(int typeId);
 
-        int DecrementProductQuantity(int productId);
+        int DecrementProductQuantity(int typeId);
 
-        int IncrementProductQuantity(int productId);
+        int IncrementProductQuantity(int typeId);
 
         int GetNumberOfProducts();
     }

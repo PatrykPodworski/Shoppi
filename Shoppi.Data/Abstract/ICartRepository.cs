@@ -6,8 +6,12 @@ namespace Shoppi.Data.Abstract
     {
         Cart GetCart();
 
-        void AddLine(Product product);
+        void AddLine(ProductType type);
 
-        void DeleteLine(int productId);
+        void DeleteLine(int typeId);
+
+        CartLine GetCartLine(int typeId);
+
+        void IncrementCartLineQuantity(int typeId);
     }
 }
