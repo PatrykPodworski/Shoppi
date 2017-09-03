@@ -55,7 +55,7 @@ namespace Shoppi.Tests.Repositories
         }
 
         [TestMethod]
-        public void SessionCartRepository_GetCart_WhenThereAlreadyIsCartInSession_ReturnsCart()
+        public void SessionCartRepository_GetCart_WhenThereIsACartInSession_ReturnsCart()
         {
             // Arrange
             var cart = new Cart();
@@ -69,20 +69,99 @@ namespace Shoppi.Tests.Repositories
         }
 
         [TestMethod]
-        public void SessionCartRepository_AddLine_AddsNewLineToCart()
+        public void SessionCartRepository_AddLine_AddsNewLineToCartWithProperType()
         {
             // Arrange
             var cart = new Cart();
-            var productId = 8;
-            var product = new Product() { Id = productId };
+
+            var typeId = 55;
+            var type = new ProductType { Id = typeId };
+
             HttpContext.Current.Session["Cart"] = cart;
 
             // Act
-            _repository.AddLine(product);
+            _repository.AddLine(type);
 
             // Assert
-            Assert.IsTrue(cart.Lines.Count == 1);
-            Assert.IsTrue(cart.Lines[0].Product.Id == productId);
+            Assert.AreEqual(type, cart.Lines[0].Type);
+        }
+
+        [TestMethod]
+        public void SessionCartRepository_AddLine_AddsNewLineWithQuantityEqualToOne()
+        {
+            // Arrange
+            var cart = new Cart();
+
+            var typeId = 55;
+            var type = new ProductType { Id = typeId };
+
+            HttpContext.Current.Session["Cart"] = cart;
+
+            // Act
+            _repository.AddLine(type);
+
+            // Assert
+            Assert.AreEqual(1, cart.Lines[0].Quantity);
+        }
+
+        [TestMethod]
+        public void SessionCartRepository_GetCartLine_ReturnsCartLineWithGivenType()
+        {
+            // Arrange
+            var cart = new Cart();
+
+            var typeId = 33;
+            var type = new ProductType { Id = typeId };
+
+            cart.Lines.Add(new CartLine { Type = type });
+            HttpContext.Current.Session["Cart"] = cart;
+
+            // Act
+            var result = _repository.GetCartLine(typeId);
+
+            // Assert
+            Assert.AreEqual(cart.Lines[0], result);
+        }
+
+        [TestMethod]
+        public void SessionCartRepository_DeleteLine_RemovesCartLineFromCart()
+        {
+            // Arrange
+
+            var typeId = 93;
+            var type = new ProductType { Id = typeId };
+
+            var cart = new Cart();
+            cart.Lines.Add(new CartLine { Type = type });
+
+            HttpContext.Current.Session["Cart"] = cart;
+
+            // Act
+            _repository.DeleteLine(typeId);
+
+            // Assert
+            Assert.AreEqual(0, cart.Lines.Count);
+        }
+
+        [TestMethod]
+        public void SessionCartRepository_IncrementCartLineQuantity_IncrementsCartLinQiantity()
+        {
+            // Arrange
+
+            var typeId = 93;
+            var type = new ProductType { Id = typeId };
+            var quantity = 55;
+
+            var cart = new Cart();
+            cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
+
+            HttpContext.Current.Session["Cart"] = cart;
+
+            // Act
+            _repository.IncrementCartLineQuantity(typeId);
+
+            // Assert
+            Assert.AreEqual(quantity + 1, cart.Lines[0].Quantity);
         }
     }
 }
