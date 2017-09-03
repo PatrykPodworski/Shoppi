@@ -47,6 +47,7 @@
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IImageServices.cs" />
     <Compile Include="Abstract\IProductServices.cs" />
+    <Compile Include="Abstract\ITypeServices.cs" />
     <Compile Include="Abstract\IUserServices.cs" />
     <Compile Include="Exceptions\AddressUnauthorizedAccessException.cs" />
     <Compile Include="Exceptions\AddressValidationException.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Implementation\ImageServices.cs" />
     <Compile Include="Implementation\ProductServices.cs" />
     <Compile Include="Implementation\CartServices.cs" />
+    <Compile Include="Implementation\TypeServices.cs" />
     <Compile Include="Implementation\UserServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

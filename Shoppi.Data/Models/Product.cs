@@ -7,6 +7,7 @@ namespace Shoppi.Data.Models
         public Product()
         {
             TypeName = "Size";
+            Types = new List<ProductType>();
         }
 
         public int Id { get; set; }

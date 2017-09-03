@@ -52,3 +52,15 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $('.js-add-to-cart').click((e) => $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Add", "Cart")',
+            data: { id: @Model.Id },
+            success: (data) => updateCartBadge(data.numberOfProducts)
+        }));
+    </script>
+}
+    }

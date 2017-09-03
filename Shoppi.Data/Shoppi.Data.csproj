@@ -59,6 +59,7 @@
     <Compile Include="Abstract\IBrandRepository.cs" />
     <Compile Include="Abstract\ICartRepository.cs" />
     <Compile Include="Abstract\ICategoryRepository.cs" />
+    <Compile Include="Abstract\ITypeRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Abstract\IProductRepository.cs" />
     <Compile Include="Migrations\201707261402264_IdentityDbContext initial migration.cs" />
