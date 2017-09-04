@@ -19,6 +19,6 @@ namespace Shoppi.Web.Models.ProductViewModels
 
         public List<SelectListItem> Types { get; set; }
 
-        public string TypeName { get; set; }
+        public string TypeLabel { get; set; }
     }
 }

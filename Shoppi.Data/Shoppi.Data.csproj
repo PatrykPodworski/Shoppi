@@ -114,6 +114,10 @@
     <Compile Include="Migrations\201709012253229_Type rename to ProductType.Designer.cs">
       <DependentUpon>201709012253229_Type rename to ProductType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709041512258_Renaming TypeName to TypeLabel.cs" />
+    <Compile Include="Migrations\201709041512258_Renaming TypeName to TypeLabel.Designer.cs">
+      <DependentUpon>201709041512258_Renaming TypeName to TypeLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709012253229_Type rename to ProductType.resx">
       <DependentUpon>201709012253229_Type rename to ProductType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709041512258_Renaming TypeName to TypeLabel.resx">
+      <DependentUpon>201709041512258_Renaming TypeName to TypeLabel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
