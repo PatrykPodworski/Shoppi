@@ -21,3 +21,7 @@
 .img-brand {
     max-width: 100px;
 }
+
+.error {
+    border-color: red;
+}

@@ -55,12 +55,23 @@
 
 @section scripts {
     <script>
-        $('.js-add-to-cart').click((e) => $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Add", "Cart")',
-            data: { id:$(".js-type-dropdown").val() },
-            success: (data) => updateCartBadge(data.numberOfProducts)
-        }));
+        $('.js-add-to-cart').click((e) => {
+            var dropdown = $(".js-type-dropdown");
+            if (!dropdown.val()) {
+                dropdown.addClass("error");
+            }
+            else
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Add", "Cart")',
+                    data: { id: dropdown.val() },
+                    success: (data) => updateCartBadge(data.numberOfProducts)
+                });
+            }
+        });
+
+        $(".js-type-dropdown").change(() => $(".js-type-dropdown").removeClass("error"));
     </script>
 }
     }
