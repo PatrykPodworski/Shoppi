@@ -184,7 +184,6 @@
     <Compile Include="Models\AddressViewModels\AddressCreateViewModel.cs" />
     <Compile Include="Models\AddressViewModels\AddressEditViewModel.cs" />
     <Compile Include="Models\AddressViewModels\AddressIndexViewModel.cs" />
-    <Compile Include="Models\CartViewModels\CartAddViewModel.cs" />
     <Compile Include="Models\CartViewModels\CartIndexViewModel.cs" />
     <Compile Include="Models\CategoryViewModels\CategoryCreateViewModel.cs" />
     <Compile Include="Models\CategoryViewModels\CategoryDeleteViewModel.cs" />
