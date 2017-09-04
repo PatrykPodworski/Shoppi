@@ -21,16 +21,16 @@
                 @foreach (var line in Model.Lines)
                 {
                     <tr>
-                        <td>@line.ProductName</td>
+                        <td>@line.ProductName - @line.TypeLabel: @line.TypeName</td>
                         <td>
                             <div class="btn-group" role="group">
-                                <button type="button" class="btn js-decrement-button" data-id=@line.ProductId>-</button>
-                                <button type="button" class="btn" disabled id=@line.ProductId>@line.Quantity</button>
-                                <button type="button" class="btn js-increment-button" data-id=@line.ProductId>+</button>
+                                <button type="button" class="btn js-decrement-button" data-id=@line.TypeId>-</button>
+                                <button type="button" class="btn" disabled id=@line.TypeId>@line.Quantity</button>
+                                <button type="button" class="btn js-increment-button" data-id=@line.TypeId>+</button>
                             </div>
                         </td>
                         <td>
-                            <button class="btn btn-danger js-delete-button" data-id=@line.ProductId>x</button>
+                            <button class="btn btn-danger js-delete-button" data-id=@line.TypeId>x</button>
                         </td>
                     </tr>
                 }
