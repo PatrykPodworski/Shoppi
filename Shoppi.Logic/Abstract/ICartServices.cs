@@ -11,9 +11,9 @@ namespace Shoppi.Logic.Abstract
 
         void Delete(int typeId);
 
-        int DecrementProductQuantity(int typeId);
+        int DecrementCartLineQuantity(int typeId);
 
-        int IncrementProductQuantity(int typeId);
+        int IncrementCartLineQuantity(int typeId);
 
         int GetNumberOfProducts();
     }

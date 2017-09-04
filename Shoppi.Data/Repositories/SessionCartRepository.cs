@@ -50,5 +50,13 @@ namespace Shoppi.Data.Repositories
                 .FirstOrDefault(x => x.Type.Id == typeId)
                 .Quantity++;
         }
+
+        public void DecrementCartLineQuantity(int typeId)
+        {
+            GetCart()
+                .Lines
+                .FirstOrDefault(x => x.Type.Id == typeId)
+                .Quantity--;
+        }
     }
 }

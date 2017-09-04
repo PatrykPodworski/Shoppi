@@ -13,5 +13,7 @@ namespace Shoppi.Data.Abstract
         CartLine GetCartLine(int typeId);
 
         void IncrementCartLineQuantity(int typeId);
+
+        void DecrementCartLineQuantity(int typeId);
     }
 }

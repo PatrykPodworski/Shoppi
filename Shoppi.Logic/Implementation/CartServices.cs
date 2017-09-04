@@ -11,6 +11,8 @@ namespace Shoppi.Logic.Implementation
         private ICartRepository _repository;
         private ITypeServices _typeServices;
 
+        private int _minimalQuantity = 1;
+
         public CartServices(ICartRepository repository, ITypeServices typeServices)
         {
             _repository = repository;
@@ -42,18 +44,37 @@ namespace Shoppi.Logic.Implementation
             _repository.DeleteLine(typeId);
         }
 
-        public int DecrementProductQuantity(int typeId)
+        public int DecrementCartLineQuantity(int typeId)
         {
             var cartLine = _repository.GetCartLine(typeId);
+
+            if (cartLine == null)
+            {
+                return 0;
+            }
+
+            if (cartLine.Quantity == _minimalQuantity)
+            {
+                return _minimalQuantity;
+            }
+
+            _repository.DecrementCartLineQuantity(typeId);
 
             return cartLine.Quantity;
         }
 
-        public int IncrementProductQuantity(int typeId)
+        public int IncrementCartLineQuantity(int typeId)
         {
+            var cartLine = _repository.GetCartLine(typeId);
+
+            if (cartLine == null)
+            {
+                return 0;
+            }
+
             _repository.IncrementCartLineQuantity(typeId);
 
-            return _repository.GetCartLine(typeId).Quantity;
+            return cartLine.Quantity;
         }
 
         public int GetNumberOfProducts()

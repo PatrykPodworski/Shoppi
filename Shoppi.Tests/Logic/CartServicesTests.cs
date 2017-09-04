@@ -40,6 +40,7 @@ namespace Shoppi.Tests.Logic
             SetUpAddLineMethod();
             SetUpGetCartLineMethod();
             SetUpIncrementCartLineQuantityMethod();
+            SetUpDecrementCartLineQuantityMethod();
             SetUpDeleteLineMethod();
         }
 
@@ -65,6 +66,12 @@ namespace Shoppi.Tests.Logic
         {
             _mockRepository.Setup(x => x.IncrementCartLineQuantity(It.IsAny<int>()))
                 .Callback<int>(x => _cart.Lines.FirstOrDefault(y => y.Type.Id == x).Quantity++);
+        }
+
+        private void SetUpDecrementCartLineQuantityMethod()
+        {
+            _mockRepository.Setup(x => x.DecrementCartLineQuantity(It.IsAny<int>()))
+                .Callback<int>(x => _cart.Lines.FirstOrDefault(y => y.Type.Id == x).Quantity--);
         }
 
         private void SetUpDeleteLineMethod()
@@ -155,7 +162,7 @@ namespace Shoppi.Tests.Logic
             _cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
 
             // Act
-            _services.IncrementProductQuantity(id);
+            _services.IncrementCartLineQuantity(id);
 
             // Assert
             Assert.AreEqual(quantity + 1, _cart.Lines[0].Quantity);
@@ -171,10 +178,23 @@ namespace Shoppi.Tests.Logic
             _cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
 
             // Act
-            var result = _services.IncrementProductQuantity(id);
+            var result = _services.IncrementCartLineQuantity(id);
 
             // Assert
             Assert.AreEqual(quantity + 1, result);
+        }
+
+        [TestMethod]
+        public void CartServices_IncrementProductQuantity_WhenThereIsNoCartLineWithGivenId_ReturnsZero()
+        {
+            // Arrange
+            var id = 12;
+
+            // Act
+            var result = _services.IncrementCartLineQuantity(id);
+
+            // Assert
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
@@ -187,101 +207,114 @@ namespace Shoppi.Tests.Logic
             _cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
 
             // Act
-            _services.DecrementProductQuantity(id);
+            _services.DecrementCartLineQuantity(id);
 
             // Assert
-            Assert.IsTrue(_cart.Lines[0].Quantity == quantity - 1);
+            Assert.AreEqual(quantity - 1, _cart.Lines[0].Quantity);
         }
 
-        //[TestMethod]
-        //public void CartServices_DecrementProductQuantity_WhenQuantityIsEqualOne_DoesNotChangeQuantity()
-        //{
-        //    // Arrange
-        //    var id = 72;
-        //    var product = new Product() { Id = id };
-        //    var quantity = 1;
-        //    _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_WhenThereIsNoCartLineWithGivenId_ReturnsZero()
+        {
+            // Arrange
+            var id = 12;
 
-        //    // Act
-        //    _services.DecrementProductQuantity(id);
+            // Act
+            var result = _services.DecrementCartLineQuantity(id);
 
-        //    // Assert
-        //    Assert.IsTrue(_cart.Lines[0].Quantity == quantity);
-        //}
+            // Assert
+            Assert.AreEqual(0, result);
+        }
 
-        //[TestMethod]
-        //public void CartServices_DecrementProductQuantity_ReturnsNewQuantity()
-        //{
-        //    // Arrange
-        //    var id = 72;
-        //    var product = new Product() { Id = id };
-        //    var quantity = 4;
-        //    _cart.Lines.Add(new CartLine { Product = product, Quantity = quantity });
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_WhenQuantityIsEqualOne_DoesNotChangeQuantity()
+        {
+            // Arrange
+            var id = 72;
+            var quantity = 1;
+            var type = new ProductType { Id = id };
+            _cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
 
-        //    // Act
-        //    var result = _services.DecrementProductQuantity(id);
+            // Act
+            _services.DecrementCartLineQuantity(id);
 
-        //    // Assert
-        //    Assert.AreEqual(quantity - 1, result);
-        //}
+            // Assert
+            Assert.AreEqual(quantity, _cart.Lines[0].Quantity);
+        }
 
-        //[TestMethod]
-        //public void CartServices_GetNumberOfProducts_WhenCartIsEmpty_ReturnsZero()
-        //{
-        //    // Act
-        //    var result = _services.GetNumberOfProducts();
+        [TestMethod]
+        public void CartServices_DecrementProductQuantity_ReturnsNewQuantity()
+        {
+            // Arrange
+            var id = 32;
+            var quantity = 13;
+            var type = new ProductType { Id = id };
+            _cart.Lines.Add(new CartLine { Type = type, Quantity = quantity });
 
-        //    // Assert
-        //    Assert.AreEqual(0, result);
-        //}
+            // Act
+            var result = _services.DecrementCartLineQuantity(id);
 
-        //[TestMethod]
-        //public void CartServices_GetNumberOfProducts_WhenThereIsSingleProduct_ReturnsOne()
-        //{
-        //    // Arrange
-        //    _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = 1 });
+            // Assert
+            Assert.AreEqual(quantity - 1, result);
+        }
 
-        //    // Act
-        //    var result = _services.GetNumberOfProducts();
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhenCartIsEmpty_ReturnsZero()
+        {
+            // Act
+            var result = _services.GetNumberOfProducts();
 
-        //    // Assert
-        //    Assert.AreEqual(1, result);
-        //}
+            // Assert
+            Assert.AreEqual(0, result);
+        }
 
-        //[TestMethod]
-        //public void CartServices_GetNumberOfProducts_WhereThereAreManyProductsWithQuantityOfOne_ReturnsSumOfProducts()
-        //{
-        //    // Arrange
-        //    var numberOfProducts = 13;
-        //    for (int i = 0; i < numberOfProducts; i++)
-        //    {
-        //        _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = 1 });
-        //    }
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhenThereIsSingleProduct_ReturnsOne()
+        {
+            // Arrange
+            _cart.Lines.Add(new CartLine { Type = new ProductType(), Quantity = 1 });
 
-        //    // Act
-        //    var result = _services.GetNumberOfProducts();
+            // Act
+            var result = _services.GetNumberOfProducts();
 
-        //    // Assert
-        //    Assert.AreEqual(numberOfProducts, result);
-        //}
+            // Assert
+            Assert.AreEqual(1, result);
+        }
 
-        //[TestMethod]
-        //public void CartServices_GetNumberOfProducts_WhereThereAreProductsWithDiffrentQuantity_ReturnsSumOfQuantities()
-        //{
-        //    // Arrange
-        //    var numberOfProducts = 5;
-        //    var sum = 0;
-        //    for (int i = 0; i < numberOfProducts; i++)
-        //    {
-        //        _cart.Lines.Add(new CartLine { Product = new Product(), Quantity = i });
-        //        sum += i;
-        //    }
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhereThereAreManyProductsWithQuantityOfOne_ReturnsSumOfProducts()
+        {
+            // Arrange
+            var numberOfProducts = 13;
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _cart.Lines.Add(new CartLine { Type = new ProductType(), Quantity = 1 });
+            }
 
-        //    // Act
-        //    var result = _services.GetNumberOfProducts();
+            // Act
+            var result = _services.GetNumberOfProducts();
 
-        //    // Assert
-        //    Assert.AreEqual(sum, result);
-        //}
+            // Assert
+            Assert.AreEqual(numberOfProducts, result);
+        }
+
+        [TestMethod]
+        public void CartServices_GetNumberOfProducts_WhereThereAreProductsWithDiffrentQuantity_ReturnsSumOfQuantities()
+        {
+            // Arrange
+            var numberOfProducts = 5;
+            var sum = 0;
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _cart.Lines.Add(new CartLine { Type = new ProductType(), Quantity = i });
+                sum += i;
+            }
+
+            // Act
+            var result = _services.GetNumberOfProducts();
+
+            // Assert
+            Assert.AreEqual(sum, result);
+        }
     }
 }

@@ -37,14 +37,14 @@ namespace Shoppi.Controllers
         [HttpPost]
         public ActionResult DecrementQuantity(int id)
         {
-            var newQuantity = _cartServices.DecrementProductQuantity(id);
+            var newQuantity = _cartServices.DecrementCartLineQuantity(id);
             return Json(new { quantity = newQuantity });
         }
 
         [HttpPost]
         public ActionResult IncrementQuantity(int id)
         {
-            var newQuantity = _cartServices.IncrementProductQuantity(id);
+            var newQuantity = _cartServices.IncrementCartLineQuantity(id);
             return Json(new { quantity = newQuantity });
         }
 
