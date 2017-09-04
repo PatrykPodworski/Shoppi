@@ -6,7 +6,7 @@ namespace Shoppi.Data.Models
     {
         public Product()
         {
-            TypeName = "Size";
+            TypeLabel = "Size";
             Types = new List<ProductType>();
         }
 
@@ -28,6 +28,6 @@ namespace Shoppi.Data.Models
 
         public virtual List<ProductType> Types { get; set; }
 
-        public string TypeName { get; set; }
+        public string TypeLabel { get; set; }
     }
 }

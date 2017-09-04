@@ -9,8 +9,14 @@ namespace Shoppi.Web.Models.CartViewModels
 
     public class CartLineViewModel
     {
-        public int ProductId { get; set; }
+        public int TypeId { get; set; }
+
+        public string TypeLabel { get; set; }
+
+        public string TypeName { get; set; }
+
         public string ProductName { get; set; }
+
         public int Quantity { get; set; }
     }
 }
