@@ -9,6 +9,7 @@ namespace Shoppi.Data.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<ProductType> Types { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
