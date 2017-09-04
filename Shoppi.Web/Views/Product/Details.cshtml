@@ -29,7 +29,7 @@
                 <h4><b>@Model.Price $</b> <small>VAT included</small></h4>
             </div>
             <div class="form-group">
-                @Html.DropDownList("Type", Model.Types, "Choose a " + Model.TypeName, new { @class = "form-control" })
+                @Html.DropDownList("Type", Model.Types, "Choose a " + Model.TypeLabel, new { @class = "form-control js-type-dropdown" })
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block js-add-to-cart">Add To Cart</button>
@@ -58,7 +58,7 @@
         $('.js-add-to-cart').click((e) => $.ajax({
             type: 'POST',
             url: '@Url.Action("Add", "Cart")',
-            data: { id: @Model.Id },
+            data: { id:$(".js-type-dropdown").val() },
             success: (data) => updateCartBadge(data.numberOfProducts)
         }));
     </script>
