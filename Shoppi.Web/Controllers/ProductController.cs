@@ -95,11 +95,20 @@ namespace Shoppi.Controllers
                 return HttpNotFound();
             }
 
-            var categories = await _categoryServices.GetAllAsync();
-            var model = Mapper.Map<ProductEditViewModel>(product);
-            model.Categories = categories.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            var model = await CreateEditViewModel(product);
 
             return View(model);
+        }
+
+        private async Task<ProductEditViewModel> CreateEditViewModel(Product product)
+        {
+            var categories = await _categoryServices.GetAllAsync();
+            var brands = await _brandServices.GetAllAsync();
+            var model = Mapper.Map<ProductEditViewModel>(product);
+            model.Categories = categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            model.Brands = brands.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+
+            return model;
         }
 
         [HttpPost]

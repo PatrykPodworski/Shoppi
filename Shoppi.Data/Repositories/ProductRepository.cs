@@ -33,6 +33,7 @@ namespace Shoppi.Data.Repositories
             toEdit.Name = editValues.Name;
             toEdit.Price = editValues.Price;
             toEdit.CategoryId = editValues.CategoryId;
+            toEdit.BrandId = editValues.BrandId;
         }
 
         public void Delete(int id)

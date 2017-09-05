@@ -84,6 +84,7 @@ namespace Shoppi.Tests
                     productFromRepository.Name = x.Name;
                     productFromRepository.CategoryId = x.CategoryId;
                     productFromRepository.Price = x.Price;
+                    productFromRepository.BrandId = x.BrandId;
                 }));
         }
 
@@ -237,6 +238,38 @@ namespace Shoppi.Tests
             Assert.IsTrue(IsEdited(existingProduct, newProduct));
         }
 
+        private void EditProductValues(Product product)
+        {
+            product.Name = "New" + product.Name;
+            product.Price = product.Price * 2 + 1m;
+            product.CategoryId = product.CategoryId * 2 + 1;
+            product.BrandId = product.BrandId * 2 + 1;
+        }
+
+        private bool IsEdited(Product editedProduct, Product editValues)
+        {
+            if (editedProduct.Name != editValues.Name)
+            {
+                return false;
+            }
+            if (editedProduct.CategoryId != editValues.CategoryId)
+            {
+                return false;
+            }
+
+            if (editedProduct.Price != editValues.Price)
+            {
+                return false;
+            }
+
+            if (editedProduct.BrandId != editValues.BrandId)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         [TestMethod]
         [ExpectedException(typeof(ProductValidationException))]
         public async Task ProductServices_Edit_WhenNameIsSetToNull_ThrowsException()
@@ -293,32 +326,6 @@ namespace Shoppi.Tests
 
             // Assert
             Assert.IsTrue(IsEdited(existingProduct, newProduct));
-        }
-
-        private void EditProductValues(Product product)
-        {
-            product.Name = "New" + product.Name;
-            product.Price = product.Price * 2 + 1m;
-            product.CategoryId = product.CategoryId * 2 + 1;
-        }
-
-        private bool IsEdited(Product editedProduct, Product editValues)
-        {
-            if (editedProduct.Name != editValues.Name)
-            {
-                return false;
-            }
-            if (editedProduct.CategoryId != editValues.CategoryId)
-            {
-                return false;
-            }
-
-            if (editedProduct.Price != editValues.Price)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         [TestMethod]

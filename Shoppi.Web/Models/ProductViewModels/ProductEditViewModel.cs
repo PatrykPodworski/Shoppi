@@ -9,10 +9,14 @@ namespace Shoppi.Web.Models.ProductViewModels
         public ProductEditViewModel()
         {
             Categories = new List<SelectListItem>();
+            Brands = new List<SelectListItem>();
         }
 
         [Required]
         public List<SelectListItem> Categories { get; set; }
+
+        [Required]
+        public List<SelectListItem> Brands { get; set; }
 
         [Required]
         public int Id { get; set; }
@@ -25,8 +29,8 @@ namespace Shoppi.Web.Models.ProductViewModels
         public int? CategoryId { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "The quantity must be greater than or equal to 0.")]
-        public int Quantity { get; set; }
+        [Display(Name = "Brand")]
+        public int? BrandId { get; set; }
 
         [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The price must be greater than 0.")]
