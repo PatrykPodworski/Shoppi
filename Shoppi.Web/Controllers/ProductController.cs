@@ -3,6 +3,7 @@ using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using Shoppi.Web.Models.ProductViewModels;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -29,11 +30,35 @@ namespace Shoppi.Controllers
 
         public async Task<ActionResult> Create()
         {
-            var categories = await _categoryServices.GetAllAsync();
+            var model = await CreateProductCreateViewModel();
+
+            return View(model);
+        }
+
+        private async Task<ProductCreateViewModel> CreateProductCreateViewModel()
+        {
+            var categories = await _categoryServices.GetAllFinalCategoriesAsync();
             var brands = await _brandServices.GetAllAsync();
 
-            var model = new ProductCreateViewModel(categories, brands);
-            return View(model);
+            return new ProductCreateViewModel()
+            {
+                Categories = ToSelectListItems(categories),
+                Brands = ToSelectListItems(brands)
+            };
+        }
+
+        private List<SelectListItem> ToSelectListItems(List<Category> categories)
+        {
+            return categories
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.GetFullCategoryPathName() })
+                .ToList();
+        }
+
+        private List<SelectListItem> ToSelectListItems(List<Brand> categories)
+        {
+            return categories
+                .Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name })
+                .ToList();
         }
 
         [HttpPost]
@@ -102,11 +127,11 @@ namespace Shoppi.Controllers
 
         private async Task<ProductEditViewModel> CreateEditViewModel(Product product)
         {
-            var categories = await _categoryServices.GetAllAsync();
+            var categories = await _categoryServices.GetAllFinalCategoriesAsync();
             var brands = await _brandServices.GetAllAsync();
             var model = Mapper.Map<ProductEditViewModel>(product);
-            model.Categories = categories.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
-            model.Brands = brands.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() }).ToList();
+            model.Categories = ToSelectListItems(categories);
+            model.Brands = ToSelectListItems(brands);
 
             return model;
         }
