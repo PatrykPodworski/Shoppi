@@ -14,6 +14,8 @@ namespace Shoppi.Logic.Abstract
 
         Task<List<Category>> GetSubCategoriesAsync(int id);
 
+        Task<List<Category>> GetAllFinalCategoriesAsync();
+
         Task EditAsync(Category category);
 
         Task DeleteAsync(int id);

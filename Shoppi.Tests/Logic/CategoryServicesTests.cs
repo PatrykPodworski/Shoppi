@@ -363,5 +363,25 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.IsTrue(result.Count == 0);
         }
+
+        [TestMethod]
+        public async Task CategoryServices_GetAllFinalCategories_ReturnsAllCategoriesThatDoesNotHaveSubCategories()
+        {
+            // Arrange
+            var finalCategory = new Category();
+            var finalCategory2 = new Category();
+            var finalCategory3 = new Category();
+
+            var subCategory = new Category { SubCategories = new List<Category> { finalCategory3 } };
+            var headCategory = new Category { SubCategories = new List<Category> { finalCategory2, subCategory } };
+
+            _categories.AddRange(new List<Category> { headCategory, subCategory, finalCategory, finalCategory2, finalCategory3 });
+
+            // Act
+            var result = await _categoryServices.GetAllFinalCategoriesAsync();
+
+            // Assert
+            Assert.AreEqual(3, result.Count);
+        }
     }
 }

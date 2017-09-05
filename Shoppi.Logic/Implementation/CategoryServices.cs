@@ -3,6 +3,7 @@ using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shoppi.Logic.Implementation
@@ -49,6 +50,13 @@ namespace Shoppi.Logic.Implementation
         public async Task<List<Category>> GetSubCategoriesAsync(int id)
         {
             return await _repository.GetSubCategoriesAsync(id);
+        }
+
+        public async Task<List<Category>> GetAllFinalCategoriesAsync()
+        {
+            var categories = await _repository.GetAllAsync();
+
+            return categories.Where(x => x.SubCategories.Count == 0).ToList();
         }
 
         public async Task EditAsync(Category category)
