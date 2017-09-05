@@ -38,10 +38,6 @@ namespace Shoppi.Web.Models.ProductViewModels
         public int BrandId { get; set; }
 
         [Required]
-        [Range(0, int.MaxValue, ErrorMessage = "The quantity must be greater than or equal to 0.")]
-        public int Quantity { get; set; }
-
-        [Required]
         [Range(0, int.MaxValue, ErrorMessage = "The price must be greater than 0.")]
         public decimal Price { get; set; }
     }

@@ -25,10 +25,6 @@
                 @Html.DropDownListFor(x => x.BrandId, Model.Brands, "Choose a brand", new { @class = "form-control" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => x.Quantity)
-                @Html.EditorFor(x => x.Quantity, "BootstrapInt")
-            </div>
-            <div class="form-group">
                 @Html.LabelFor(x => x.Price)
                 @Html.EditorFor(x => x.Price, "BootstrapDecimal")
             </div>
