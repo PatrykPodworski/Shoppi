@@ -14,18 +14,25 @@ namespace Shoppi.Controllers
         private readonly IProductServices _productServices;
         private readonly ICategoryServices _categoryServices;
         private readonly IImageServices _imageServices;
+        private readonly IBrandServices _brandServices;
 
-        public ProductController(IProductServices productServices, ICategoryServices categoryServices, IImageServices imageServices)
+        public ProductController(IProductServices productServices,
+                                 ICategoryServices categoryServices,
+                                 IImageServices imageServices,
+                                 IBrandServices brandServices)
         {
             _productServices = productServices;
             _categoryServices = categoryServices;
             _imageServices = imageServices;
+            _brandServices = brandServices;
         }
 
         public async Task<ActionResult> Create()
         {
             var categories = await _categoryServices.GetAllAsync();
-            var model = new ProductCreateViewModel(categories);
+            var brands = await _brandServices.GetAllAsync();
+
+            var model = new ProductCreateViewModel(categories, brands);
             return View(model);
         }
 

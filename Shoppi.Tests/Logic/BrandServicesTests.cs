@@ -28,8 +28,20 @@ namespace Shoppi.Tests.Logic
 
         private void SetupMockRepository()
         {
+            SetUpGetByIdMethod();
+            SetUpGetAllMethod();
+        }
+
+        private void SetUpGetByIdMethod()
+        {
             _mockRepository.Setup(x => x.GetByIdAsync(It.IsAny<int>()))
                 .Returns<int>(x => Task.Run(() => _brands.FirstOrDefault(y => y.Id == x)));
+        }
+
+        private void SetUpGetAllMethod()
+        {
+            _mockRepository.Setup(x => x.GetAllAsync())
+                .Returns(Task.Run(() => _brands));
         }
 
         [TestMethod]
@@ -58,6 +70,34 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.AreEqual(brand, result);
+        }
+
+        [TestMethod]
+        public async Task BrandServices_GetAll_ReturnsListOfAllBrands()
+        {
+            // Arrange
+            var numberOfBrands = 13;
+
+            for (int i = 0; i < numberOfBrands; i++)
+            {
+                _brands.Add(new Brand());
+            }
+
+            // Act
+            var result = await _brandServices.GetAllAsync();
+
+            // Assert
+            Assert.AreEqual(numberOfBrands, result.Count);
+        }
+
+        [TestMethod]
+        public async Task BrandServices_GetAll_WhenThereAreNoBrands_ReturnsEmptyList()
+        {
+            // Act
+            var result = await _brandServices.GetAllAsync();
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
         }
     }
 }
