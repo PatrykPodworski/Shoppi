@@ -9,7 +9,8 @@ namespace Shoppi.Web.Models.ProductViewModels
 
         public string Name { get; set; }
 
-        public int Quantity { get; set; }
+        [Display(Name = "Brand")]
+        public string BrandName { get; set; }
 
         public decimal Price { get; set; }
     }
