@@ -8,11 +8,10 @@ namespace Shoppi.Data.Seeders
 {
     public class ProductSeeder
     {
-        private ShoppiDbContext _context;
-
-        private List<int> _brandIds;
-
-        private Random _random;
+        private readonly ShoppiDbContext _context;
+        private readonly List<int> _brandIds;
+        private readonly Random _random;
+        private readonly List<string> _imagePaths;
 
         public ProductSeeder(ShoppiDbContext context)
         {
@@ -21,6 +20,23 @@ namespace Shoppi.Data.Seeders
             _random = new Random();
 
             _brandIds = _context.Brands.Where(x => true).Select(x => x.Id).ToList();
+
+            _imagePaths = GetImagePaths();
+        }
+
+        private List<string> GetImagePaths()
+        {
+            var basePath = "\\images\\products\\";
+
+            return new List<string>
+            {
+                basePath + "01.jpg",
+                basePath + "02.jpg",
+                basePath + "03.jpg",
+                basePath + "04.jpg",
+                basePath + "05.jpg",
+                basePath + "06.jpg",
+            };
         }
 
         public void Seed()
@@ -59,6 +75,7 @@ namespace Shoppi.Data.Seeders
         {
             product.BrandId = PickRandomBrandId();
             product.Types = GenerateTypes();
+            product.ImagePath = PickRandomImagePath();
             _context.Products.AddOrUpdate(x => new { x.Name, x.CategoryId }, product);
         }
 
@@ -83,6 +100,11 @@ namespace Shoppi.Data.Seeders
         private int PickRandomBrandId()
         {
             return _brandIds[_random.Next(_brandIds.Count)];
+        }
+
+        private string PickRandomImagePath()
+        {
+            return _imagePaths[_random.Next(_imagePaths.Count)];
         }
 
         private void SeedTops()
