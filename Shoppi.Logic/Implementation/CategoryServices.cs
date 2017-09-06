@@ -80,7 +80,8 @@ namespace Shoppi.Logic.Implementation
             }
 
             var category = await GetByIdAsync(id);
-            return category.SubCategories.Count == 0;
+
+            return category?.SubCategories.Count == 0;
         }
     }
 }

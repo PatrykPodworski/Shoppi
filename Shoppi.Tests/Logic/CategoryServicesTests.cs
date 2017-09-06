@@ -426,5 +426,18 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public async Task CategoryServices_IsFinalCategory_WhenCategoryDoesNotExists_ReturnsFalse()
+        {
+            // Arrange
+            var id = 12;
+
+            // Act
+            var result = await _categoryServices.IsFinalCategoryAsync(id);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }
