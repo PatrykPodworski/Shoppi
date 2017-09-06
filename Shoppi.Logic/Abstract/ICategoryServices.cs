@@ -19,5 +19,7 @@ namespace Shoppi.Logic.Abstract
         Task EditAsync(Category category);
 
         Task DeleteAsync(int id);
+
+        Task<bool> IsFinalCategoryAsync(int id);
     }
 }

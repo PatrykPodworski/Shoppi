@@ -2,6 +2,7 @@
 using Moq;
 using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using Shoppi.Logic.Implementation;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Shoppi.Tests
     public class ProductServicesTests
     {
         private Mock<IProductRepository> _mockRepository;
+        private Mock<ICategoryServices> _mockCategoryServices;
         private ProductServices _productServices;
         private List<Product> _products;
 
@@ -22,11 +24,12 @@ namespace Shoppi.Tests
         {
             _products = new List<Product>();
 
-            var mockRepository = SetUpMockRepository();
-            _productServices = new ProductServices(mockRepository.Object);
+            SetUpMockRepository();
+            SetUpMockCategoryServices();
+            _productServices = new ProductServices(_mockRepository.Object, _mockCategoryServices.Object);
         }
 
-        private Mock<IProductRepository> SetUpMockRepository()
+        private void SetUpMockRepository()
         {
             _mockRepository = new Mock<IProductRepository>();
             SetUpCreateMethod();
@@ -36,8 +39,6 @@ namespace Shoppi.Tests
             SetUpGetByIdMethod();
             SetUpEditMethod();
             SetUpDeleteMethod();
-
-            return _mockRepository;
         }
 
         private void SetUpCreateMethod()
@@ -92,6 +93,18 @@ namespace Shoppi.Tests
         {
             _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
                 .Callback<int>(x => _products.RemoveAll(y => y.Id == x));
+        }
+
+        private void SetUpMockCategoryServices()
+        {
+            _mockCategoryServices = new Mock<ICategoryServices>();
+            SetUpIsFinalCategoryMethod(true);
+        }
+
+        private void SetUpIsFinalCategoryMethod(bool returns)
+        {
+            _mockCategoryServices.Setup(x => x.IsFinalCategoryAsync(It.IsAny<int>()))
+                .Returns(Task.Run(() => returns));
         }
 
         [TestMethod]
@@ -153,20 +166,6 @@ namespace Shoppi.Tests
                 Name = "ProductName",
                 Price = 0.01m,
             };
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_Create_WhenNameIsNotUnique_ThrowsException()
-        {
-            // Arrange
-            var productName = "Product";
-
-            var product = new Product { Name = productName };
-            _products.Add(new Product { Name = productName, Id = 1 });
-
-            // Act
-            await _productServices.CreateAsync(product);
         }
 
         [TestMethod]
@@ -275,10 +274,11 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenNameIsSetToNull_ThrowsException()
         {
             // Arrange
-            var newProduct = new Product { Id = 1 };
+            var product = GenerateValidProduct();
+            product.Name = null;
 
             // Act
-            await _productServices.EditAsync(newProduct);
+            await _productServices.EditAsync(product);
         }
 
         [TestMethod]
@@ -286,25 +286,11 @@ namespace Shoppi.Tests
         public async Task ProductServices_Edit_WhenNameIsSetToWhitespace_ThrowsException()
         {
             // Arrange
-            var newProduct = new Product { Name = "  ", Id = 1 };
+            var product = GenerateValidProduct();
+            product.Name = " ";
 
             // Act
-            await _productServices.EditAsync(newProduct);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ProductValidationException))]
-        public async Task ProductServices_Edit_WhenNewNameIsNotUnique_ThrowsException()
-        {
-            // Arrange
-            var productName = "Product";
-            var existingProduct = new Product { Name = productName, Id = 2 };
-            _products.Add(existingProduct);
-
-            var newProduct = new Product { Name = productName, Id = 1 };
-
-            // Act
-            await _productServices.EditAsync(newProduct);
+            await _productServices.EditAsync(product);
         }
 
         [TestMethod]
@@ -458,6 +444,33 @@ namespace Shoppi.Tests
 
             var newProduct = GenerateValidProduct();
             newProduct.Price = price;
+
+            // Act
+            await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Create_WhenCategoryIdIsNotFinal_ThrowsException()
+        {
+            // Arrange
+            SetUpIsFinalCategoryMethod(false);
+            var product = GenerateValidProduct();
+
+            // Act
+            await _productServices.CreateAsync(product);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ProductValidationException))]
+        public async Task ProductServices_Edit_WhenCategoryIdIsNotFinal_ThrowsException()
+        {
+            // Arrange
+            var product = GenerateValidProduct();
+            _products.Add(product);
+
+            var newProduct = GenerateValidProduct();
+            SetUpIsFinalCategoryMethod(false);
 
             // Act
             await _productServices.EditAsync(newProduct);

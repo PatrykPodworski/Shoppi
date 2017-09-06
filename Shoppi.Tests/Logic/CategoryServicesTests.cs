@@ -383,5 +383,48 @@ namespace Shoppi.Tests.Logic
             // Assert
             Assert.AreEqual(3, result.Count);
         }
+
+        [TestMethod]
+        public async Task CategoryServices_IsFinalCategory_WhenCategoryDoesNotHaveSubCategories_ReturnsTrue()
+        {
+            // Arrange
+            var id = 93;
+            var category = new Category { Id = id };
+            _categories.Add(category);
+
+            // Act
+            var result = await _categoryServices.IsFinalCategoryAsync(id);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_IsFinalCategory_WhenCategoryHaveSubCategories_ReturnsTrue()
+        {
+            // Arrange
+            var id = 93;
+            var category = new Category { Id = id, SubCategories = new List<Category> { new Category() } };
+            _categories.Add(category);
+
+            // Act
+            var result = await _categoryServices.IsFinalCategoryAsync(id);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public async Task CategoryServices_IsFinalCategory_WhenIdIsEqualToZero_ReturnsFalse()
+        {
+            // Arrange
+            var id = 0;
+
+            // Act
+            var result = await _categoryServices.IsFinalCategoryAsync(id);
+
+            // Assert
+            Assert.IsFalse(result);
+        }
     }
 }

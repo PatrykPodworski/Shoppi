@@ -71,5 +71,16 @@ namespace Shoppi.Logic.Implementation
             _repository.Delete(id);
             await _repository.SaveAsync();
         }
+
+        public async Task<bool> IsFinalCategoryAsync(int id)
+        {
+            if (id == 0)
+            {
+                return false;
+            }
+
+            var category = await GetByIdAsync(id);
+            return category.SubCategories.Count == 0;
+        }
     }
 }

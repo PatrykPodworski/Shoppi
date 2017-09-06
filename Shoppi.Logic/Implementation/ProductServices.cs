@@ -10,10 +10,12 @@ namespace Shoppi.Logic.Implementation
     public class ProductServices : IProductServices
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryServices _categoryServices;
 
-        public ProductServices(IProductRepository productRepository)
+        public ProductServices(IProductRepository productRepository, ICategoryServices categroryServices)
         {
             _productRepository = productRepository;
+            _categoryServices = categroryServices;
         }
 
         public async Task CreateAsync(Product product)
@@ -35,9 +37,9 @@ namespace Shoppi.Logic.Implementation
                 throw new ProductValidationException("Invalid product price: " + product.Price);
             }
 
-            if (await IsNotUniqueProduct(product))
+            if (await IsInvalidCategory(product.CategoryId))
             {
-                throw new ProductValidationException("There already is a product with a given name.");
+                throw new ProductValidationException("Invalid category.");
             }
         }
 
@@ -46,26 +48,14 @@ namespace Shoppi.Logic.Implementation
             return string.IsNullOrWhiteSpace(name);
         }
 
-        private bool IsInvalidProductQuantity(int quantity)
+        private async Task<bool> IsInvalidCategory(int categoryId)
         {
-            return quantity < 0;
+            return !(await _categoryServices.IsFinalCategoryAsync(categoryId));
         }
 
         private bool IsInvalidPrice(decimal price)
         {
             return price <= 0m;
-        }
-
-        private async Task<bool> IsNotUniqueProduct(Product product)
-        {
-            var productFromDb = await _productRepository.GetByNameAsync(product.Name);
-
-            if (productFromDb == null)
-            {
-                return false;
-            }
-
-            return productFromDb.Id != product.Id;
         }
 
         public Task<List<Product>> GetAllAsync()
