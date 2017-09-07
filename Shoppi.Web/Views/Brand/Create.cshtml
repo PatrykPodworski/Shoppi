@@ -1,0 +1,27 @@
+﻿@model Shoppi.Web.Models.BrandViewModels.BrandCreateViewModel
+@{
+    ViewBag.Title = "Create a brand";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.Partial("PageHeader")
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name)
+                @Html.EditorFor(m => m.Name, "BootstrapString")
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ImagePath)
+                @Html.EditorFor(m => m.ImagePath, "BootstrapString")
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.ReturnUrl)
+                <a href=@Model.ReturnUrl>Cancel</a>
+                <button type="submit" class="btn btn-primary pull-right">Create</button>
+            </div>
+        }
+    </div>
+</div>

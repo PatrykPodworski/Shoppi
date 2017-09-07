@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Web.Models.AccountViewModels;
 using Shoppi.Web.Models.AddressViewModels;
+using Shoppi.Web.Models.BrandViewModels;
 using Shoppi.Web.Models.CartViewModels;
 using Shoppi.Web.Models.CategoryViewModels;
 using Shoppi.Web.Models.ProductViewModels;
@@ -29,6 +30,7 @@ namespace Shoppi.App_Start
             CreateAccountMaps();
             CreateAddressMaps();
             CreateCartMaps();
+            CreateBrandMaps();
         }
 
         private void CreateProductMaps()
@@ -71,6 +73,11 @@ namespace Shoppi.App_Start
         {
             CreateMap<Cart, CartIndexViewModel>();
             CreateMap<CartLine, CartLineViewModel>();
+        }
+
+        private void CreateBrandMaps()
+        {
+            CreateMap<BrandCreateViewModel, Brand>();
         }
     }
 }

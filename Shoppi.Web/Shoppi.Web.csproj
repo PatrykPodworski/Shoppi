@@ -184,6 +184,7 @@
     <Compile Include="Models\AddressViewModels\AddressCreateViewModel.cs" />
     <Compile Include="Models\AddressViewModels\AddressEditViewModel.cs" />
     <Compile Include="Models\AddressViewModels\AddressIndexViewModel.cs" />
+    <Compile Include="Models\BrandViewModels\BrandCreateViewModel.cs" />
     <Compile Include="Models\CartViewModels\CartIndexViewModel.cs" />
     <Compile Include="Models\CategoryViewModels\CategoryCreateViewModel.cs" />
     <Compile Include="Models\CategoryViewModels\CategoryDeleteViewModel.cs" />
@@ -241,6 +242,7 @@
     <Content Include="Views\Shared\AuthenticatedNavbarPartial.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Brand\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
