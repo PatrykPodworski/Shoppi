@@ -9,5 +9,9 @@ namespace Shoppi.Data.Abstract
         Task<Brand> GetByIdAsync(int id);
 
         Task<List<Brand>> GetAllAsync();
+
+        void Create(Brand brand);
+
+        Task SaveAsync();
     }
 }

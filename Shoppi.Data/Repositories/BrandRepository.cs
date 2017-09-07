@@ -24,5 +24,15 @@ namespace Shoppi.Data.Repositories
         {
             return await _context.Brands.ToListAsync();
         }
+
+        public void Create(Brand brand)
+        {
+            _context.Brands.Add(brand);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

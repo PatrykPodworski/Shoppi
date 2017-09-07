@@ -9,5 +9,7 @@ namespace Shoppi.Logic.Abstract
         Task<Brand> GetByIdAsync(int id);
 
         Task<List<Brand>> GetAllAsync();
+
+        Task CreateAsync(Brand brand);
     }
 }

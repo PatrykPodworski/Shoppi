@@ -51,6 +51,7 @@
     <Compile Include="Abstract\IUserServices.cs" />
     <Compile Include="Exceptions\AddressUnauthorizedAccessException.cs" />
     <Compile Include="Exceptions\AddressValidationException.cs" />
+    <Compile Include="Exceptions\BrandValidationException.cs" />
     <Compile Include="Exceptions\CategoryValidationException.cs" />
     <Compile Include="Exceptions\ProductValidationException.cs" />
     <Compile Include="Implementation\AddressServices.cs" />

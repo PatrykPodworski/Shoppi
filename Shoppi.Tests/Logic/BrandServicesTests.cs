@@ -2,6 +2,7 @@
 using Moq;
 using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Logic.Exceptions;
 using Shoppi.Logic.Implementation;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace Shoppi.Tests.Logic
         {
             SetUpGetByIdMethod();
             SetUpGetAllMethod();
+            SetUpCreateMethod();
         }
 
         private void SetUpGetByIdMethod()
@@ -42,6 +44,12 @@ namespace Shoppi.Tests.Logic
         {
             _mockRepository.Setup(x => x.GetAllAsync())
                 .Returns(Task.Run(() => _brands));
+        }
+
+        private void SetUpCreateMethod()
+        {
+            _mockRepository.Setup(x => x.Create(It.IsAny<Brand>()))
+                .Callback<Brand>(x => _brands.Add(x));
         }
 
         [TestMethod]
@@ -98,6 +106,52 @@ namespace Shoppi.Tests.Logic
 
             // Assert
             Assert.AreEqual(0, result.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BrandValidationException))]
+        public async Task BrandServices_Create_WhenNameIsNull_ThrowsException()
+        {
+            // Arrange
+            var brand = GenerateValidBrand();
+            brand.Name = null;
+
+            // Act
+            await _brandServices.CreateAsync(brand);
+        }
+
+        private Brand GenerateValidBrand()
+        {
+            return new Brand
+            {
+                Name = "BrandName",
+                Products = new List<Product>()
+            };
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BrandValidationException))]
+        public async Task BrandServices_Create_WhenNameIsWhitespace_ThrowsException()
+        {
+            // Arrange
+            var brand = GenerateValidBrand();
+            brand.Name = "  ";
+
+            // Act
+            await _brandServices.CreateAsync(brand);
+        }
+
+        [TestMethod]
+        public async Task BrandServices_Create_WhenValidDataIsGiven_CreatesNewBrandInRepository()
+        {
+            // Arrange
+            var brand = GenerateValidBrand();
+
+            // Act
+            await _brandServices.CreateAsync(brand);
+
+            // Assert
+            Assert.AreEqual(1, _brands.Count);
         }
     }
 }
