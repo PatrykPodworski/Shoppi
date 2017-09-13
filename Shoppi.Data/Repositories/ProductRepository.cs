@@ -1,5 +1,6 @@
 ﻿using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Data.Specifications;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -46,6 +47,11 @@ namespace Shoppi.Data.Repositories
         public Task<List<Product>> GetAllAsync()
         {
             return _context.Products.ToListAsync();
+        }
+
+        public async Task<ICollection<Product>> GetAsync(Specification<Product> specification)
+        {
+            return await specification.SatisfyingItemsFrom(_context.Products).ToListAsync();
         }
 
         public Task<Product> GetByIdAsync(int id)

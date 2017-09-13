@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
+using Shoppi.Logic.Factories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -61,6 +62,13 @@ namespace Shoppi.Logic.Implementation
         public Task<List<Product>> GetAllAsync()
         {
             return _productRepository.GetAllAsync();
+        }
+
+        public async Task<ICollection<Product>> GetAsync(ProductSpecificationFilters filters)
+        {
+            var builder = new PagedProductSpecificationBuilder(filters);
+            var specification = builder.GetResult();
+            return await _productRepository.GetAsync(specification);
         }
 
         public Task<List<Product>> GetByCategoryIdAsync(int categoryId)

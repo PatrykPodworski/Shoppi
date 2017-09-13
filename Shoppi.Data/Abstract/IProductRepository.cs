@@ -1,4 +1,5 @@
 ﻿using Shoppi.Data.Models;
+using Shoppi.Data.Specifications;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace Shoppi.Data.Abstract
         Task<Product> GetByNameAsync(string name);
 
         Task<List<Product>> GetAllAsync();
+
+        Task<ICollection<Product>> GetAsync(Specification<Product> specification);
 
         Task<List<Product>> GetByCategoryIdAsync(int categoryId);
 
