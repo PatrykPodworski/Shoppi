@@ -23,7 +23,7 @@ namespace Shoppi.Web.Models.ProductViewModels
         }
 
         [Required]
-        public List<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public int? ChosenCategoryId { get; set; }
     }

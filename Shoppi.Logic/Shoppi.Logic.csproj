@@ -54,6 +54,8 @@
     <Compile Include="Exceptions\BrandValidationException.cs" />
     <Compile Include="Exceptions\CategoryValidationException.cs" />
     <Compile Include="Exceptions\ProductValidationException.cs" />
+    <Compile Include="Implementation\PagedProductSpecificationBuilder.cs" />
+    <Compile Include="Implementation\ProductSpecificationFilters.cs" />
     <Compile Include="Implementation\AddressServices.cs" />
     <Compile Include="Implementation\BrandServices.cs" />
     <Compile Include="Implementation\CategoryServices.cs" />

@@ -2,6 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
+using Shoppi.Logic.Factories;
 using Shoppi.Web.Models.ProductViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,7 +87,9 @@ namespace Shoppi.Controllers
 
         public async Task<ActionResult> Index(int? id)
         {
-            var model = await CreateProductListViewModel(id);
+            var filters = new ProductSpecificationFilters { Page = 1, ProductPerPage = 9 };
+            var products = await _productServices.GetAsync(filters);
+            var model = new ProductIndexViewModel { Products = products };
             return View(model);
         }
 
