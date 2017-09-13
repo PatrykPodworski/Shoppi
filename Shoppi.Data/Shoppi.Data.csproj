@@ -140,6 +140,7 @@
     <Compile Include="Seeders\CategorySeeder.cs" />
     <Compile Include="Seeders\ProductSeeder.cs" />
     <Compile Include="Seeders\UserSeeder.cs" />
+    <Compile Include="Specifications\Specification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
