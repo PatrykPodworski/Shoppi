@@ -14,12 +14,12 @@ namespace Shoppi.Logic.Factories
 
         public Specification<Product> GetResult()
         {
-            var productsToSkip = (_filters.Page - 1) * _filters.ProductPerPage;
+            var productsToSkip = (_filters.Page - 1) * _filters.ProductsPerPage;
 
             return new Specification<Product>(x => true)
                 .OrderBy(x => x.Name)
                 .Skip(productsToSkip)
-                .Take(_filters.ProductPerPage);
+                .Take(_filters.ProductsPerPage);
         }
     }
 
