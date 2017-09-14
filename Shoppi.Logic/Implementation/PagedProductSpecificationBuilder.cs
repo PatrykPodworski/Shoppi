@@ -1,5 +1,6 @@
 ﻿using Shoppi.Data.Models;
 using Shoppi.Data.Specifications;
+using Shoppi.Logic.Implementation;
 
 namespace Shoppi.Logic.Factories
 {

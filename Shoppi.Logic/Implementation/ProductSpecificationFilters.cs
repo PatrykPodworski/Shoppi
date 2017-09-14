@@ -1,4 +1,4 @@
-﻿namespace Shoppi.Logic.Factories
+﻿namespace Shoppi.Logic.Implementation
 {
     public class ProductSpecificationFilters
     {

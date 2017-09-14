@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Shoppi.Data.Models;
-using Shoppi.Logic.Factories;
+using Shoppi.Logic.Implementation;
 using Shoppi.Web.Models.AccountViewModels;
 using Shoppi.Web.Models.AddressViewModels;
 using Shoppi.Web.Models.BrandViewModels;

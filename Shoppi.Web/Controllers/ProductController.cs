@@ -2,7 +2,7 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
-using Shoppi.Logic.Factories;
+using Shoppi.Logic.Implementation;
 using Shoppi.Web.Models.ProductViewModels;
 using System.Collections.Generic;
 using System.Linq;
