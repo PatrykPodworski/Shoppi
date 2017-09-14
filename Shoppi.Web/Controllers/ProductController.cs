@@ -85,33 +85,16 @@ namespace Shoppi.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Index(int? id)
+        public async Task<ActionResult> Index(ProductIndexViewModel model)
         {
-            var filters = new ProductSpecificationFilters { Page = 1, ProductPerPage = 9 };
-            var products = await _productServices.GetAsync(filters);
-            var model = new ProductIndexViewModel { Products = products };
-            return View(model);
-        }
-
-        private async Task<ProductIndexViewModel> CreateProductListViewModel(int? categoryId)
-        {
-            if (categoryId == null)
+            if (!ModelState.IsValid)
             {
-                return await CreateListModelWithoutCategory();
+                model = new ProductIndexViewModel { Page = 1, ProductsPerPage = 9 };
             }
-            return await CreateListModelWithCategory(categoryId.Value);
-        }
 
-        private async Task<ProductIndexViewModel> CreateListModelWithoutCategory()
-        {
-            var products = await _productServices.GetAllAsync();
-            return new ProductIndexViewModel(products);
-        }
-
-        private async Task<ProductIndexViewModel> CreateListModelWithCategory(int categoryId)
-        {
-            var products = await _productServices.GetByCategoryIdAsync(categoryId);
-            return new ProductIndexViewModel(products, categoryId);
+            var filters = Mapper.Map<ProductSpecificationFilters>(model);
+            model.Products = await _productServices.GetAsync(filters);
+            return View(model);
         }
 
         public async Task<ActionResult> Edit(int id)
