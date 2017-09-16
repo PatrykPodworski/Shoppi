@@ -54,6 +54,11 @@ namespace Shoppi.Data.Repositories
             return await specification.SatisfyingItemsFrom(_context.Products).ToListAsync();
         }
 
+        public async Task<int> GetNumberOfProductsSatisfying(Specification<Product> specification)
+        {
+            return await specification.SatisfyingItemsFrom(_context.Products).CountAsync();
+        }
+
         public Task<Product> GetByIdAsync(int id)
         {
             return _context.Products.FirstOrDefaultAsync(p => p.Id == id);

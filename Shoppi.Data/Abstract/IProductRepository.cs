@@ -15,6 +15,8 @@ namespace Shoppi.Data.Abstract
 
         Task<ICollection<Product>> GetAsync(Specification<Product> specification);
 
+        Task<int> GetNumberOfProductsSatisfying(Specification<Product> specification);
+
         Task<List<Product>> GetByCategoryIdAsync(int categoryId);
 
         void Create(Product product);
