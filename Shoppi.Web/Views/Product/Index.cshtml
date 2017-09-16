@@ -7,6 +7,20 @@
 @Html.ActionLink("Add new product", "Create")
 
 <div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.LabelFor(m => m.Page)
+        @Html.EditorFor(m => m.Page)
+
+        @Html.LabelFor(m => m.ProductsPerPage)
+        @Html.DropDownListFor(m => m.ProductsPerPage, new List<SelectListItem> { new SelectListItem { Value = "9", Text = "9" },
+                                                                                 new SelectListItem { Value = "18", Text = "18" },
+                                                                                 new SelectListItem { Value = "27", Text = "27" } }
+                                                                                 )
+        <button type="submit" class="btn btn-primary">Filter</button>
+    }
+</div>
+<div class="row">
     @foreach (var product in Model.Products)
     {
         <div class="col-md-4 col-sm-6">
