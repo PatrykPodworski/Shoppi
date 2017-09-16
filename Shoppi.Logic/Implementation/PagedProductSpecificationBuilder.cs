@@ -1,31 +1,24 @@
 ﻿using Shoppi.Data.Models;
 using Shoppi.Data.Specifications;
-using Shoppi.Logic.Implementation;
+using Shoppi.Logic.Abstract;
 
-namespace Shoppi.Logic.Factories
+namespace Shoppi.Logic.Implementation
 {
-    public class PagedProductSpecificationBuilder : ISpecificationBuilder<Product>
+    public class PagedProductSpecificationBuilder : ProductSpecificationBuilder
     {
-        private readonly ProductSpecificationFilters _filters;
+        private new IPagedProductFilters _filters;
 
-        public PagedProductSpecificationBuilder(ProductSpecificationFilters filters)
+        public PagedProductSpecificationBuilder(IPagedProductFilters filters) : base(filters)
         {
-            _filters = filters;
         }
 
-        public Specification<Product> GetResult()
+        public override Specification<Product> GetResult()
         {
             var productsToSkip = (_filters.Page - 1) * _filters.ProductsPerPage;
 
-            return new Specification<Product>(x => true)
-                .OrderBy(x => x.Name)
+            return base.GetResult()
                 .Skip(productsToSkip)
                 .Take(_filters.ProductsPerPage);
         }
-    }
-
-    public interface ISpecificationBuilder<T>
-    {
-        Specification<T> GetResult();
     }
 }

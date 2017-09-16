@@ -2,7 +2,6 @@
 using Shoppi.Data.Models;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
-using Shoppi.Logic.Factories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -64,7 +63,7 @@ namespace Shoppi.Logic.Implementation
             return _productRepository.GetAllAsync();
         }
 
-        public async Task<ICollection<Product>> GetAsync(ProductSpecificationFilters filters)
+        public async Task<ICollection<Product>> GetAsync(IPagedProductFilters filters)
         {
             var builder = new PagedProductSpecificationBuilder(filters);
             var specification = builder.GetResult();
@@ -92,6 +91,14 @@ namespace Shoppi.Logic.Implementation
         {
             _productRepository.Delete(id);
             await _productRepository.SaveAsync();
+        }
+
+        public async Task<int> GetNumberOfPages(IPagedProductFilters filters)
+        {
+            var builder = new ProductSpecificationBuilder(filters);
+            var specification = builder.GetResult();
+            var products = await _productRepository.GetAsync(specification);
+            return products.Count / filters.ProductsPerPage;
         }
     }
 }

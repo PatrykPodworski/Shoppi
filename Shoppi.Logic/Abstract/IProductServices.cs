@@ -1,5 +1,4 @@
 ﻿using Shoppi.Data.Models;
-using Shoppi.Logic.Implementation;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,9 +10,9 @@ namespace Shoppi.Logic.Abstract
 
         Task<List<Product>> GetAllAsync();
 
-        Task<ICollection<Product>> GetAsync(ProductSpecificationFilters filters);
+        Task<ICollection<Product>> GetAsync(IPagedProductFilters filters);
 
-        Task<int> GetNumberOfPages(ProductSpecificationFilters filters);
+        Task<int> GetNumberOfPages(IPagedProductFilters filters);
 
         Task<List<Product>> GetByCategoryIdAsync(int categoryId);
 

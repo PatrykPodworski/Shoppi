@@ -46,6 +46,8 @@
     <Compile Include="Abstract\ICartServices.cs" />
     <Compile Include="Abstract\ICategoryServices.cs" />
     <Compile Include="Abstract\IImageServices.cs" />
+    <Compile Include="Abstract\IPagedProductFilters.cs" />
+    <Compile Include="Abstract\IProductFilters.cs" />
     <Compile Include="Abstract\IProductServices.cs" />
     <Compile Include="Abstract\ITypeServices.cs" />
     <Compile Include="Abstract\IUserServices.cs" />
@@ -54,7 +56,9 @@
     <Compile Include="Exceptions\BrandValidationException.cs" />
     <Compile Include="Exceptions\CategoryValidationException.cs" />
     <Compile Include="Exceptions\ProductValidationException.cs" />
+    <Compile Include="Abstract\ISpecificationBuilder.cs" />
     <Compile Include="Implementation\PagedProductSpecificationBuilder.cs" />
+    <Compile Include="Implementation\ProductSpecificationBuilder.cs" />
     <Compile Include="Implementation\ProductSpecificationFilters.cs" />
     <Compile Include="Implementation\AddressServices.cs" />
     <Compile Include="Implementation\BrandServices.cs" />

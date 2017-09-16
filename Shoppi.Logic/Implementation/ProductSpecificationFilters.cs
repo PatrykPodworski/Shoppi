@@ -1,6 +1,8 @@
-﻿namespace Shoppi.Logic.Implementation
+﻿using Shoppi.Logic.Abstract;
+
+namespace Shoppi.Logic.Implementation
 {
-    public class ProductSpecificationFilters
+    public class PagedProductSpecificationFilters : IPagedProductFilters
     {
         public int Page { get; set; }
         public int ProductsPerPage { get; set; }
