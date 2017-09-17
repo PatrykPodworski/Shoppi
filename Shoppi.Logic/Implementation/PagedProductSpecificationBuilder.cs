@@ -6,10 +6,11 @@ namespace Shoppi.Logic.Implementation
 {
     public class PagedProductSpecificationBuilder : ProductSpecificationBuilder
     {
-        private new IPagedProductFilters _filters;
+        private readonly new IPagedProductFilters _filters;
 
         public PagedProductSpecificationBuilder(IPagedProductFilters filters) : base(filters)
         {
+            _filters = filters;
         }
 
         public override Specification<Product> GetResult()
