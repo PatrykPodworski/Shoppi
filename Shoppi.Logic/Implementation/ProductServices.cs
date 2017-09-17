@@ -97,7 +97,9 @@ namespace Shoppi.Logic.Implementation
         {
             var builder = new ProductSpecificationBuilder(filters);
             var specification = builder.GetResult();
-            return await _productRepository.GetNumberOfProductsSatisfying(specification);
+            var numberOfProducts = await _productRepository.GetNumberOfProductsSatisfying(specification);
+
+            return numberOfProducts / filters.ProductsPerPage + (numberOfProducts % filters.ProductsPerPage > 0 ? 1 : 0);
         }
     }
 }

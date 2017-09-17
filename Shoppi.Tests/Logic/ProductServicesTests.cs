@@ -2,6 +2,7 @@
 using Moq;
 using Shoppi.Data.Abstract;
 using Shoppi.Data.Models;
+using Shoppi.Data.Specifications;
 using Shoppi.Logic.Abstract;
 using Shoppi.Logic.Exceptions;
 using Shoppi.Logic.Implementation;
@@ -39,6 +40,7 @@ namespace Shoppi.Tests
             SetUpGetByIdMethod();
             SetUpEditMethod();
             SetUpDeleteMethod();
+            SetUpGetMethod();
         }
 
         private void SetUpCreateMethod()
@@ -93,6 +95,18 @@ namespace Shoppi.Tests
         {
             _mockRepository.Setup(m => m.Delete(It.IsAny<int>()))
                 .Callback<int>(x => _products.RemoveAll(y => y.Id == x));
+        }
+
+        private void SetUpGetNumberOfProductsSatisfyingMethod(int numberOfProducts)
+        {
+            _mockRepository.Setup(m => m.GetNumberOfProductsSatisfying(It.IsAny<Specification<Product>>()))
+                .Returns(Task.Run(() => numberOfProducts));
+        }
+
+        private void SetUpGetMethod()
+        {
+            _mockRepository.Setup(x => x.GetAsync(It.IsAny<Specification<Product>>()))
+                .Returns(Task.FromResult<ICollection<Product>>(_products));
         }
 
         private void SetUpMockCategoryServices()
@@ -474,6 +488,60 @@ namespace Shoppi.Tests
 
             // Act
             await _productServices.EditAsync(newProduct);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_GetNumberOfPages_WhenNumberOfProductsIsDivisibleByProductPerPage_ReturnsNumberOfPages()
+        {
+            // Arrange
+            var numberOfProducts = 27;
+            var productsPerPage = 9;
+            var pages = 3;
+            SetUpGetNumberOfProductsSatisfyingMethod(numberOfProducts);
+
+            var filters = new PagedProductSpecificationFilters { ProductsPerPage = productsPerPage };
+
+            // Act
+            var result = await _productServices.GetNumberOfPages(filters);
+
+            // Assert
+            Assert.AreEqual(pages, result);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_GetNumberOfPages_WhenNumberOfProductsIsNoTDivisibleByProductPerPage_ReturnsNumberOfPages()
+        {
+            // Arrange
+            var numberOfProducts = 28;
+            var productsPerPage = 9;
+            var pages = 4;
+            SetUpGetNumberOfProductsSatisfyingMethod(numberOfProducts);
+
+            var filters = new PagedProductSpecificationFilters { ProductsPerPage = productsPerPage };
+
+            // Act
+            var result = await _productServices.GetNumberOfPages(filters);
+
+            // Assert
+            Assert.AreEqual(pages, result);
+        }
+
+        [TestMethod]
+        public async Task ProductServices_GetWithFilters_ReturnsProductsSatifyingSpecification()
+        {
+            // Arrange
+            var numberOfProducts = 13;
+            for (int i = 0; i < numberOfProducts; i++)
+            {
+                _products.Add(new Product());
+            }
+            var filters = new PagedProductSpecificationFilters();
+
+            // Act
+            var result = await _productServices.GetAsync(filters);
+
+            // Assert
+            Assert.AreEqual(numberOfProducts, result.Count);
         }
     }
 }
