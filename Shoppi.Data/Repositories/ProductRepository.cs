@@ -51,12 +51,12 @@ namespace Shoppi.Data.Repositories
 
         public async Task<ICollection<Product>> GetAsync(Specification<Product> specification)
         {
-            return await specification.SatisfyingItemsFrom(_context.Products).ToListAsync();
+            return await specification.ItemsSatisfyingSpecification(_context.Products).ToListAsync();
         }
 
         public async Task<int> GetNumberOfProductsSatisfying(Specification<Product> specification)
         {
-            return await specification.SatisfyingItemsFrom(_context.Products).CountAsync();
+            return await specification.ItemsSatisfyingPredicate(_context.Products).CountAsync();
         }
 
         public Task<Product> GetByIdAsync(int id)

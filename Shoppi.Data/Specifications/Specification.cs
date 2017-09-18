@@ -79,9 +79,14 @@ namespace Shoppi.Data.Specifications
             return newSpecification;
         }
 
-        public IQueryable<T> SatisfyingItemsFrom(IQueryable<T> query)
+        public IQueryable<T> ItemsSatisfyingSpecification(IQueryable<T> query)
         {
             return Prepare(query);
+        }
+
+        public IQueryable<T> ItemsSatisfyingPredicate(IQueryable<T> query)
+        {
+            return query.Where(_predicate);
         }
 
         private IQueryable<T> Prepare(IQueryable<T> query)
