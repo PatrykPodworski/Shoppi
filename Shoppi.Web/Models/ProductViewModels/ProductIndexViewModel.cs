@@ -13,5 +13,7 @@ namespace Shoppi.Web.Models.ProductViewModels
 
         [Required]
         public int? ProductsPerPage { get; set; }
+
+        public int? MaxPages { get; set; }
     }
 }

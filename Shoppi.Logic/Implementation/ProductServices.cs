@@ -11,11 +11,15 @@ namespace Shoppi.Logic.Implementation
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryServices _categoryServices;
+        private IProductSpecificationFactory _productSpecificationFactory;
 
-        public ProductServices(IProductRepository productRepository, ICategoryServices categroryServices)
+        public ProductServices(IProductRepository productRepository,
+                               ICategoryServices categroryServices,
+                               IProductSpecificationFactory specificationBuilder)
         {
             _productRepository = productRepository;
             _categoryServices = categroryServices;
+            _productSpecificationFactory = specificationBuilder;
         }
 
         public async Task CreateAsync(Product product)
@@ -63,13 +67,6 @@ namespace Shoppi.Logic.Implementation
             return _productRepository.GetAllAsync();
         }
 
-        public async Task<ICollection<Product>> GetAsync(IPagedProductFilters filters)
-        {
-            var builder = new PagedProductSpecificationBuilder(filters);
-            var specification = builder.GetResult();
-            return await _productRepository.GetAsync(specification);
-        }
-
         public Task<List<Product>> GetByCategoryIdAsync(int categoryId)
         {
             return _productRepository.GetByCategoryIdAsync(categoryId);
@@ -93,10 +90,15 @@ namespace Shoppi.Logic.Implementation
             await _productRepository.SaveAsync();
         }
 
-        public async Task<int> GetNumberOfPages(IPagedProductFilters filters)
+        public async Task<ICollection<Product>> GetAsync(IProductFilters filters)
         {
-            var builder = new ProductSpecificationBuilder(filters);
-            var specification = builder.GetResult();
+            var specification = _productSpecificationFactory.GetResult(filters);
+            return await _productRepository.GetAsync(specification);
+        }
+
+        public async Task<int> GetNumberOfPages(IProductFilters filters)
+        {
+            var specification = _productSpecificationFactory.GetResult(filters);
             var numberOfProducts = await _productRepository.GetNumberOfProductsSatisfying(specification);
 
             return numberOfProducts / filters.ProductsPerPage + (numberOfProducts % filters.ProductsPerPage > 0 ? 1 : 0);

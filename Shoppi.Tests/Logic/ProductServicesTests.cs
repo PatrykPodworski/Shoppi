@@ -17,6 +17,7 @@ namespace Shoppi.Tests
     {
         private Mock<IProductRepository> _mockRepository;
         private Mock<ICategoryServices> _mockCategoryServices;
+        private Mock<IProductSpecificationFactory> _mockFactory;
         private ProductServices _productServices;
         private List<Product> _products;
 
@@ -27,7 +28,8 @@ namespace Shoppi.Tests
 
             SetUpMockRepository();
             SetUpMockCategoryServices();
-            _productServices = new ProductServices(_mockRepository.Object, _mockCategoryServices.Object);
+            SetUpMockBuilder();
+            _productServices = new ProductServices(_mockRepository.Object, _mockCategoryServices.Object, _mockFactory.Object);
         }
 
         private void SetUpMockRepository()
@@ -113,6 +115,11 @@ namespace Shoppi.Tests
         {
             _mockCategoryServices = new Mock<ICategoryServices>();
             SetUpIsFinalCategoryMethod(true);
+        }
+
+        private void SetUpMockBuilder()
+        {
+            _mockFactory = new Mock<IProductSpecificationFactory>();
         }
 
         private void SetUpIsFinalCategoryMethod(bool returns)
@@ -499,7 +506,7 @@ namespace Shoppi.Tests
             var pages = 3;
             SetUpGetNumberOfProductsSatisfyingMethod(numberOfProducts);
 
-            var filters = new PagedProductSpecificationFilters { ProductsPerPage = productsPerPage };
+            var filters = new ProductFilters { ProductsPerPage = productsPerPage };
 
             // Act
             var result = await _productServices.GetNumberOfPages(filters);
@@ -517,7 +524,7 @@ namespace Shoppi.Tests
             var pages = 4;
             SetUpGetNumberOfProductsSatisfyingMethod(numberOfProducts);
 
-            var filters = new PagedProductSpecificationFilters { ProductsPerPage = productsPerPage };
+            var filters = new ProductFilters { ProductsPerPage = productsPerPage };
 
             // Act
             var result = await _productServices.GetNumberOfPages(filters);
@@ -535,7 +542,7 @@ namespace Shoppi.Tests
             {
                 _products.Add(new Product());
             }
-            var filters = new PagedProductSpecificationFilters();
+            var filters = new ProductFilters();
 
             // Act
             var result = await _productServices.GetAsync(filters);

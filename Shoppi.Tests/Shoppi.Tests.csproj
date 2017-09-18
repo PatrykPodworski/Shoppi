@@ -62,9 +62,8 @@
     <Compile Include="Logic\BrandServicesTests.cs" />
     <Compile Include="Logic\CartServicesTests.cs" />
     <Compile Include="Logic\CategoryServicesTests.cs" />
-    <Compile Include="Logic\PagedProductSpecificationBuilderTests.cs" />
     <Compile Include="Logic\ProductServicesTests.cs" />
-    <Compile Include="Logic\ProductSpecificationBuilderTests.cs" />
+    <Compile Include="Logic\ProductSpecificationFactoryTests.cs" />
     <Compile Include="Logic\ProductTypeServicesTests.cs" />
     <Compile Include="Logic\UserServicesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

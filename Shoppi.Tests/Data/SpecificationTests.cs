@@ -16,7 +16,7 @@ namespace Shoppi.Tests.Data
             var collection = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
 
             // Act
-            var result = spec.SatisfyingItemsFrom(collection.AsQueryable());
+            var result = spec.ItemsSatisfyingSpecification(collection.AsQueryable());
 
             // Assert
             Assert.AreEqual(5, result.Count());
@@ -31,7 +31,7 @@ namespace Shoppi.Tests.Data
             var expected = collection.OrderBy(x => x);
 
             // Act
-            var result = spec.SatisfyingItemsFrom(collection.AsQueryable()).ToList();
+            var result = spec.ItemsSatisfyingSpecification(collection.AsQueryable()).ToList();
 
             // Assert
             Assert.IsTrue(result.SequenceEqual(expected));
@@ -46,7 +46,7 @@ namespace Shoppi.Tests.Data
             var expected = collection.OrderByDescending(x => x);
 
             // Act
-            var result = spec.SatisfyingItemsFrom(collection.AsQueryable()).ToList();
+            var result = spec.ItemsSatisfyingSpecification(collection.AsQueryable()).ToList();
 
             // Assert
             Assert.IsTrue(result.SequenceEqual(expected));
@@ -61,7 +61,7 @@ namespace Shoppi.Tests.Data
             var expected = collection.Skip(4);
 
             // Act
-            var result = spec.SatisfyingItemsFrom(collection.AsQueryable()).ToList();
+            var result = spec.ItemsSatisfyingSpecification(collection.AsQueryable()).ToList();
 
             // Assert
             Assert.IsTrue(result.SequenceEqual(expected));
@@ -76,7 +76,7 @@ namespace Shoppi.Tests.Data
             var expected = collection.Take(6);
 
             // Act
-            var result = spec.SatisfyingItemsFrom(collection.AsQueryable()).ToList();
+            var result = spec.ItemsSatisfyingSpecification(collection.AsQueryable()).ToList();
 
             // Assert
             Assert.IsTrue(result.SequenceEqual(expected));

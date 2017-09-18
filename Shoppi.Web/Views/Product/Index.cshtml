@@ -15,8 +15,10 @@
         @Html.LabelFor(m => m.ProductsPerPage)
         @Html.DropDownListFor(m => m.ProductsPerPage, new List<SelectListItem> { new SelectListItem { Value = "9", Text = "9" },
                                                                                  new SelectListItem { Value = "18", Text = "18" },
-                                                                                 new SelectListItem { Value = "27", Text = "27" } }
-                                                                                 )
+                                                                                 new SelectListItem { Value = "27", Text = "27" } })
+
+   @:<p>Page @Model.Page of @Model.MaxPages</p>
+                                                                                 
         <button type="submit" class="btn btn-primary">Filter</button>
     }
 </div>
@@ -27,7 +29,7 @@
             <a href=@Url.Action("Details", "Product", new { id = @product.Id })>
                 <div class="thumbnail thumbnail-product">
                     @if (product.ImagePath != null)
-                {
+                    {
                         <img src=@Url.Action("GetImage", new { id = @product.Id }) alt=@product.Name />
                     }
                     <div class="caption row">

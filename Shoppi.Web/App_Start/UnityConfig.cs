@@ -16,6 +16,7 @@ namespace Shoppi
 
             RegisterServices(container);
             RegisterRepositories(container);
+            RegisterSpecificationRelatedTypes(container);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
@@ -41,6 +42,11 @@ namespace Shoppi
             container.RegisterType<ICartRepository, SessionCartRepository>();
             container.RegisterType<IBrandRepository, BrandRepository>();
             container.RegisterType<ITypeRepository, TypeRepository>();
+        }
+
+        private static void RegisterSpecificationRelatedTypes(IUnityContainer container)
+        {
+            container.RegisterType<IProductSpecificationFactory, ProductSpecificationFactory>();
         }
     }
 }

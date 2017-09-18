@@ -44,7 +44,7 @@ namespace Shoppi.App_Start
             CreateMap<ProductType, SelectListItem>()
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Id.ToString()));
-            CreateMap<ProductIndexViewModel, PagedProductSpecificationFilters>();
+            CreateMap<ProductIndexViewModel, ProductFilters>();
         }
 
         private void CreateCategoryMaps()

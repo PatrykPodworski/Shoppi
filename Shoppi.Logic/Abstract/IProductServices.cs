@@ -10,9 +10,9 @@ namespace Shoppi.Logic.Abstract
 
         Task<List<Product>> GetAllAsync();
 
-        Task<ICollection<Product>> GetAsync(IPagedProductFilters filters);
+        Task<ICollection<Product>> GetAsync(IProductFilters filters);
 
-        Task<int> GetNumberOfPages(IPagedProductFilters filters);
+        Task<int> GetNumberOfPages(IProductFilters filters);
 
         Task<List<Product>> GetByCategoryIdAsync(int categoryId);
 

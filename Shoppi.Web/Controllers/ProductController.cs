@@ -92,8 +92,9 @@ namespace Shoppi.Controllers
                 model = new ProductIndexViewModel { Page = 1, ProductsPerPage = 9 };
             }
 
-            var filters = Mapper.Map<PagedProductSpecificationFilters>(model);
+            var filters = Mapper.Map<ProductFilters>(model);
             model.Products = await _productServices.GetAsync(filters);
+            model.MaxPages = await _productServices.GetNumberOfPages(filters);
             return View(model);
         }
 

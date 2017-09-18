@@ -8,17 +8,17 @@ using Shoppi.Logic.Implementation;
 namespace Shoppi.Tests.Logic
 {
     [TestClass]
-    public class ProductSpecificationBuilderTests
+    public class ProductSpecificationFactoryTests
     {
         [TestMethod]
-        public void ProductSpecificationBuilder_ReturnsSpecificationOfProducts()
+        public void ProductSpecificationFactory_ReturnsSpecificationOfProducts()
         {
             // Arrange
             var filters = new Mock<IProductFilters>();
-            var builder = new ProductSpecificationBuilder(filters.Object);
+            var builder = new ProductSpecificationFactory();
 
             // Act
-            var result = builder.GetResult();
+            var result = builder.GetResult(filters.Object);
 
             // Assert
 
